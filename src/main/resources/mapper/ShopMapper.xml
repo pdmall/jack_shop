@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdkj.jack_shop.dao.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.pdkj.jack_shop.model.Shop">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_address" jdbcType="VARCHAR" property="shopAddress" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="shop_phone" jdbcType="VARCHAR" property="shopPhone" />
+    <result column="shop_state" jdbcType="INTEGER" property="shopState" />
+    <result column="buss_open" jdbcType="TIME" property="bussOpen" />
+    <result column="buss_close" jdbcType="TIME" property="bussClose" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="average_cons" jdbcType="DECIMAL" property="averageCons" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="license_img" jdbcType="VARCHAR" property="licenseImg" />
+    <result column="service_score" jdbcType="INTEGER" property="serviceScore" />
+    <result column="enviro_score" jdbcType="INTEGER" property="enviroScore" />
+    <result column="taste_score" jdbcType="INTEGER" property="tasteScore" />
+    <result column="home_img" jdbcType="VARCHAR" property="homeImg" />
+    <result column="detail_imgs" jdbcType="LONGVARCHAR" property="detailImgs" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,22 @@
+package com.pdkj.jack_shop.service.impl;
+
+import com.pdkj.jack_shop.dao.UserRoleMapper;
+import com.pdkj.jack_shop.model.UserRole;
+import com.pdkj.jack_shop.service.UserRoleService;
+import com.pdkj.jack_shop.core.AbstractService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+
+
+/**
+ * Created by CodeGenerator on 2018/06/26.
+ */
+@Service
+@Transactional
+public class UserRoleServiceImpl extends AbstractService<UserRole> implements UserRoleService {
+    @Resource
+    private UserRoleMapper userRoleMapper;
+
+}

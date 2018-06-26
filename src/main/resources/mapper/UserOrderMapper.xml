@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdkj.jack_shop.dao.UserOrderMapper">
+  <resultMap id="BaseResultMap" type="com.pdkj.jack_shop.model.UserOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="pay_on" jdbcType="VARCHAR" property="payOn" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime" />
+    <result column="use_time" jdbcType="TIMESTAMP" property="useTime" />
+    <result column="use_coupon_id" jdbcType="BIGINT" property="useCouponId" />
+    <result column="wallet_money" jdbcType="DECIMAL" property="walletMoney" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
+  </resultMap>
+</mapper>

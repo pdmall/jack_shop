@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdkj.jack_shop.dao.CouponItemMapper">
+  <resultMap id="BaseResultMap" type="com.pdkj.jack_shop.model.CouponItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_price" jdbcType="VARCHAR" property="itemPrice" />
+    <result column="item_num" jdbcType="INTEGER" property="itemNum" />
+    <result column="item_unit" jdbcType="VARCHAR" property="itemUnit" />
+  </resultMap>
+</mapper>

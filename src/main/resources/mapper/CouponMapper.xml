@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdkj.jack_shop.dao.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.pdkj.jack_shop.model.Coupon">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="buy_price" jdbcType="DECIMAL" property="buyPrice" />
+    <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
+    <result column="is_refund" jdbcType="INTEGER" property="isRefund" />
+    <result column="sub_time" jdbcType="INTEGER" property="subTime" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="date_start" jdbcType="DATE" property="dateStart" />
+    <result column="date_end" jdbcType="TIMESTAMP" property="dateEnd" />
+    <result column="time_start" jdbcType="TIME" property="timeStart" />
+    <result column="time_end" jdbcType="TIME" property="timeEnd" />
+    <result column="unable_date" jdbcType="INTEGER" property="unableDate" />
+    <result column="coupon_img" jdbcType="VARCHAR" property="couponImg" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+  </resultMap>
+</mapper>
