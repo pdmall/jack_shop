@@ -18,9 +18,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user/shop/rel")
-public class UserShopRelController {
-    @Resource
-    private UserShopRelService userShopRelService;
+public class UserShopRelController extends BaseController  {
+
 
     @PostMapping("/add")
     public Result add(UserShopRel userShopRel) {

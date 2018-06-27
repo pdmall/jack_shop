@@ -1,9 +1,10 @@
 package com.pdkj.jack_shop.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +24,8 @@ public class User {
     private String ip;
 
     private String email;
+
+    private String token;
 
     /**
      * 身份证
@@ -45,6 +48,14 @@ public class User {
      * 昵称
      */
     private String nickname;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     /**
      * @return id

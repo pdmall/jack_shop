@@ -10,5 +10,6 @@ import java.util.List;
  * Created by CodeGenerator on 2018/06/26.
  */
 public interface UserService extends Service<User> {
-    List<User> test();
+
+    User getUserByToken(String token);
 }

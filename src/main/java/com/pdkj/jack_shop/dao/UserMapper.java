@@ -7,5 +7,5 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface UserMapper extends Mapper<User> {
-    List<User> test();
+    User getUserByToken(String token);
 }
