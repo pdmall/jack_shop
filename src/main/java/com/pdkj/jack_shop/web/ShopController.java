@@ -17,9 +17,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/shop")
-public class ShopController {
-    @Resource
-    private ShopService shopService;
+public class ShopController  extends BaseController {
+
 
     @PostMapping("/add")
     public Result add(Shop shop) {
