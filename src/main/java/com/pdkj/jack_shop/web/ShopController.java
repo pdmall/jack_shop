@@ -16,9 +16,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/shop")
-public class ShopController {
-    @Resource
-    private ShopService shopService;
+public class ShopController  extends BaseController {
+
 
     @PostMapping("/add")
     public Result add(Shop shop) {
@@ -48,15 +47,6 @@ public class ShopController {
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<Shop> list = shopService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
-    }
-    @GetMapping("/findByCondition")
-    public Result findByCondition(@RequestParam Shop shop) {
-        HashMap map = new HashMap();
-        map.put("shop",shop);
-        map.put("id",1);
-        List<Shop> list = shopService.findByCondition(map);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

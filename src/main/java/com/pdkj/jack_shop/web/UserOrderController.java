@@ -18,9 +18,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user/order")
-public class UserOrderController {
-    @Resource
-    private UserOrderService userOrderService;
+public class UserOrderController extends BaseController  {
+
 
     @PostMapping("/add")
     public Result add(UserOrder userOrder) {
