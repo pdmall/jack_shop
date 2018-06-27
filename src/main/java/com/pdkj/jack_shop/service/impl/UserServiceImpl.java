@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -52,4 +53,5 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
         return user;
     }
+
 }

@@ -20,8 +20,7 @@ public class ShopServiceImpl extends AbstractService<Shop> implements ShopServic
     @Resource
     private ShopMapper shopMapper;
 
-    @Override
-    public List<Shop> getShop(String name) {
-        return shopMapper.getShop(name);
+    public Shop findAddressById(Long id){
+        return shopMapper.findAddressById(id);
     }
 }

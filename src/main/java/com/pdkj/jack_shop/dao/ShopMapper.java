@@ -4,9 +4,9 @@ import com.pdkj.jack_shop.core.Mapper;
 import com.pdkj.jack_shop.model.Shop;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface ShopMapper extends Mapper<Shop> {
-
-    public List<Shop> getShop(String name);
-
+    Shop findAddressById(Long id);
 }

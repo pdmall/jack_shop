@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,12 +23,6 @@ public class ShopController  extends BaseController {
     public Result add(Shop shop) {
         shopService.save(shop);
         return ResultGenerator.genSuccessResult();
-    }
-
-    @GetMapping("/getShop")
-    public Result getShop(String name) {
-        List<Shop> shop = shopService.getShop(name);
-        return ResultGenerator.genSuccessResult(shop);
     }
 
     @PostMapping("/delete")
@@ -48,7 +43,7 @@ public class ShopController  extends BaseController {
         return ResultGenerator.genSuccessResult(shop);
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<Shop> list = shopService.findAll();

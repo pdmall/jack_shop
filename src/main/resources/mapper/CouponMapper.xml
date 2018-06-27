@@ -23,4 +23,26 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="shop_id" jdbcType="BIGINT" property="shopId" />
   </resultMap>
+  <!-- 定义sql操作列 -->
+  <sql id="columns">
+        id,title,type,discount,buy_price,
+			final_price,is_refund,sub_time,
+			date_start,date_end,time_start,time_end,
+			unable_date,coupon_img
+    </sql>
+  <!-- 根据条件查询查询 -->
+  <select id="findByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+			<include refid="columns"/>
+		from coupon
+			where shop_id = #{shop_id}
+  </select>
+  <!-- 根据id查询 -->
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+   select
+    <include refid="columns"/>
+		from coupon
+			where id = #{id}
+  </select>
+
 </mapper>
