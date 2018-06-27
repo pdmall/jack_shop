@@ -12,6 +12,7 @@ import tk.mybatis.mapper.entity.Condition;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -99,5 +100,12 @@ public abstract class AbstractService<T> implements Service<T> {
 
     public List<T> findAll() {
         return mapper.selectAll();
+    }
+
+    public List<T> findByCondition(Map<String,Object> map){
+        return mapper.findByCondition(map);
+    }
+    public T findById(Long id){
+        return mapper.findById(id);
     }
 }

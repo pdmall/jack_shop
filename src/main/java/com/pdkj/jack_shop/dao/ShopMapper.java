@@ -9,4 +9,5 @@ import java.util.Map;
 
 public interface ShopMapper extends Mapper<Shop> {
     Shop findAddressById(Long id);
+    List<Shop> findByClassify(Long id);
 }

@@ -21,10 +21,4 @@ public class CouponServiceImpl extends AbstractService<Coupon> implements Coupon
     @Resource
     private CouponMapper couponMapper;
 
-    public List<Coupon> findByCondition(Map<String,Coupon> map){
-        return couponMapper.findByCondition(map);
-    }
-    public Coupon findById(Long id){
-        return couponMapper.findById(id);
-    }
 }

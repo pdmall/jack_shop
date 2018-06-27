@@ -7,6 +7,4 @@ import java.util.List;
 import java.util.Map;
 
 public interface CouponMapper extends Mapper<Coupon> {
-    List<Coupon> findByCondition(Map<String,Coupon> map);
-    Coupon findById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.service.ShopService;
 import com.github.pagehelper.PageHelper;
@@ -16,8 +17,9 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/shop")
-public class ShopController  extends BaseController {
-
+public class ShopController {
+    @Resource
+    private ShopService shopService;
 
     @PostMapping("/add")
     public Result add(Shop shop) {
@@ -47,6 +49,20 @@ public class ShopController  extends BaseController {
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<Shop> list = shopService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+    @GetMapping("/findByCondition")
+    public Result findByCondition(Shop shop) {
+        HashMap map = new HashMap();
+        map.put("shop",shop);
+        List<Shop> list = shopService.findByCondition(map);
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+    @GetMapping("/findByClassify")
+    public Result findByClassify(@RequestParam Long typeId) {
+        List<Shop> list = shopService.findByClassify(typeId);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
