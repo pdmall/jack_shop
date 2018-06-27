@@ -1,4 +1,6 @@
 package com.pdkj.jack_shop.web;
+import com.aliyuncs.exceptions.ClientException;
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.User;
@@ -21,14 +23,18 @@ public class UserController extends BaseController  {
 
 
     @PostMapping("/getVerCode")
-    public Result getVerCode(String phone) {
-//        userService.save(user);
-        return ResultGenerator.genSuccessResult();
+    public Result getVerCode(String phone) throws ClientException {
+        boolean ok = userService.getVerCode(phone);
+        if(ok){
+            return ResultGenerator.genSuccessResult("成功");
+        }else{
+            return ResultGenerator.genFailResult("号码已存在");
+        }
     }
 
-    @PostMapping("/add")
-    public Result add(User user) {
-        userService.save(user);
+    @PostMapping("/register")
+    public Result register(User user,String vercode) throws CustomException {
+        userService.register(user,vercode);
         return ResultGenerator.genSuccessResult();
     }
 

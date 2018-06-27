@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserMapper extends Mapper<User> {
     User getUserByToken(String token);
+
+    boolean existsWithPhone(String phone);
 }

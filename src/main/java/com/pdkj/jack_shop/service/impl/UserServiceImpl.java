@@ -1,5 +1,8 @@
 package com.pdkj.jack_shop.service.impl;
 
+import com.aliyuncs.exceptions.ClientException;
+import com.pdkj.jack_shop.configurer.AliYunSMS;
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.dao.UserMapper;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.service.UserService;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
@@ -35,23 +39,45 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public User getUserByToken(String token) {
-        String key = "user" + token;
-        ValueOperations<String, User> operations = redisTemplate.opsForValue();
-        boolean hasKey = redisTemplate.hasKey(key);
-        if (hasKey) {
-            User user = operations.get(key);
-            System.out.println("有缓存"+user.getState());
-            return user;
+        String key = "token"+token;
+        User user = (User) getCache(key);
+        if(user==null){
+            user = userMapper.getUserByToken(token);
         }
-
-        // 从 DB 中获取城市信息
-        User user = userMapper.getUserByToken(token);
-
-        // 插入缓存
-        operations.set(key, user, 10, TimeUnit.SECONDS);
-        LOGGER.info("CityServiceImpl.findCityById() : 城市插入缓存 >> " + user.toString());
-
+        setCache(key,user);
         return user;
+    }
+
+    @Override
+    public boolean getVerCode(String phone) throws ClientException {
+        boolean exist = userMapper.existsWithPhone(phone);
+        //不存在发送注册验证码
+        if(!exist){
+            String verCodeNum = getVerCodeNum(6);
+            setCache("verCode"+phone,verCodeNum);
+            AliYunSMS.sendSms(phone,verCodeNum);
+        }
+        return !exist;
+    }
+
+    @Override
+    public void register(User user,String vercode) throws CustomException {
+        String oldCode = (String) getCache("verCode" + user.getPhone());
+        if(oldCode.equals(vercode)){
+            save(user);
+        }else{
+            throw new CustomException("验证码有误");
+        }
+    }
+
+    private String getVerCodeNum(int varCodelength) {
+        int verCode = 0;
+        if (varCodelength == 6) {
+            verCode = 1000000 - new Random().nextInt(899999);
+        } else {
+            verCode = 10000 - new Random().nextInt(8999);
+        }
+        return String.valueOf(verCode);
     }
 
 }

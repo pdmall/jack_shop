@@ -27,8 +27,8 @@ public class AliYunSMS {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIbHl7YNNih800";
-    static final String accessKeySecret = "SSZxlQ3Ko7iYFvQGuuJAwT70IMex1V";
+    static final String accessKeyId = "LTAItNo00VAu6ohm";
+    static final String accessKeySecret = "ZRq5gV1r1aCgcILRpRvNhC7lIXcG0N";
 
     public static SendSmsResponse sendSms(String phone,String vrCode) throws ClientException {
 
@@ -46,9 +46,9 @@ public class AliYunSMS {
         //必填:待发送手机号
         request.setPhoneNumbers(phone);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("立川食品");
+        request.setSignName("派对科技");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_135230003");
+        request.setTemplateCode("SMS_135825038");
 
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         JSONObject obj = new JSONObject();
