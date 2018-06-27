@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Transactional
-@CacheConfig(cacheNames = "user")
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     @Resource
     private UserMapper userMapper;
@@ -33,14 +32,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Cacheable(key = "#p0")
     @Override
     public User getUserByToken(String token) {
-
-        String key = "city_" + token;
+        String key = "user" + token;
         ValueOperations<String, User> operations = redisTemplate.opsForValue();
-
-        // 缓存存在
         boolean hasKey = redisTemplate.hasKey(key);
         if (hasKey) {
             User user = operations.get(key);
@@ -56,6 +51,5 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         LOGGER.info("CityServiceImpl.findCityById() : 城市插入缓存 >> " + user.toString());
 
         return user;
-
     }
 }
