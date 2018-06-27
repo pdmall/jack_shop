@@ -17,18 +17,21 @@ import java.util.List;
 * Created by CodeGenerator on 2018/06/26.
 */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController extends BaseController  {
 
 
-
-    @PostMapping("/getVerCode")
-    public Result getVerCode(String phone) throws ClientException {
-        boolean ok = userService.getVerCode(phone);
-        if(ok){
-            return ResultGenerator.genSuccessResult("成功");
-        }else{
-            return ResultGenerator.genFailResult("号码已存在");
+    @GetMapping("getVerCode")
+    public Result getVerCode(String phone) {
+        try{
+            boolean ok = userService.getVerCode(phone);
+            if(ok){
+                return ResultGenerator.genSuccessResult("成功");
+            }else{
+                return ResultGenerator.genFailResult("号码已存在");
+            }
+        }catch (Exception e){
+            return ResultGenerator.genFailResult(e.getMessage());
         }
     }
 

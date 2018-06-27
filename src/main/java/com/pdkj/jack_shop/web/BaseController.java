@@ -1,34 +1,35 @@
 package com.pdkj.jack_shop.web;
 
 import com.pdkj.jack_shop.service.*;
+import com.pdkj.jack_shop.service.impl.*;
 
 import javax.annotation.Resource;
 
 public class BaseController {
     @Resource
-    public CouponService couponService;
+    public CouponServiceImpl couponService;
     @Resource
-    public CouponItemService couponItemService;
+    public CouponItemServiceImpl couponItemService;
     @Resource
-    public CouponItemUnitService couponItemUnitService;
+    public CouponItemUnitServiceImpl couponItemUnitService;
     @Resource
-    public ShopCommentService shopCommentService;
+    public ShopCommentServiceImpl shopCommentService;
     @Resource
-    public ShopService shopService;
+    public ShopServiceImpl shopService;
     @Resource
-    public ShopTypeService shopTypeService;
+    public ShopTypeServiceImpl shopTypeService;
     @Resource
-    public ShopTypeRelService shopTypeRelService;
+    public ShopTypeRelServiceImpl shopTypeRelService;
     @Resource
-    public UserConcernService userConcernService;
+    public UserConcernServiceImpl userConcernService;
     @Resource
-    public UserService userService;
+    public UserServiceImpl userService;
     @Resource
-    public UserOrderService userOrderService;
+    public UserOrderServiceImpl userOrderService;
     @Resource
-    public UserRoleService userRoleService;
+    public UserRoleServiceImpl userRoleService;
     @Resource
-    public UserShopRelService userShopRelService;
+    public UserShopRelServiceImpl userShopRelService;
     @Resource
-    public UserWalletService userWalletService;
+    public UserWalletServiceImpl userWalletService;
 }

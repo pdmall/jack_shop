@@ -91,12 +91,22 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
                     }
                     logger.error(message, e);
                 }
-               // responseResult(response, result);
                 return new ModelAndView();
             }
         });
     }
 
+
+    private void responseResult(HttpServletResponse response, Result result) {
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-type", "application/json;charset=UTF-8");
+        response.setStatus(200);
+        try {
+            response.getWriter().write(JSON.toJSONString(result));
+        } catch (IOException ex) {
+            logger.error(ex.getMessage());
+        }
+    }
     //解决跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {

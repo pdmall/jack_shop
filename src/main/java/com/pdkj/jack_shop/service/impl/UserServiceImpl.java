@@ -50,14 +50,14 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public boolean getVerCode(String phone) throws ClientException {
-        boolean exist = userMapper.existsWithPhone(phone);
+        User user = userMapper.getUserByPhone(phone);
         //不存在发送注册验证码
-        if(!exist){
+        if(user==null){
             String verCodeNum = getVerCodeNum(6);
             setCache("verCode"+phone,verCodeNum);
             AliYunSMS.sendSms(phone,verCodeNum);
         }
-        return !exist;
+        return user==null;
     }
 
     @Override

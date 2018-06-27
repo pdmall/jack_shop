@@ -25,4 +25,10 @@
     SELECT * FROM user WHERE token = #{token}
   </select>
 
+  <select id="getUserByPhone" parameterType="String" resultMap="user">
+    SELECT * FROM user WHERE token = #{phone}
+  </select>
+
+
+
 </mapper>
