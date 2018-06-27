@@ -57,7 +57,12 @@ public class ShopController {
         HashMap map = new HashMap();
         map.put("shop",shop);
         List<Shop> list = shopService.findByCondition(map);
-        System.out.println(list.get(0).getShopName());
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+    @GetMapping("/findByClassify")
+    public Result findByClassify(@RequestParam Long typeId) {
+        List<Shop> list = shopService.findByClassify(typeId);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

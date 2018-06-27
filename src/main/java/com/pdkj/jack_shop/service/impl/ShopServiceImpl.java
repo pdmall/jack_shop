@@ -24,4 +24,10 @@ public class ShopServiceImpl extends AbstractService<Shop> implements ShopServic
     public Shop findAddressById(Long id){
         return shopMapper.findAddressById(id);
     }
+
+    @Override
+    public List<Shop> findByClassify(Long id) {
+        return shopMapper.findByClassify(id);
+    }
+
 }

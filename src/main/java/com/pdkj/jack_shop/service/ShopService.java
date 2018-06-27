@@ -11,4 +11,5 @@ import java.util.Map;
  */
 public interface ShopService extends Service<Shop> {
     Shop findAddressById(Long id);
+    List<Shop> findByClassify(Long id);
 }

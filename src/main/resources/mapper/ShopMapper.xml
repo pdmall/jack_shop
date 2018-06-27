@@ -66,12 +66,12 @@
   </select>
 
   <!-- 根据分类查询 -->
-  <select id="findByClassify " parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="findByClassify" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     shop.id,shop_name,shop_address,longitude,
     latitude,average_cons,service_score,
     enviro_score,taste_score,home_img
-    
+
     from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id
     <where>
         type_id = #{id}
