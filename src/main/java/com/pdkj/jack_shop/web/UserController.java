@@ -20,6 +20,13 @@ public class UserController {
     @Resource
     private UserService userService;
 
+
+    @PostMapping("/getVerCode")
+    public Result getVerCode(String phone) {
+//        userService.save(user);
+        return ResultGenerator.genSuccessResult();
+    }
+
     @PostMapping("/add")
     public Result add(User user) {
         userService.save(user);
