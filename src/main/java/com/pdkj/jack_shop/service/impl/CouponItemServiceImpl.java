@@ -6,6 +6,7 @@ import com.pdkj.jack_shop.service.CouponItemService;
 import com.pdkj.jack_shop.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 
@@ -18,5 +19,8 @@ import javax.annotation.Resource;
 public class CouponItemServiceImpl extends AbstractService<CouponItem> implements CouponItemService {
     @Resource
     private CouponItemMapper couponItemMapper;
+    public void getTest(){
+
+    }
 
 }

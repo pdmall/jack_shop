@@ -27,4 +27,10 @@
     <result column="home_img" jdbcType="VARCHAR" property="homeImg" />
     <result column="detail_imgs" jdbcType="LONGVARCHAR" property="detailImgs" />
   </resultMap>
+
+
+  <select id="getShop" parameterType="String" resultType="hashmap">
+    SELECT * FROM shop WHERE shop_name like #{name}
+  </select>
+
 </mapper>

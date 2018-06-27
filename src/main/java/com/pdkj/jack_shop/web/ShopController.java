@@ -5,10 +5,7 @@ import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.service.ShopService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,14 +15,19 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/shop")
-public class ShopController {
-    @Resource
-    private ShopService shopService;
+public class ShopController  extends BaseController {
+
 
     @PostMapping("/add")
     public Result add(Shop shop) {
         shopService.save(shop);
         return ResultGenerator.genSuccessResult();
+    }
+
+    @GetMapping("/getShop")
+    public Result getShop(String name) {
+        List<Shop> shop = shopService.getShop(name);
+        return ResultGenerator.genSuccessResult(shop);
     }
 
     @PostMapping("/delete")

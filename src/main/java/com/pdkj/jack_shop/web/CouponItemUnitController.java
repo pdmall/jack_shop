@@ -18,9 +18,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/coupon/item/unit")
-public class CouponItemUnitController {
-    @Resource
-    private CouponItemUnitService couponItemUnitService;
+public class CouponItemUnitController  extends BaseController {
+
 
     @PostMapping("/add")
     public Result add(CouponItemUnit couponItemUnit) {

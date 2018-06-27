@@ -8,4 +8,5 @@ import com.pdkj.jack_shop.core.Service;
  */
 public interface UserService extends Service<User> {
 
+    User getUserByToken(String token);
 }

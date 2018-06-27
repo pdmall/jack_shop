@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +20,8 @@ public class ShopServiceImpl extends AbstractService<Shop> implements ShopServic
     @Resource
     private ShopMapper shopMapper;
 
+    @Override
+    public List<Shop> getShop(String name) {
+        return shopMapper.getShop(name);
+    }
 }

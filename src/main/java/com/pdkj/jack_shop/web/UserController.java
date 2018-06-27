@@ -15,9 +15,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user")
-public class UserController {
-    @Resource
-    private UserService userService;
+public class UserController extends BaseController  {
+
 
     @PostMapping("/add")
     public Result add(User user) {
@@ -49,5 +48,11 @@ public class UserController {
         List<User> list = userService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @GetMapping("/getToken")
+    public Result getToken(String token) {
+        User user = userService.getUserByToken(token);
+        return ResultGenerator.genSuccessResult(user);
     }
 }

@@ -18,9 +18,8 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user/role")
-public class UserRoleController {
-    @Resource
-    private UserRoleService userRoleService;
+public class UserRoleController extends BaseController  {
+
 
     @PostMapping("/add")
     public Result add(UserRole userRole) {
