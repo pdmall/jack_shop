@@ -10,6 +10,4 @@ import java.util.Map;
  * Created by CodeGenerator on 2018/06/26.
  */
 public interface CouponService extends Service<Coupon> {
-    List<Coupon> findByCondition(Map<String,Coupon> map);
-    Coupon findById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.service.ShopService;
 import com.github.pagehelper.PageHelper;
@@ -52,11 +53,11 @@ public class ShopController {
         return ResultGenerator.genSuccessResult(pageInfo);
     }
     @GetMapping("/findByCondition")
-    public Result findByCondition(@RequestParam Shop shop) {
+    public Result findByCondition(Shop shop) {
         HashMap map = new HashMap();
         map.put("shop",shop);
-        map.put("id",1);
         List<Shop> list = shopService.findByCondition(map);
+        System.out.println(list.get(0).getShopName());
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

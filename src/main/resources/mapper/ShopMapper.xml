@@ -39,11 +39,11 @@
         <include refid="columns"/>
 		from shop
 		  <where>
-            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(shop_state)">
-              and shop_state=#{shop.shop_state}
+            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(shop.shopState)">
+              and shop_state=#{shop.shopState}
             </if>
-            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(id)">
-              and id=#{id}
+            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(shop.id)">
+              and id=#{shop.id}
             </if>
           </where>
   </select>
@@ -65,4 +65,16 @@
 			where ID=#{id}
   </select>
 
+  <!-- 根据分类查询 -->
+  <select id="findByClassify " parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    shop.id,shop_name,shop_address,longitude,
+    latitude,average_cons,service_score,
+    enviro_score,taste_score,home_img
+    
+    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id
+    <where>
+        type_id = #{id}
+    </where>
+  </select>
 </mapper>
