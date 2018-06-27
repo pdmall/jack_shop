@@ -5,12 +5,10 @@ import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.service.ShopService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,10 +44,19 @@ public class ShopController {
         return ResultGenerator.genSuccessResult(shop);
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<Shop> list = shopService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+    @GetMapping("/findByCondition")
+    public Result findByCondition(@RequestParam Shop shop) {
+        HashMap map = new HashMap();
+        map.put("shop",shop);
+        map.put("id",1);
+        List<Shop> list = shopService.findByCondition(map);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

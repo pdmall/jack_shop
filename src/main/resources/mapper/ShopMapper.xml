@@ -27,4 +27,42 @@
     <result column="home_img" jdbcType="VARCHAR" property="homeImg" />
     <result column="detail_imgs" jdbcType="LONGVARCHAR" property="detailImgs" />
   </resultMap>
+  <!-- 定义sql操作列 -->
+  <sql id="columns">
+        id,shop_name,shop_address,longitude,
+			latitude,average_cons,service_score,
+			enviro_score,taste_score,home_img
+    </sql>
+  <!-- 根据条件查询 -->
+  <select id="findByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+        <include refid="columns"/>
+		from shop
+		  <where>
+            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(shop_state)">
+              and shop_state=#{shop.shop_state}
+            </if>
+            <if test="@com.pdkj.jack_shop.util.Ognl@isNotEmpty(id)">
+              and id=#{id}
+            </if>
+          </where>
+  </select>
+  <!-- 根据id查询 -->
+  <select id="findById" parameterType="java.lang.Long"  resultType="com.pdkj.jack_shop.model.Shop">
+    SELECT
+      id,shop_name,shop_address,shop_phone,buss_open,buss_close,longitude,
+	  latitude,average_consintroduce,service_score,enviro_score,taste_score,home_img
+    FROM shop
+    WHERE ID=#{id}
+  </select>
+
+  <!-- 根据id查询地址 -->
+  <select id="findAddressById" parameterType="java.lang.Long" resultType="com.pdkj.jack_shop.model.Shop">
+   select
+			id,shop_name,shop_address,shop_phone,
+			longitude,latitude
+		from shop
+			where ID=#{id}
+  </select>
+
 </mapper>

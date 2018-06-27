@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,6 +49,8 @@ public class UserController {
         PageHelper.startPage(page, size);
         List<User> list = userService.findAll();
         PageInfo pageInfo = new PageInfo(list);
+        List<User> list2  = userService.test();
+        pageInfo = new PageInfo(list2);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 }

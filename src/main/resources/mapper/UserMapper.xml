@@ -19,4 +19,8 @@
     <result column="address_id" jdbcType="BIGINT" property="addressId" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
   </resultMap>
+
+  <select id="test" resultMap="BaseResultMap"  >
+      select `name`,`password` from  user where id = 999 or id=998
+  </select>
 </mapper>

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -19,4 +21,13 @@ public class ShopServiceImpl extends AbstractService<Shop> implements ShopServic
     @Resource
     private ShopMapper shopMapper;
 
+    public List<Shop> findByCondition(Map<String,Object> map){
+        return shopMapper.findByCondition(map);
+    }
+    public Shop findById(Long id){
+        return shopMapper.findById(id);
+    }
+    public Shop findAddressById(Long id){
+        return shopMapper.findAddressById(id);
+    }
 }
