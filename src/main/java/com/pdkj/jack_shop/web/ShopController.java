@@ -56,7 +56,6 @@ public class ShopController extends BaseController {
 
     @GetMapping("/searchBox")
     public Result searchBox(@RequestParam(value = "name") String name) throws CustomException {
-        System.out.println(name);
         return ResultGenerator.genSuccessResult(shopService.searchBox(name));
     }
 

@@ -1,7 +1,7 @@
 package com.pdkj.jack_shop.service;
 
-import com.pdkj.jack_shop.dao.ShopDao;
-import com.pdkj.jack_shop.dao.UserDao;
+import com.pdkj.jack_shop.dao.*;
+import com.pdkj.jack_shop.model.ShopType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,12 @@ public class BaseService<T> {
 
     @Resource
     ShopDao shopDao;
+
+    @Resource
+    ShopTypeDao shopTypeDao;
+
+    @Resource
+    CouponDao couponDao;
 
 
     public Object getCache(String key){

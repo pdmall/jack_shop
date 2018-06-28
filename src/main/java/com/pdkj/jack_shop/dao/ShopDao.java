@@ -28,43 +28,45 @@ import java.util.Map;
 @Repository
 public class ShopDao extends DaoBase<Shop> {
 
-    public List<Map<String, Object>> getAllShop(){
+    public List<Map<String, Object>> getAllShop() {
         String sql = "select id,shop_name,shop_address,longitude," +
                 "latitude,average_cons,service_score," +
                 "enviro_score,taste_score,home_img from shop where shop_state=1 ";
         return jdbcTemplate.queryForList(sql);
     }
 
-    public Long addShop(Shop shop)  {
+    public Long addShop(Shop shop) {
         Long id = Tools.generatorId();
         shop.setId(id);
         SqlInfo insertSQL = SQLTools.getInsertSQL(shop);
-        jdbcTemplate.update(insertSQL.getSql(),insertSQL.getValues());
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return id;
     }
 
-    public Map<String, Object> getShop(Long id){
+    public Map<String, Object> getShop(Long id) {
         String sql = "select id,shop_name,shop_address,longitude," +
                 "latitude,average_cons,service_score," +
                 "enviro_score,taste_score,home_img from shop where id = ?";
-        Map<String, Object> map = jdbcTemplate.queryForMap(sql,id);
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql, id);
         return map;
     }
 
-    public Map<String, Object> findAddressById(Long id){
+    public Map<String, Object> findAddressById(Long id) {
         String sql = "select id,shop_name,shop_address,shop_phone," +
                 "longitude,latitude from shop where id=? ";
-        return jdbcTemplate.queryForMap(sql,id);
+        return jdbcTemplate.queryForMap(sql, id);
     }
+
     public List<Map<String, Object>> findByClassify(Long type_id) throws CustomException {
         String sql = "select " +
                 "    shop.id,shop_name,shop_address,longitude," +
                 "    latitude,average_cons,service_score," +
                 "    enviro_score,taste_score,home_img" +
                 "    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id where type_id =? ";
-        return jdbcTemplate.queryForList(sql,type_id);
+        return jdbcTemplate.queryForList(sql, type_id);
     }
-    public List<Map<String, Object>> searchBox(String name){
+
+    public List<Map<String, Object>> searchBox(String name) {
         String sql = "select " +
                 "    shop.id,shop_name,shop_address,longitude, " +
                 "    latitude,average_cons,service_score, " +
@@ -72,9 +74,8 @@ public class ShopDao extends DaoBase<Shop> {
                 "    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id " +
                 "    inner join shop_type on shop_type.id = shop_type_rel.type_id " +
                 "    where " +
-                "        shop_type.name like CONCAT('%',?,'%') OR  shop_name like CONCAT('%',?,'%'); " ;
-        System.out.println(sql);
-        Object[] objects = new Object[]{name,name};
-        return jdbcTemplate.queryForList(sql,objects);
+                "        shop_type.name like CONCAT('%',?,'%') OR  shop_name like CONCAT('%',?,'%'); ";
+        Object[] objects = new Object[]{name, name};
+        return jdbcTemplate.queryForList(sql, objects);
     }
 }
