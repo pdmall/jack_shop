@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 public class Shop {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "shop_name")
