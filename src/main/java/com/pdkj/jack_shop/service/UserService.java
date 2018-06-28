@@ -1,4 +1,5 @@
 package com.pdkj.jack_shop.service;
+
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.configurer.AliYunSMS;
@@ -23,31 +24,31 @@ import java.util.Random;
  */
 
 @Service
-public class UserService extends BaseService<User>{
+public class UserService extends BaseService<User> {
 
-    @Cacheable(value = "token",key ="#p0")
+    @Cacheable(value = "token", key = "#p0")
     public User getUserByToken(String token) {
-        User  user = userDao.getUserByToken(token);
+        User user = userDao.getUserByToken(token);
         return user;
     }
 
+
     public String getVerCode(String phone) throws CustomException, ClientException {
         boolean exist = userDao.phoneHasExist(phone);
-        //不存在发送注册验证码
-        if(1==1)throw new CustomException("号码已存在");
-        if(!exist){
+        if (!exist) {//不存在发送注册验证码
             String verCodeNum = getVerCodeNum(6);
             SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum);
+            setCache("verCode" + phone, verCodeNum, 300);
             return sendSmsResponse.getMessage();
         }
         throw new CustomException("号码已存在");
     }
 
-    public void register(User user,String vercode) throws CustomException {
+    public void register(User user, String verCode) throws CustomException {
         String oldCode = (String) getCache("verCode" + user.getPhone());
-        if(oldCode.equals(vercode)){
+        if (oldCode.equals(verCode)) {
             userDao.save(user);
-        }else{
+        } else {
             throw new CustomException("验证码有误");
         }
     }
