@@ -20,8 +20,16 @@ public class JackShopApplicationTests {
 
     @Test
     public void contextLoads() {
-       User u =  userService.getUserByToken("11111");
-       System.out.println(u.getName());
+        User u = userService.getUserByToken("11111");
+        System.out.println(u.getName());
+        u = userService.getUserByToken("11111");
+        System.out.println(u.getName());
+        u = userService.getUserByToken("11111");
+        System.out.println(u.getName());
+        u = userService.getUserByToken("11111");
+        System.out.println(u.getName());
+        u = userService.getUserByToken("11111");
+        System.out.println(u.getName());
     }
 
 }

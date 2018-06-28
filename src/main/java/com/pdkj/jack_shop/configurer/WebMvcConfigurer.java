@@ -15,9 +15,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
-import com.pdkj.jack_shop.core.Result;
-import com.pdkj.jack_shop.core.ResultCode;
-import com.pdkj.jack_shop.core.ServiceException;
+import com.pdkj.jack_shop.core.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -69,7 +67,7 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
         exceptionResolvers.add(new HandlerExceptionResolver() {
             public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
                 Result result = new Result();
-                if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
+                if (e instanceof CustomException) {//业务失败的异常，如“账号或密码错误”
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
                     logger.info(e.getMessage());
                 } else if (e instanceof NoHandlerFoundException) {
@@ -91,11 +89,11 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
                     }
                     logger.error(message, e);
                 }
+                responseResult(response,result);
                 return new ModelAndView();
             }
         });
     }
-
 
     private void responseResult(HttpServletResponse response, Result result) {
         response.setCharacterEncoding("UTF-8");

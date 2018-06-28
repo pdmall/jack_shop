@@ -43,8 +43,8 @@ public class UserDao extends DaoBase {
         return users.get(0);
     }
 
-    public boolean phoneHasEixst(String phone) {
-        String sql = "SELECT id from USER where mobile=? ";
+    public boolean phoneHasExist(String phone) {
+        String sql = "SELECT id from USER where phone=? ";
         List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, new Object[]{phone});
         return users.size()>0;
     }

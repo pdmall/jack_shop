@@ -1,4 +1,5 @@
 package com.pdkj.jack_shop.web;
+
 import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
@@ -14,25 +15,21 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2018/06/26.
-*/
+ * Created by CodeGenerator on 2018/06/26.
+ */
 @RestController
 @RequestMapping("user")
-public class UserController extends BaseController  {
+public class UserController extends BaseController {
 
     @GetMapping("getVerCode")
-    public Result getVerCode(String phone) {
-        try{
-            userService.getVerCode(phone);
-            return ResultGenerator.genSuccessResult("成功");
-        }catch (Exception e){
-            return ResultGenerator.genFailResult(e.getMessage());
-        }
+    public Result getVerCode(String phone) throws CustomException, ClientException {
+        String message = userService.getVerCode(phone);
+        return ResultGenerator.genSuccessResult(message);
     }
 
     @PostMapping("/register")
-    public Result register(User user,String vercode) throws CustomException {
-        userService.register(user,vercode);
+    public Result register(User user, String vercode) throws CustomException {
+        userService.register(user, vercode);
         return ResultGenerator.genSuccessResult();
     }
 

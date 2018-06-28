@@ -1,11 +1,14 @@
 package com.pdkj.jack_shop.service;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.User;
+import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -22,24 +25,20 @@ import java.util.Random;
 @Service
 public class UserService extends BaseService<User>{
 
+    @Cacheable(value = "token",key ="#p0")
     public User getUserByToken(String token) {
-        String key = "token"+token;
-        User user = (User) getCache(key);
-        if(user==null){
-            user = userDao.getUserByToken(token);
-        }
-        setCache(key,user);
+        User  user = userDao.getUserByToken(token);
         return user;
     }
 
-
-    public void getVerCode(String phone) throws ClientException, CustomException {
-        boolean eixst = userDao.phoneHasEixst(phone);
+    public String getVerCode(String phone) throws CustomException, ClientException {
+        boolean exist = userDao.phoneHasExist(phone);
         //不存在发送注册验证码
-        if(!eixst){
+        if(1==1)throw new CustomException("号码已存在");
+        if(!exist){
             String verCodeNum = getVerCodeNum(6);
-            setCache("verCode"+phone,verCodeNum);
-            AliYunSMS.sendSms(phone,verCodeNum);
+            SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum);
+            return sendSmsResponse.getMessage();
         }
         throw new CustomException("号码已存在");
     }
