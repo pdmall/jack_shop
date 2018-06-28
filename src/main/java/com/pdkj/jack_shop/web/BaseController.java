@@ -7,4 +7,7 @@ import javax.annotation.Resource;
 public class BaseController {
     @Resource
     public UserService userService;
+
+    @Resource
+    public ShopService shopService;
 }

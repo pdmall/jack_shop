@@ -1,5 +1,6 @@
 package com.pdkj.jack_shop.service;
 
+import com.pdkj.jack_shop.dao.ShopDao;
 import com.pdkj.jack_shop.dao.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class BaseService<T> {
 
     @Resource
     UserDao userDao;
+
+    @Resource
+    ShopDao shopDao;
 
 
     public Object getCache(String key){
