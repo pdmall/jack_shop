@@ -11,20 +11,17 @@ public class UserConcern {
     /**
      * 用户id 和 商户id 二选一
      */
-    @Column(name = "user_id")
-    private Long userId;
+    private Long user_id;
 
     /**
      * 商户id 和 用户id 二选一
      */
-    @Column(name = "shop_id")
-    private Long shopId;
+    private Long shop_id;
 
     /**
      * 粉丝id
      */
-    @Column(name = "be_user_id")
-    private Long beUserId;
+    private Long be_user_id;
 
     /**
      * @return id
@@ -40,57 +37,28 @@ public class UserConcern {
         this.id = id;
     }
 
-    /**
-     * 获取用户id 和 商户id 二选一
-     *
-     * @return user_id - 用户id 和 商户id 二选一
-     */
-    public Long getUserId() {
-        return userId;
+
+    public Long getUser_id() {
+        return user_id;
     }
 
-    /**
-     * 设置用户id 和 商户id 二选一
-     *
-     * @param userId 用户id 和 商户id 二选一
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
-    /**
-     * 获取商户id 和 用户id 二选一
-     *
-     * @return shop_id - 商户id 和 用户id 二选一
-     */
-    public Long getShopId() {
-        return shopId;
+    public Long getShop_id() {
+        return shop_id;
     }
 
-    /**
-     * 设置商户id 和 用户id 二选一
-     *
-     * @param shopId 商户id 和 用户id 二选一
-     */
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
     }
 
-    /**
-     * 获取粉丝id
-     *
-     * @return be_user_id - 粉丝id
-     */
-    public Long getBeUserId() {
-        return beUserId;
+    public Long getBe_user_id() {
+        return be_user_id;
     }
 
-    /**
-     * 设置粉丝id
-     *
-     * @param beUserId 粉丝id
-     */
-    public void setBeUserId(Long beUserId) {
-        this.beUserId = beUserId;
+    public void setBe_user_id(Long be_user_id) {
+        this.be_user_id = be_user_id;
     }
 }

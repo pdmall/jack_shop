@@ -10,8 +10,7 @@ public class UserWallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    private Long user_id;
 
     private BigDecimal money;
 
@@ -35,18 +34,12 @@ public class UserWallet {
         this.id = id;
     }
 
-    /**
-     * @return user_id
-     */
-    public Long getUserId() {
-        return userId;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    /**
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     /**

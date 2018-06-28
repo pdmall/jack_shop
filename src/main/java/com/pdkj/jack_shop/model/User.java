@@ -41,8 +41,7 @@ public class User implements Serializable {
     /**
      * 用户默认收获地址
      */
-    @Column(name = "address_id")
-    private Long addressId;
+    private Long address_id;
 
     /**
      * 昵称
@@ -223,22 +222,12 @@ public class User implements Serializable {
         this.state = state;
     }
 
-    /**
-     * 获取用户默认收获地址
-     *
-     * @return address_id - 用户默认收获地址
-     */
-    public Long getAddressId() {
-        return addressId;
+    public Long getAddress_id() {
+        return address_id;
     }
 
-    /**
-     * 设置用户默认收获地址
-     *
-     * @param addressId 用户默认收获地址
-     */
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
+    public void setAddress_id(Long address_id) {
+        this.address_id = address_id;
     }
 
     /**

@@ -5,20 +5,11 @@ import java.util.Date;
 import javax.persistence.*;
 
 public class Coupon {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
-    /**
-     * 卷名称
-     */
     private String title;
 
-    /**
-     * 1,团餐卷
-2,待金卷
-3,折扣卷
-     */
     private Integer type;
 
     /**
@@ -26,33 +17,23 @@ public class Coupon {
      */
     private Integer discount;
 
-    /**
-     * 购买价
-     */
-    @Column(name = "buy_price")
-    private BigDecimal buyPrice;
+    private BigDecimal buy_price;
 
-    /**
-     * 抵扣价格
-     */
-    @Column(name = "final_price")
-    private BigDecimal finalPrice;
+    private BigDecimal final_price;
 
     /**
      * 是否可退
 1，随时退
 0，不可退
      */
-    @Column(name = "is_refund")
-    private Integer isRefund;
+    private Integer is_refund;
 
     /**
      * 0,免预约
 1,提前一小时预约
 2，提前2销售预约
      */
-    @Column(name = "sub_time")
-    private Integer subTime;
+    private Integer sub_time;
 
     /**
      * 优惠描述，团餐菜品介绍 ；好换行
@@ -62,26 +43,22 @@ public class Coupon {
     /**
      * 有效开始日期
      */
-    @Column(name = "date_start")
-    private Date dateStart;
+    private Date date_start;
 
     /**
      * 有效结束日期
      */
-    @Column(name = "date_end")
-    private Date dateEnd;
+    private Date date_end;
 
     /**
      * 使用开始时间
      */
-    @Column(name = "time_start")
-    private Date timeStart;
+    private Date time_start;
 
     /**
      * 使用结束时间
      */
-    @Column(name = "time_end")
-    private Date timeEnd;
+    private Date time_end;
 
     /**
      * 0,随时可用
@@ -89,347 +66,151 @@ public class Coupon {
 2,周六，周日不可用
 3,节假日不可用
      */
-    @Column(name = "unable_date")
-    private Integer unableDate;
+    private Integer unable_date;
 
-    @Column(name = "coupon_img")
-    private String couponImg;
+    private String coupon_img;
 
     private Date created;
 
     /**
      * 商家id
      */
-    @Column(name = "shop_id")
-    private Long shopId;
+    private Long shop_id;
 
-    /**
-     * @return id
-     */
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * 获取卷名称
-     *
-     * @return title - 卷名称
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * 设置卷名称
-     *
-     * @param title 卷名称
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     * 获取1,团餐卷
-2,待金卷
-3,折扣卷
-     *
-     * @return type - 1,团餐卷
-2,待金卷
-3,折扣卷
-     */
     public Integer getType() {
         return type;
     }
 
-    /**
-     * 设置1,团餐卷
-2,待金卷
-3,折扣卷
-     *
-     * @param type 1,团餐卷
-2,待金卷
-3,折扣卷
-     */
     public void setType(Integer type) {
         this.type = type;
     }
 
-    /**
-     * 获取折扣 范围 0-99
-     *
-     * @return discount - 折扣 范围 0-99
-     */
     public Integer getDiscount() {
         return discount;
     }
 
-    /**
-     * 设置折扣 范围 0-99
-     *
-     * @param discount 折扣 范围 0-99
-     */
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
-    /**
-     * 获取购买价
-     *
-     * @return buy_price - 购买价
-     */
-    public BigDecimal getBuyPrice() {
-        return buyPrice;
+    public BigDecimal getBuy_price() {
+        return buy_price;
     }
 
-    /**
-     * 设置购买价
-     *
-     * @param buyPrice 购买价
-     */
-    public void setBuyPrice(BigDecimal buyPrice) {
-        this.buyPrice = buyPrice;
+    public void setBuy_price(BigDecimal buy_price) {
+        this.buy_price = buy_price;
     }
 
-    /**
-     * 获取抵扣价格
-     *
-     * @return final_price - 抵扣价格
-     */
-    public BigDecimal getFinalPrice() {
-        return finalPrice;
+    public BigDecimal getFinal_price() {
+        return final_price;
     }
 
-    /**
-     * 设置抵扣价格
-     *
-     * @param finalPrice 抵扣价格
-     */
-    public void setFinalPrice(BigDecimal finalPrice) {
-        this.finalPrice = finalPrice;
+    public void setFinal_price(BigDecimal final_price) {
+        this.final_price = final_price;
     }
 
-    /**
-     * 获取是否可退
-1，随时退
-0，不可退
-     *
-     * @return is_refund - 是否可退
-1，随时退
-0，不可退
-     */
-    public Integer getIsRefund() {
-        return isRefund;
+    public Integer getIs_refund() {
+        return is_refund;
     }
 
-    /**
-     * 设置是否可退
-1，随时退
-0，不可退
-     *
-     * @param isRefund 是否可退
-1，随时退
-0，不可退
-     */
-    public void setIsRefund(Integer isRefund) {
-        this.isRefund = isRefund;
+    public void setIs_refund(Integer is_refund) {
+        this.is_refund = is_refund;
     }
 
-    /**
-     * 获取0,免预约
-1,提前一小时预约
-2，提前2销售预约
-     *
-     * @return sub_time - 0,免预约
-1,提前一小时预约
-2，提前2销售预约
-     */
-    public Integer getSubTime() {
-        return subTime;
+    public Integer getSub_time() {
+        return sub_time;
     }
 
-    /**
-     * 设置0,免预约
-1,提前一小时预约
-2，提前2销售预约
-     *
-     * @param subTime 0,免预约
-1,提前一小时预约
-2，提前2销售预约
-     */
-    public void setSubTime(Integer subTime) {
-        this.subTime = subTime;
+    public void setSub_time(Integer sub_time) {
+        this.sub_time = sub_time;
     }
 
-    /**
-     * 获取优惠描述，团餐菜品介绍 ；好换行
-     *
-     * @return describe - 优惠描述，团餐菜品介绍 ；好换行
-     */
     public String getDescribe() {
         return describe;
     }
 
-    /**
-     * 设置优惠描述，团餐菜品介绍 ；好换行
-     *
-     * @param describe 优惠描述，团餐菜品介绍 ；好换行
-     */
     public void setDescribe(String describe) {
         this.describe = describe;
     }
 
-    /**
-     * 获取有效开始日期
-     *
-     * @return date_start - 有效开始日期
-     */
-    public Date getDateStart() {
-        return dateStart;
+    public Date getDate_start() {
+        return date_start;
     }
 
-    /**
-     * 设置有效开始日期
-     *
-     * @param dateStart 有效开始日期
-     */
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
+    public void setDate_start(Date date_start) {
+        this.date_start = date_start;
     }
 
-    /**
-     * 获取有效结束日期
-     *
-     * @return date_end - 有效结束日期
-     */
-    public Date getDateEnd() {
-        return dateEnd;
+    public Date getDate_end() {
+        return date_end;
     }
 
-    /**
-     * 设置有效结束日期
-     *
-     * @param dateEnd 有效结束日期
-     */
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setDate_end(Date date_end) {
+        this.date_end = date_end;
     }
 
-    /**
-     * 获取使用开始时间
-     *
-     * @return time_start - 使用开始时间
-     */
-    public Date getTimeStart() {
-        return timeStart;
+    public Date getTime_start() {
+        return time_start;
     }
 
-    /**
-     * 设置使用开始时间
-     *
-     * @param timeStart 使用开始时间
-     */
-    public void setTimeStart(Date timeStart) {
-        this.timeStart = timeStart;
+    public void setTime_start(Date time_start) {
+        this.time_start = time_start;
     }
 
-    /**
-     * 获取使用结束时间
-     *
-     * @return time_end - 使用结束时间
-     */
-    public Date getTimeEnd() {
-        return timeEnd;
+    public Date getTime_end() {
+        return time_end;
     }
 
-    /**
-     * 设置使用结束时间
-     *
-     * @param timeEnd 使用结束时间
-     */
-    public void setTimeEnd(Date timeEnd) {
-        this.timeEnd = timeEnd;
+    public void setTime_end(Date time_end) {
+        this.time_end = time_end;
     }
 
-    /**
-     * 获取0,随时可用
-1,周末不可用
-2,周六，周日不可用
-3,节假日不可用
-     *
-     * @return unable_date - 0,随时可用
-1,周末不可用
-2,周六，周日不可用
-3,节假日不可用
-     */
-    public Integer getUnableDate() {
-        return unableDate;
+    public Integer getUnable_date() {
+        return unable_date;
     }
 
-    /**
-     * 设置0,随时可用
-1,周末不可用
-2,周六，周日不可用
-3,节假日不可用
-     *
-     * @param unableDate 0,随时可用
-1,周末不可用
-2,周六，周日不可用
-3,节假日不可用
-     */
-    public void setUnableDate(Integer unableDate) {
-        this.unableDate = unableDate;
+    public void setUnable_date(Integer unable_date) {
+        this.unable_date = unable_date;
     }
 
-    /**
-     * @return coupon_img
-     */
-    public String getCouponImg() {
-        return couponImg;
+    public String getCoupon_img() {
+        return coupon_img;
     }
 
-    /**
-     * @param couponImg
-     */
-    public void setCouponImg(String couponImg) {
-        this.couponImg = couponImg;
+    public void setCoupon_img(String coupon_img) {
+        this.coupon_img = coupon_img;
     }
 
-    /**
-     * @return created
-     */
     public Date getCreated() {
         return created;
     }
 
-    /**
-     * @param created
-     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
-    /**
-     * 获取商家id
-     *
-     * @return shop_id - 商家id
-     */
-    public Long getShopId() {
-        return shopId;
+    public Long getShop_id() {
+        return shop_id;
     }
 
-    /**
-     * 设置商家id
-     *
-     * @param shopId 商家id
-     */
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
     }
 }

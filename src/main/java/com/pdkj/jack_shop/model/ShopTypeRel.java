@@ -8,51 +8,32 @@ public class ShopTypeRel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shop_id")
-    private Long shopId;
+    private Long shop_id;
 
-    @Column(name = "type_id")
-    private Long typeId;
+    private Long type_id;
 
-    /**
-     * @return id
-     */
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return shop_id
-     */
-    public Long getShopId() {
-        return shopId;
+    public Long getShop_id() {
+        return shop_id;
     }
 
-    /**
-     * @param shopId
-     */
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
     }
 
-    /**
-     * @return type_id
-     */
-    public Long getTypeId() {
-        return typeId;
+    public Long getType_id() {
+        return type_id;
     }
 
-    /**
-     * @param typeId
-     */
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setType_id(Long type_id) {
+        this.type_id = type_id;
     }
 }

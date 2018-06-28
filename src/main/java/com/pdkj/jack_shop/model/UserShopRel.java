@@ -9,17 +9,14 @@ public class UserShopRel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shop_id")
-    private Long shopId;
+    private Long shop_id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    private Long user_id;
 
     /**
      * 用户店铺角色
      */
-    @Column(name = "user_role")
-    private Integer userRole;
+    private Integer user_role;
 
     private Date created;
 
@@ -39,50 +36,28 @@ public class UserShopRel {
         this.id = id;
     }
 
-    /**
-     * @return shop_id
-     */
-    public Long getShopId() {
-        return shopId;
+    public Long getShop_id() {
+        return shop_id;
     }
 
-    /**
-     * @param shopId
-     */
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
     }
 
-    /**
-     * @return user_id
-     */
-    public Long getUserId() {
-        return userId;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    /**
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
-    /**
-     * 获取用户店铺角色
-     *
-     * @return user_role - 用户店铺角色
-     */
-    public Integer getUserRole() {
-        return userRole;
+    public Integer getUser_role() {
+        return user_role;
     }
 
-    /**
-     * 设置用户店铺角色
-     *
-     * @param userRole 用户店铺角色
-     */
-    public void setUserRole(Integer userRole) {
-        this.userRole = userRole;
+    public void setUser_role(Integer user_role) {
+        this.user_role = user_role;
     }
 
     /**

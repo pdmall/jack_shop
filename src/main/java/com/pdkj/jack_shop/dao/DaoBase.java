@@ -29,6 +29,7 @@ public class DaoBase<E> {
         sqlDel +=")";
         return jdbcTemplate.update(sqlDel,ids);
     }
+
     /**
      * @Title: save
      * @Description: 添加

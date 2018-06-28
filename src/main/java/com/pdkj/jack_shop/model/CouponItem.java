@@ -8,32 +8,27 @@ public class CouponItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "coupon_id")
-    private Long couponId;
+    private Long coupon_id;
 
     /**
      * 商品名备注
      */
-    @Column(name = "item_name")
-    private String itemName;
+    private String item_name;
 
     /**
      * 价格备注
      */
-    @Column(name = "item_price")
-    private String itemPrice;
+    private String item_price;
 
     /**
      * 数量
      */
-    @Column(name = "item_num")
-    private Integer itemNum;
+    private Integer item_num;
 
     /**
      * 查询 unit 表
      */
-    @Column(name = "item_unit")
-    private String itemUnit;
+    private String item_unit;
 
     /**
      * @return id
@@ -49,89 +44,44 @@ public class CouponItem {
         this.id = id;
     }
 
-    /**
-     * @return coupon_id
-     */
-    public Long getCouponId() {
-        return couponId;
+
+    public Long getCoupon_id() {
+        return coupon_id;
     }
 
-    /**
-     * @param couponId
-     */
-    public void setCouponId(Long couponId) {
-        this.couponId = couponId;
+    public void setCoupon_id(Long coupon_id) {
+        this.coupon_id = coupon_id;
     }
 
-    /**
-     * 获取商品名备注
-     *
-     * @return item_name - 商品名备注
-     */
-    public String getItemName() {
-        return itemName;
+    public String getItem_name() {
+        return item_name;
     }
 
-    /**
-     * 设置商品名备注
-     *
-     * @param itemName 商品名备注
-     */
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setItem_name(String item_name) {
+        this.item_name = item_name;
     }
 
-    /**
-     * 获取价格备注
-     *
-     * @return item_price - 价格备注
-     */
-    public String getItemPrice() {
-        return itemPrice;
+    public String getItem_price() {
+        return item_price;
     }
 
-    /**
-     * 设置价格备注
-     *
-     * @param itemPrice 价格备注
-     */
-    public void setItemPrice(String itemPrice) {
-        this.itemPrice = itemPrice;
+    public void setItem_price(String item_price) {
+        this.item_price = item_price;
     }
 
-    /**
-     * 获取数量
-     *
-     * @return item_num - 数量
-     */
-    public Integer getItemNum() {
-        return itemNum;
+    public Integer getItem_num() {
+        return item_num;
     }
 
-    /**
-     * 设置数量
-     *
-     * @param itemNum 数量
-     */
-    public void setItemNum(Integer itemNum) {
-        this.itemNum = itemNum;
+    public void setItem_num(Integer item_num) {
+        this.item_num = item_num;
     }
 
-    /**
-     * 获取查询 unit 表
-     *
-     * @return item_unit - 查询 unit 表
-     */
-    public String getItemUnit() {
-        return itemUnit;
+    public String getItem_unit() {
+        return item_unit;
     }
 
-    /**
-     * 设置查询 unit 表
-     *
-     * @param itemUnit 查询 unit 表
-     */
-    public void setItemUnit(String itemUnit) {
-        this.itemUnit = itemUnit;
+    public void setItem_unit(String item_unit) {
+        this.item_unit = item_unit;
     }
 }

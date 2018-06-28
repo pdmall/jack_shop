@@ -4,14 +4,13 @@ import javax.persistence.*;
 
 @Table(name = "shop_type")
 public class ShopType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+
     private Long id;
 
     private String name;
 
-    @Column(name = "parent_id")
-    private Long parentId;
+    private Long parent_id;
 
     /**
      * @return id
@@ -41,17 +40,12 @@ public class ShopType {
         this.name = name;
     }
 
-    /**
-     * @return parent_id
-     */
-    public Long getParentId() {
-        return parentId;
+
+    public Long getParent_id() {
+        return parent_id;
     }
 
-    /**
-     * @param parentId
-     */
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParent_id(Long parent_id) {
+        this.parent_id = parent_id;
     }
 }

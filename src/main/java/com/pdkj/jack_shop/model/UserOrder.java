@@ -14,14 +14,12 @@ public class UserOrder {
     /**
      * 支付平台编号
      */
-    @Column(name = "pay_on")
-    private String payOn;
+    private String pay_on;
 
     /**
      * 商品，优惠卷,id ...
      */
-    @Column(name = "item_id")
-    private Long itemId;
+    private Long item_id;
 
     /**
      * 0，待支付
@@ -35,11 +33,9 @@ public class UserOrder {
     /**
      * 1，微信支付
      */
-    @Column(name = "pay_type")
-    private Integer payType;
+    private Integer pay_type;
 
-    @Column(name = "user_id")
-    private Long userId;
+    private Long user_id;
 
     /**
      * 下单时间
@@ -49,38 +45,32 @@ public class UserOrder {
     /**
      * 购买时间
      */
-    @Column(name = "buy_time")
-    private Date buyTime;
+    private Date buy_time;
 
     /**
      * 使用时间
      */
-    @Column(name = "use_time")
-    private Date useTime;
+    private Date use_time;
 
     /**
      * 抵扣卷价格
      */
-    @Column(name = "use_coupon_id")
-    private Long useCouponId;
+    private Long use_coupon_id;
 
     /**
      * jack 钱包余额
      */
-    @Column(name = "wallet_money")
-    private BigDecimal walletMoney;
+    private BigDecimal wallet_money;
 
     /**
      * 总费用
      */
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private BigDecimal total_price;
 
     /**
      * 最后付款金额
      */
-    @Column(name = "final_price")
-    private BigDecimal finalPrice;
+    private BigDecimal final_price;
 
     /**
      * @return id
@@ -96,41 +86,6 @@ public class UserOrder {
         this.id = id;
     }
 
-    /**
-     * 获取支付平台编号
-     *
-     * @return pay_on - 支付平台编号
-     */
-    public String getPayOn() {
-        return payOn;
-    }
-
-    /**
-     * 设置支付平台编号
-     *
-     * @param payOn 支付平台编号
-     */
-    public void setPayOn(String payOn) {
-        this.payOn = payOn;
-    }
-
-    /**
-     * 获取商品，优惠卷,id ...
-     *
-     * @return item_id - 商品，优惠卷,id ...
-     */
-    public Long getItemId() {
-        return itemId;
-    }
-
-    /**
-     * 设置商品，优惠卷,id ...
-     *
-     * @param itemId 商品，优惠卷,id ...
-     */
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
 
     /**
      * 获取0，待支付
@@ -166,161 +121,92 @@ public class UserOrder {
         this.state = state;
     }
 
-    /**
-     * 获取1，微信支付
-     *
-     * @return pay_type - 1，微信支付
-     */
-    public Integer getPayType() {
-        return payType;
+
+    public String getPay_on() {
+        return pay_on;
     }
 
-    /**
-     * 设置1，微信支付
-     *
-     * @param payType 1，微信支付
-     */
-    public void setPayType(Integer payType) {
-        this.payType = payType;
+    public void setPay_on(String pay_on) {
+        this.pay_on = pay_on;
     }
 
-    /**
-     * @return user_id
-     */
-    public Long getUserId() {
-        return userId;
+    public Long getItem_id() {
+        return item_id;
     }
 
-    /**
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setItem_id(Long item_id) {
+        this.item_id = item_id;
     }
 
-    /**
-     * 获取下单时间
-     *
-     * @return created - 下单时间
-     */
+    public Integer getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(Integer pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
     public Date getCreated() {
         return created;
     }
 
-    /**
-     * 设置下单时间
-     *
-     * @param created 下单时间
-     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
-    /**
-     * 获取购买时间
-     *
-     * @return buy_time - 购买时间
-     */
-    public Date getBuyTime() {
-        return buyTime;
+    public Date getBuy_time() {
+        return buy_time;
     }
 
-    /**
-     * 设置购买时间
-     *
-     * @param buyTime 购买时间
-     */
-    public void setBuyTime(Date buyTime) {
-        this.buyTime = buyTime;
+    public void setBuy_time(Date buy_time) {
+        this.buy_time = buy_time;
     }
 
-    /**
-     * 获取使用时间
-     *
-     * @return use_time - 使用时间
-     */
-    public Date getUseTime() {
-        return useTime;
+    public Date getUse_time() {
+        return use_time;
     }
 
-    /**
-     * 设置使用时间
-     *
-     * @param useTime 使用时间
-     */
-    public void setUseTime(Date useTime) {
-        this.useTime = useTime;
+    public void setUse_time(Date use_time) {
+        this.use_time = use_time;
     }
 
-    /**
-     * 获取抵扣卷价格
-     *
-     * @return use_coupon_id - 抵扣卷价格
-     */
-    public Long getUseCouponId() {
-        return useCouponId;
+    public Long getUse_coupon_id() {
+        return use_coupon_id;
     }
 
-    /**
-     * 设置抵扣卷价格
-     *
-     * @param useCouponId 抵扣卷价格
-     */
-    public void setUseCouponId(Long useCouponId) {
-        this.useCouponId = useCouponId;
+    public void setUse_coupon_id(Long use_coupon_id) {
+        this.use_coupon_id = use_coupon_id;
     }
 
-    /**
-     * 获取jack 钱包余额
-     *
-     * @return wallet_money - jack 钱包余额
-     */
-    public BigDecimal getWalletMoney() {
-        return walletMoney;
+    public BigDecimal getWallet_money() {
+        return wallet_money;
     }
 
-    /**
-     * 设置jack 钱包余额
-     *
-     * @param walletMoney jack 钱包余额
-     */
-    public void setWalletMoney(BigDecimal walletMoney) {
-        this.walletMoney = walletMoney;
+    public void setWallet_money(BigDecimal wallet_money) {
+        this.wallet_money = wallet_money;
     }
 
-    /**
-     * 获取总费用
-     *
-     * @return total_price - 总费用
-     */
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getTotal_price() {
+        return total_price;
     }
 
-    /**
-     * 设置总费用
-     *
-     * @param totalPrice 总费用
-     */
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotal_price(BigDecimal total_price) {
+        this.total_price = total_price;
     }
 
-    /**
-     * 获取最后付款金额
-     *
-     * @return final_price - 最后付款金额
-     */
-    public BigDecimal getFinalPrice() {
-        return finalPrice;
+    public BigDecimal getFinal_price() {
+        return final_price;
     }
 
-    /**
-     * 设置最后付款金额
-     *
-     * @param finalPrice 最后付款金额
-     */
-    public void setFinalPrice(BigDecimal finalPrice) {
-        this.finalPrice = finalPrice;
+    public void setFinal_price(BigDecimal final_price) {
+        this.final_price = final_price;
     }
 }
