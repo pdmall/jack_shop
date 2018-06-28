@@ -24,15 +24,14 @@ import java.util.Map;
 public class ShopDao extends DaoBase<Shop> {
     public ShopDao(){
         rowMap = new BeanPropertyRowMapper<Shop>(Shop.class);
+        columnQ = "id,shop_name,shop_address,longitude," +
+                "latitude,average_cons,service_score," +
+                "enviro_score,taste_score,home_img, detail_imgs";
+        columnU =" id, shop_name, shop_address, city, province, shop_phone,  " +
+                "  buss_open, buss_close, " +
+                " longitude, latitude,  introduce, license_img,home_img, detail_imgs";
+        sqlDel = "update shop set shop_state = -1 where id in  ";
     }
-
-    private String columnQ = "id,shop_name,shop_address,longitude," +
-            "latitude,average_cons,service_score," +
-            "enviro_score,taste_score,home_img, detail_imgs";
-    private String ColumnU =" id, shop_name, shop_address, city, province, shop_phone,  " +
-            "  buss_open, buss_close, " +
-            " longitude, latitude,  introduce, license_img,home_img, detail_imgs";
-    private String sql = "select "+columnQ+ "from shop where ";
     public List<Shop> selectAll(Object[] objects){
 
         return super.findByCondtion(objects);

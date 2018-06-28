@@ -14,22 +14,19 @@ public class DaoBase<E> {
     protected String sqlSel = "select "+columnQ+ "from "+tableName+" where ";
     protected String sqlIns = "insert "+columnU+ "from "+tableName+" where ";
     protected String sqlUpd = "update "+columnU+ "from "+tableName+" where ";
-    protected String sqlDel = "delete from "+tableName+" where id  in ";
+    protected String sqlDel ;
     @Autowired
     JdbcTemplate jdbcTemplate;
-    /**
-     * @Title: deleteById
-     * @Description: 根据Id删除数据
-     */
-    public Integer deleteById(Long id)  {
-        return jdbcTemplate.update(sqlDel,id);
-    };
-
     /**
      * @Title: deleteByIds
      * @Description: 根据Id删除多个
      */
     public Integer deleteByIds(Long[] ids) {
+        sqlDel +="(";
+        for (int i = 0 ; ids.length > 0 ; i++) {
+            sqlDel +=ids[i]+",";
+        }
+        sqlDel +=")";
         return jdbcTemplate.update(sqlDel,ids);
     }
     /**
