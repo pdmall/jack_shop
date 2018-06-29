@@ -15,7 +15,9 @@ public class Tools {
         return DateUtils.parseCalendar2String(calendar, "yyyy-MM-dd HH:mm:ss");
     }
 
-
+    public static String uuid(){
+        return UUID.randomUUID().toString().replace("-", "");
+    }
     public static Long generatorId() {
         return System.currentTimeMillis()+new Random().nextInt(999);
     }

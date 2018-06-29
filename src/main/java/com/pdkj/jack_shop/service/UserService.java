@@ -5,6 +5,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.User;
+import com.pdkj.jack_shop.util.Tools;
 import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,20 +38,21 @@ public class UserService extends BaseService<User> {
 
 
     public String getVerCode(String phone) throws CustomException, ClientException {
-        boolean exist = userDao.phoneHasExist(phone);
-        if (!exist) {//不存在发送注册验证码
             String verCodeNum = getVerCodeNum(6);
             SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum);
             setCache("verCode" + phone, verCodeNum, 300);
             return sendSmsResponse.getMessage();
-        }
-        throw new CustomException("号码已存在");
     }
 
-    public void register(User user, String verCode) throws CustomException {
+    public String register(User user, String verCode) throws CustomException {
         String oldCode = (String) getCache("verCode" + user.getPhone());
         if (oldCode.equals(verCode)) {
-            userDao.save(user);
+            if(!userDao.phoneHasExist(user.getPhone())){
+                userDao.save(user);
+                return Tools.uuid();
+            }else{
+                return Tools.uuid();
+            }
         } else {
             throw new CustomException("验证码有误");
         }
