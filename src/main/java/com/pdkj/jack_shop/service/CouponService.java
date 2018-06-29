@@ -20,4 +20,8 @@ public class CouponService extends BaseService<ShopType> {
         return list;
     }
 
+    public Map<String, Object> getControllerById(Long id) {
+        Map<String, Object> map = couponDao.getControllerById(id);
+        return map;
+    }
 }

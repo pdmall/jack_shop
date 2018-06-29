@@ -32,4 +32,15 @@ public class CouponDao extends DaoBase<ShopType> {
                 " where shop_id = ? ";
         return jdbcTemplate.queryForList(sql, shopId);
     }
+    public Map<String, Object> getControllerById(Long id) {
+        String sql = " select " +
+                " id,title,`type`,discount,buy_price, " +
+                " final_price,is_refund,sub_time, " +
+                " date_start,date_end,time_start,time_end, " +
+                " unable_date,coupon_img " +
+                " from coupon " +
+                " where id = ? ";
+        return jdbcTemplate.queryForMap(sql, id);
+    }
+
 }

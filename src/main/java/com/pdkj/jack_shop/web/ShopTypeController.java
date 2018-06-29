@@ -15,10 +15,10 @@ import java.util.Map;
  * Created by CodeGenerator on 2018/06/26.
  */
 @RestController
-@RequestMapping("/shopType")
+@RequestMapping("shopType")
 public class ShopTypeController extends BaseController {
 
-    @GetMapping("/getAllShopType")
+    @GetMapping("getAllShopType")
     public Result getAllShopType() throws CustomException {
         List<Map<String, Object>> list =  shopTypeService.getAllShopType();
         return ResultGenerator.genSuccessResult(list);

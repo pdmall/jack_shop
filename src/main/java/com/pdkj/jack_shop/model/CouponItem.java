@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Table(name = "coupon_item")
 public class CouponItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long coupon_id;

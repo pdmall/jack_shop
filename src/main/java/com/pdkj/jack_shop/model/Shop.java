@@ -1,5 +1,7 @@
 package com.pdkj.jack_shop.model;
 
+import com.pdkj.jack_shop.util.DateUtils;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -142,16 +144,20 @@ public class Shop {
         return buss_open;
     }
 
-    public void setBuss_open(Date buss_open) {
-        this.buss_open = buss_open;
+    public void setBuss_open(String buss_open) {
+       if(DateUtils.isLegalDate(buss_open,"HH:mm")){
+           this.buss_open = DateUtils.parseString2Date(buss_open,"HH:mm:ss");
+       }
     }
 
     public Date getBuss_close() {
         return buss_close;
     }
 
-    public void setBuss_close(Date buss_close) {
-        this.buss_close = buss_close;
+    public void setBuss_close(String buss_close) {
+        if(DateUtils.isLegalDate(buss_close,"HH:mm")){
+            this.buss_close = DateUtils.parseString2Date(buss_close,"HH:mm:ss");
+        }
     }
 
     public Date getCreated() {
