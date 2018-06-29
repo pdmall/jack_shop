@@ -27,7 +27,7 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(message);
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public Result register(User user, String vercode) throws CustomException {
         userService.register(user, vercode);
         return ResultGenerator.genSuccessResult();
