@@ -46,7 +46,7 @@ public class UserDao extends DaoBase {
     public boolean phoneHasExist(String phone) {
         String sql = "SELECT id from USER where phone=? ";
         List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, new Object[]{phone});
-        return users.size()>0;
+        return users.size() > 0;
     }
 
     public Long save(User user) {
@@ -54,5 +54,10 @@ public class UserDao extends DaoBase {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(user);
         jdbcTemplate.update(sqlInfo.getSql(), sqlInfo.getValues());
         return user.getId();
+    }
+
+    public Map<String, Object> getUser(Long id){
+        String sql ="Select name from user where id = ?";
+        return jdbcTemplate.queryForMap(sql,id);
     }
 }
