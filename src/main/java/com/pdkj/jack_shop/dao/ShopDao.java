@@ -65,7 +65,7 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql, type_id);
     }
 
-    public List<Map<String, Object>> searchBox(String name) {
+    public List<Map<String, Object>> searchBox(String name,String shop_address) {
         String sql = "select " +
                 "    shop.id,shop_name,shop_address,longitude, " +
                 "    latitude,average_cons,service_score, " +
@@ -73,8 +73,8 @@ public class ShopDao extends DaoBase<Shop> {
                 "    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id " +
                 "    inner join shop_type on shop_type.id = shop_type_rel.type_id " +
                 "    where " +
-                "        shop_type.name like CONCAT('%',?,'%') OR  shop_name like CONCAT('%',?,'%'); ";
-        Object[] objects = new Object[]{name, name};
+                "        shop_type.name like CONCAT('%',?,'%') OR  shop_name like CONCAT('%',?,'%') and shop_address = ?; ";
+        Object[] objects = new Object[]{name, name,shop_address};
         return jdbcTemplate.queryForList(sql, objects);
     }
 }

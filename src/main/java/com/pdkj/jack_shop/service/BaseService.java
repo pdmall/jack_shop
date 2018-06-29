@@ -33,9 +33,11 @@ public class BaseService<T> {
 
     @Resource
     CouponDao couponDao;
+    @Resource
+    BannerDao bannerDao;
 
 
-    public Object getCache(String key){
+    public Object getCache(String key) {
         Object value = null;
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);
@@ -45,12 +47,12 @@ public class BaseService<T> {
         return value;
     }
 
-    public void setCache(String key,Object value,int seconds){
+    public void setCache(String key, Object value, int seconds) {
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, value, seconds, TimeUnit.SECONDS);
     }
 
-    public void setCache(String key,Object value){
+    public void setCache(String key, Object value) {
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, value, 10, TimeUnit.SECONDS);
     }

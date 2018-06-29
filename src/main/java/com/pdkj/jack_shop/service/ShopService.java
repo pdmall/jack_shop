@@ -34,7 +34,7 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> findByClassify(Long type_id) {
         return shopDao.findByClassify(type_id);
     }
-    public List<Map<String, Object>> searchBox(String name){
-        return shopDao.searchBox(name);
+    public List<Map<String, Object>> searchBox(String name ,String shop_address){
+        return shopDao.searchBox(name,shop_address);
     }
 }

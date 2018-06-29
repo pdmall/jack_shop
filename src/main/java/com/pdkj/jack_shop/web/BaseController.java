@@ -17,4 +17,7 @@ public class BaseController {
 
     @Resource
     public CouponService couponService;
+
+    @Resource
+    public BannerService bannerService;
 }
