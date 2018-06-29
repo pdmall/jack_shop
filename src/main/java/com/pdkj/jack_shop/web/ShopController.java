@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by CodeGenerator on 2018/06/26.
  */
 @RestController
-@RequestMapping("/shop")
+@RequestMapping("shop")
 public class ShopController extends BaseController {
 
 /*    @GetMapping("getList")
@@ -23,41 +23,42 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(message);
     }*/
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public Result register(User user, String vercode) throws CustomException {
         userService.register(user, vercode);
         return ResultGenerator.genSuccessResult();
     }
-    @GetMapping("/getAllShop")
+    @GetMapping("getAllShop")
     public Result getAllShop() throws CustomException {
         List<Map<String, Object>> list =  shopService.getAllShop();
         return ResultGenerator.genSuccessResult(list);
     }
-    @GetMapping("/addShop")
+    @GetMapping("addShop")
     public Result addShop(Shop shop) throws CustomException {
          shopService.addShop(shop);
         return ResultGenerator.genSuccessResult();
     }
 
-    @GetMapping("/getShop")
+    @GetMapping("getShop")
     public Result getShop(@RequestParam(value = "id") Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getShop(id));
     }
 
-    @GetMapping("/findAddressById")
+    @GetMapping("findAddressById")
     public Result findAddressById(@RequestParam(value = "id") Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.findAddressById(id));
     }
 
-    @GetMapping("/findByClassify")
+    @GetMapping("findByClassify")
     public Result findByClassify(@RequestParam(value = "id") Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.findByClassify(id));
     }
 
-    @GetMapping("/searchBox")
+    @GetMapping("searchBox")
     public Result searchBox(@RequestParam(value = "name") String name) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.searchBox(name));
     }
+
 
 
 }

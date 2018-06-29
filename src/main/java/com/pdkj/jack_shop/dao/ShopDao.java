@@ -36,11 +36,10 @@ public class ShopDao extends DaoBase<Shop> {
     }
 
     public Long addShop(Shop shop) {
-        Long id = Tools.generatorId();
-        shop.setId(id);
+        shop.setId(Tools.generatorId());
         SqlInfo insertSQL = SQLTools.getInsertSQL(shop);
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
-        return id;
+        return shop.getId();
     }
 
     public Map<String, Object> getShop(Long id) {
