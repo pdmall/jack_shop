@@ -50,6 +50,7 @@ public class UserDao extends DaoBase {
     }
 
     public Long save(User user) {
+        user.setId(Tools.generatorId());
         SqlInfo sqlInfo = SQLTools.getInsertSQL(user);
         jdbcTemplate.update(sqlInfo.getSql(), sqlInfo.getValues());
         return user.getId();
