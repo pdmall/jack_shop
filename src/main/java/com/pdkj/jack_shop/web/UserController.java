@@ -33,7 +33,7 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(message);
     }
 
-    @PostMapping("getUser")
+    @GetMapping("getUser")
     public Result getUser(@RequestParam Long id) throws CustomException {
 
         return ResultGenerator.genSuccessResult(userService.getUser(id));
