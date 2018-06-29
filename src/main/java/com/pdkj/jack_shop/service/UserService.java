@@ -29,13 +29,13 @@ import java.util.Random;
 public class UserService extends BaseService<User> {
 
     @Cacheable(value = "token", key = "#p0")
-    @PostMapping("getUserByToken")
+
     public User getUserByToken(String token) {
         User user = userDao.getUserByToken(token);
         return user;
     }
 
-    @PostMapping("getVerCode")
+
     public String getVerCode(String phone) throws CustomException, ClientException {
         boolean exist = userDao.phoneHasExist(phone);
         if (!exist) {//不存在发送注册验证码
@@ -46,7 +46,7 @@ public class UserService extends BaseService<User> {
         }
         throw new CustomException("号码已存在");
     }
-    @PostMapping("register")
+
     public void register(User user, String verCode) throws CustomException {
         String oldCode = (String) getCache("verCode" + user.getPhone());
         if (oldCode.equals(verCode)) {
