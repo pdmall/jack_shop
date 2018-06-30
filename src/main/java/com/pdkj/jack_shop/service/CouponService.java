@@ -24,4 +24,9 @@ public class CouponService extends BaseService<ShopType> {
         Map<String, Object> map = couponDao.getControllerById(id);
         return map;
     }
+    public List<Map<String, Object>> getControllerByUserId(Long userId) {
+        List<Map<String, Object>> list = couponDao.getControllerByUserId(userId);
+        return list;
+    }
+
 }
