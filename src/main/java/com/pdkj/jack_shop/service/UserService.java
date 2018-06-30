@@ -42,6 +42,16 @@ public class UserService extends BaseService<User> {
     public String getVerCode(String phone) throws CustomException, ClientException {
             String verCodeNum = getVerCodeNum(6);
             SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum);
+            if(!sendSmsResponse.getCode().equalsIgnoreCase("ok")){
+                if(sendSmsResponse.getMessage().contains("天")){
+                    throw new CustomException("太快了，一天之后再试");
+                }else if(sendSmsResponse.getMessage().contains("小时")){
+                    throw new CustomException("太快了，一小时之后再试");
+                }else if(sendSmsResponse.getMessage().contains("分钟")){
+                    throw new CustomException("太快了，一分钟之后再试");
+                }
+
+            }
             setCache("verCode" + phone, verCodeNum, 300);
             return sendSmsResponse.getMessage();
     }
