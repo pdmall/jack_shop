@@ -46,18 +46,18 @@ public class ShopController extends BaseController {
     }
 
     @GetMapping("findAddressById")
-    public Result findAddressById(@RequestParam(value = "id") Long id) throws CustomException {
+    public Result findAddressById(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.findAddressById(id));
     }
 
     @GetMapping("findByClassify")
-    public Result findByClassify(@RequestParam(value = "id") Long id) throws CustomException {
+    public Result findByClassify(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.findByClassify(id));
     }
 
-    @GetMapping("searchBox")
-    public Result searchBox(@RequestParam(value = "name") String name,@RequestParam(value = "shop_address") String shop_address) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.searchBox(name,shop_address));
+    @GetMapping("search")
+    public Result searchBox(String key, String shop_address) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.searchBox(key,shop_address));
     }
 
 

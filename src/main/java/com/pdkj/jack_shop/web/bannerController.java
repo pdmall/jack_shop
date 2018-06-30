@@ -17,9 +17,9 @@ import java.util.Map;
 @RequestMapping("banner")
 public class bannerController extends BaseController {
 
-    @GetMapping("getAllBanner")
-    public Result getAllBanner() throws CustomException {
-        List<Map<String, Object>> list =  bannerService.getAllBanner();
+    @GetMapping("getHomeBanner")
+    public Result getHomeBanner() throws CustomException {
+        List<Map<String, Object>> list =  bannerService.getHomeBanner();
         return ResultGenerator.genSuccessResult(list);
     }
 
