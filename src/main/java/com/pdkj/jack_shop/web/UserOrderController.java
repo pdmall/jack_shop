@@ -5,6 +5,7 @@ import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.dao.UserDao;
 import com.pdkj.jack_shop.model.UserOrder;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,13 @@ public class UserOrderController extends BaseController {
         Long id  =  userOrderService.updateOrder(userOrder);
         return ResultGenerator.genSuccessResult(id);
     }
-
-
+    @GetMapping("getUserOrder")
+    public Result getUserOrder(Long user_id , Pager pager){
+        return ResultGenerator.genSuccessResult(userOrderService.getUserOrder(user_id,pager));
+    }
+    @GetMapping("getShopOrder")
+    public Result getShopOrder(Long shop_id , Pager pager){
+        return ResultGenerator.genSuccessResult(userOrderService.getShopOrder(shop_id,pager));
+    }
 
 }

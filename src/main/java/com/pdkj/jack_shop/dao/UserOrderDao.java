@@ -10,6 +10,8 @@ package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.model.UserOrder;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.Pager;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
@@ -40,12 +42,22 @@ public class UserOrderDao extends DaoBase<Banner> {
         return userOrder.getId();
     }
 
-    public List getShopOrder(){
-        String sql = " select id, ";
-        return null;
+    public List<Map<String, Object>> getShopOrder(Long shop_id,Pager page){
+        MySql sql = new MySql();
+        sql.append("select id,pay_on,item_id,state,pay_type,user_id,created,buy_time,");
+        sql.append("use_time,use_coupon_id,wallet_money,total_price,final_price,shop_id ");
+        sql.append(" FROM user_order ");
+        sql.append(" where shop_id = ?",shop_id);
+        sql.limit(page);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
-    public List getUserOrder(){
-
-        return null;
+    public List<Map<String, Object>> getUserOrder(Long user_id,Pager page){
+        MySql sql = new MySql();
+        sql.append("select id,pay_on,item_id,state,pay_type,user_id,created,buy_time,");
+        sql.append("use_time,use_coupon_id,wallet_money,total_price,final_price,shop_id ");
+        sql.append(" FROM user_order ");
+        sql.append(" where user_id = ?",user_id);
+        sql.limit(page);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 }
