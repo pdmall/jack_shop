@@ -5,6 +5,7 @@ import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.model.User;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +29,9 @@ public class ShopController extends BaseController {
         userService.register(user, vercode);
         return ResultGenerator.genSuccessResult();
     }
-    @GetMapping("getAllShop")
-    public Result getAllShop() throws CustomException {
-        List<Map<String, Object>> list =  shopService.getAllShop();
+    @GetMapping("getShopList")
+    public Result getShopList(Pager page) throws CustomException {
+        List<Map<String, Object>> list =  shopService.getShopList(page);
         return ResultGenerator.genSuccessResult(list);
     }
     @GetMapping("addShop")

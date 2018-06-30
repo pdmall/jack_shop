@@ -8,10 +8,13 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.github.pagehelper.Page;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.Pager;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
@@ -28,11 +31,13 @@ import java.util.Map;
 @Repository
 public class ShopDao extends DaoBase<Shop> {
 
-    public List<Map<String, Object>> getAllShop() {
-        String sql = "select id,shop_name,shop_address,longitude," +
-                "latitude,average_cons,service_score," +
-                "enviro_score,taste_score,home_img from shop where shop_state=1 ";
-        return jdbcTemplate.queryForList(sql);
+    public List<Map<String, Object>> getShopList(Pager page) {
+        MySql sql = new MySql();
+        sql.append("select id,shop_name,shop_address,longitude,");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img from shop where shop_state=1");
+        sql.limit(page);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
     public Long addShop(Shop shop) {
