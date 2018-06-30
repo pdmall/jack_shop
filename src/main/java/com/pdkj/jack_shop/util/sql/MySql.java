@@ -28,11 +28,11 @@ public class MySql {
         sql.append(" ").append(s).append(" ");
     }
 
-    public void limit(Pager<Map<String, Object>> pager) {
+    public void limit(Pager pager) {
         sql.append(" limit ");
-        sql.append((pager.getPage() - 1) * pager.getRows());
+        sql.append((pager.getPage() - 1) * pager.getRow());
         sql.append(",");
-        sql.append(pager.getRows()).append(" ");
+        sql.append(pager.getRow()).append(" ");
 
     }
 

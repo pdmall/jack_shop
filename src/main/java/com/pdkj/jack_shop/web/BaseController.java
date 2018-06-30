@@ -20,4 +20,7 @@ public class BaseController {
 
     @Resource
     public BannerService bannerService;
+
+    @Resource
+    public UserOrderService userOrderService;
 }
