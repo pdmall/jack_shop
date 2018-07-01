@@ -68,7 +68,7 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql, type_id);
     }
 
-    public List<Map<String, Object>> searchBox(String name,String shop_address) {
+    public List<Map<String, Object>> searchBox(String name,String county) {
         MySql sql = new MySql();
         sql.append("select ");
         sql.append("shop.id,shop_name,shop_address,longitude, ");
@@ -78,7 +78,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
         sql.append("where");
         String key = SQLTools.FuzzyKey(name);
-        sql.append("(shop_type.name like ? OR  shop_name like ?) and shop_address = ? and state  = 1",key,key,shop_address);
+        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and state  = 1",key,key,county);
 
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }

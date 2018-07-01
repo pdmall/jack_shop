@@ -56,8 +56,8 @@ public class ShopController extends BaseController {
     }
 
     @GetMapping("search")
-    public Result searchBox(String key, String shop_address) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.searchBox(key,shop_address));
+    public Result searchBox(String key, String county) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.searchBox(key,county));
     }
 
 
