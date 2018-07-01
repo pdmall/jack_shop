@@ -48,15 +48,13 @@ public class ShopDao extends DaoBase<Shop> {
     }
 
     public Map<String, Object> getShop(Long id) {
-        String sql = "select id,shop_name,shop_address,longitude," +
-                "latitude,average_cons,service_score," +
-                "enviro_score,taste_score,home_img from shop where id = ?";
+        String sql = " SELECT id,shop_name,shop_address,province,city,county,shop_phone,shop_state,buss_open,buss_close,longitude,latitude,average_cons,eintroduce,license_img,service_score,enviro_score,taste_score,home_img,detail_imgs FROM shop where shop_id = ? ";
         Map<String, Object> map = jdbcTemplate.queryForMap(sql, id);
         return map;
     }
 
     public Map<String, Object> findAddressById(Long id) {
-        String sql = "select id,shop_name,shop_address,shop_phone," +
+        String sql = "select id,shop_name,shop_address,province,city,county,shop_phone," +
                 "longitude,latitude from shop where id=? ";
         return jdbcTemplate.queryForMap(sql, id);
     }
