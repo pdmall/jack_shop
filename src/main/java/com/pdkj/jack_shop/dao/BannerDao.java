@@ -24,7 +24,7 @@ import java.util.Map;
 public class BannerDao extends DaoBase<Banner> {
 
     public List<Map<String, Object>> getHomeBanner() {
-        String sql = "SELECT id,img_url,type,`value` from banner where is_available = 1";
+        String sql = "SELECT id,img_url,`type`,`value` from banner where is_available = 1";
         return jdbcTemplate.queryForList(sql);
     }
 }

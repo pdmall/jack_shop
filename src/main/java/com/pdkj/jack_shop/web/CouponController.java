@@ -25,10 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("coupon")
 public class CouponController extends BaseController {
-    @GetMapping("getCouponByShopId")
-    public Result getControllerByShopId(@RequestParam(value = "shopId") Long shopId) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getControllerByShopId(shopId));
-    }
+
 
     @GetMapping("getCouponById")
     public Result getControllerById(@RequestParam(value = "id") Long id) throws CustomException {
@@ -40,4 +37,8 @@ public class CouponController extends BaseController {
         return ResultGenerator.genSuccessResult(couponService.getControllerByUserId(userId));
     }
 
+    @GetMapping("getCouponByShopId")
+    public Result getControllerByShopId(@RequestParam(value = "shopId") Long shopId) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getControllerByShopId(shopId));
+    }
 }

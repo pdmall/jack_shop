@@ -57,7 +57,7 @@ public class UserDao extends DaoBase {
     }
 
     public Map<String, Object> getUser(Long id){
-        String sql ="Select name from user where id = ?";
+        String sql ="Select id,`name` from user where id = ?";
         return jdbcTemplate.queryForMap(sql,id);
     }
 }
