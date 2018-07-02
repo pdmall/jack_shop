@@ -62,10 +62,12 @@ public class UserService extends BaseService<User> {
             if(oldUser==null){
                 user.setToken(Tools.uuid());
                 userDao.save(user);
+                user.setPassword(null);
                 return user;
             }else{
                 oldUser.setToken(Tools.uuid());
                 userDao.update(oldUser);
+                oldUser.setPassword(null);
                 return oldUser;
             }
         } else {

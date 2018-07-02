@@ -29,8 +29,7 @@ public class UserController extends BaseController {
 
     @PostMapping("register")
     public Result register(User user, String verCode) throws CustomException {
-        String message =userService.register(user, verCode);
-        return ResultGenerator.genSuccessResult(message);
+        return ResultGenerator.genSuccessResult(userService.register(user, verCode));
     }
 
 /*    @GetMapping("getUser")
@@ -42,6 +41,8 @@ public class UserController extends BaseController {
     public Result getUserInfo() throws CustomException {
         return ResultGenerator.genSuccessResult(getUser());
     }
+
+
 
 
 }
