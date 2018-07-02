@@ -80,7 +80,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
         sql.append("where");
         String key = SQLTools.FuzzyKey(name);
-        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and state  = 1", key, key, county);
+        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and shop_state  = 1", key, key, county);
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
