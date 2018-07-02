@@ -55,14 +55,18 @@ public class UserService extends BaseService<User> {
             return sendSmsResponse.getMessage();
     }
 
-    public String register(User user, String verCode) throws CustomException {
+    public User register(User user, String verCode) throws CustomException {
         String oldCode = (String) getCache("verCode" + user.getPhone());
         if (oldCode.equals(verCode)) {
-            if(!userDao.phoneHasExist(user.getPhone())){
+            User oldUser = userDao.getUserByPhone(user.getPhone());
+            if(oldUser==null){
+                user.setToken(Tools.uuid());
                 userDao.save(user);
-                return Tools.uuid();
+                return user;
             }else{
-                return Tools.uuid();
+                oldUser.setToken(Tools.uuid());
+                userDao.update(oldUser);
+                return oldUser;
             }
         } else {
             throw new CustomException("验证码有误");

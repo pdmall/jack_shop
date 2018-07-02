@@ -39,6 +39,9 @@ public class BaseService<T> {
     @Resource
     UserOrderDao userOrderDao;
 
+    @Resource
+    UserWalletDao userWalletDao;
+
 
     public Object getCache(String key) {
         Object value = null;

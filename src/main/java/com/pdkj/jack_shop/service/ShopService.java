@@ -37,11 +37,11 @@ public class ShopService extends BaseService<Shop> {
     public Map<String, Object> findAddressById(Long id){
         return shopDao.findAddressById(id);
     }
-    public List<Map<String, Object>> findByClassify(Long type_id) {
-        return shopDao.findByClassify(type_id);
+    public List<Map<String, Object>> findByClassify(Long type_id,Pager pager) {
+        return shopDao.findByClassify(type_id,pager);
     }
-    public List<Map<String, Object>> searchBox(String name ,String county){
-        return shopDao.searchBox(name,county);
+    public List<Map<String, Object>> searchBox(String name ,String county,Pager pager){
+        return shopDao.searchBox(name,county,pager);
     }
 
 

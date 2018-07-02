@@ -43,10 +43,14 @@ public class UserDao extends DaoBase {
         return users.get(0);
     }
 
-    public boolean phoneHasExist(String phone) {
-        String sql = "SELECT id from USER where phone=? ";
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, new Object[]{phone});
-        return users.size() > 0;
+    public User getUserByPhone(String phone) {
+        String sql = "SELECT * from USER where phone=?";
+        RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
+        List<User> users = jdbcTemplate.query(sql, new Object[]{phone}, rowMap);
+        if (users.size() == 0) {
+            return null;
+        }
+        return users.get(0);
     }
 
     public Long save(User user) {
@@ -59,5 +63,10 @@ public class UserDao extends DaoBase {
     public Map<String, Object> getUser(Long id){
         String sql ="Select id,`name` from user where id = ?";
         return jdbcTemplate.queryForMap(sql,id);
+    }
+
+    public void update(User oldUser) {
+        SqlInfo sql = SQLTools.getUpdateById(oldUser, "user", oldUser.getId());
+        jdbcTemplate.update(sql.toString(),sql.getValues());
     }
 }

@@ -37,7 +37,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("latitude,average_cons,service_score,");
         sql.append("enviro_score,taste_score,home_img from shop where shop_state=1");
         sql.limit(page);
-        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
     public Long addShop(Shop shop) {
@@ -59,16 +59,18 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForMap(sql, id);
     }
 
-    public List<Map<String, Object>> findByClassify(Long type_id) throws CustomException {
-        String sql = "select " +
-                "    shop.id,shop_name,shop_address,longitude," +
-                "    latitude,average_cons,service_score," +
-                "    enviro_score,taste_score,home_img" +
-                "    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id where type_id =? ";
-        return jdbcTemplate.queryForList(sql, type_id);
+    public List<Map<String, Object>> findByClassify(Long type_id, Pager pager) throws CustomException {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("    shop.id,shop_name,shop_address,longitude,");
+        sql.append("    latitude,average_cons,service_score,");
+        sql.append("    enviro_score,taste_score,home_img");
+        sql.append("    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id where type_id =?",type_id);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    public List<Map<String, Object>> searchBox(String name,String county) {
+    public List<Map<String, Object>> searchBox(String name, String county, Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
         sql.append("shop.id,shop_name,shop_address,longitude, ");
@@ -78,8 +80,8 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
         sql.append("where");
         String key = SQLTools.FuzzyKey(name);
-        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and state  = 1",key,key,county);
-
+        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and state  = 1", key, key, county);
+        sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 }

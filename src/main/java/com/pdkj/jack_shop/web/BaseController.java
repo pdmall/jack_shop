@@ -24,6 +24,9 @@ public class BaseController {
     public CouponService couponService;
 
     @Resource
+    public UserWalletService userWalletService;
+
+    @Resource
     public BannerService bannerService;
 
     @Resource
