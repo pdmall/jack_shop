@@ -15,6 +15,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ import java.security.MessageDigest;
 import java.util.*;
 
 @Component
-public class UserSecurityInterceptor implements HandlerInterceptor {
+public class UserSecurityInterceptor extends InterceptorRegistry implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
 

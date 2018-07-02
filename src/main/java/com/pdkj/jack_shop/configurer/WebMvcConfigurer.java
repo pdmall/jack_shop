@@ -16,6 +16,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 import com.pdkj.jack_shop.core.*;
+import com.pdkj.jack_shop.interceptor.UserSecurityInterceptor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -154,6 +155,11 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         //registry.addMapping("/**");
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        super.addInterceptors(new UserSecurityInterceptor());
     }
 
     //拦截器配置

@@ -6,7 +6,7 @@
     <groupId>com.pdtec</groupId>
     <artifactId>jack_shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>jack_shop</name>
     <description>Demo project for Spring Boot</description>

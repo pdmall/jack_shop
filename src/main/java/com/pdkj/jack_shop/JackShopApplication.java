@@ -15,6 +15,5 @@ public class JackShopApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JackShopApplication.class, args);
-
     }
 }
