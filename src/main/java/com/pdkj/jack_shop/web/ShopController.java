@@ -99,7 +99,10 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.searchBox(key,county,pager));
     }
 
-
+    @GetMapping("shopSort")
+    public Result shopSort(String name , Pager pager){
+        return ResultGenerator.genSuccessResult(shopService.shopSort(name,1l,"成都",pager));
+    }
 
 
 

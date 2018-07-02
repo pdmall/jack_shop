@@ -44,5 +44,7 @@ public class ShopService extends BaseService<Shop> {
         return shopDao.searchBox(name,county,pager);
     }
 
-
+    public List<Map<String, Object>> shopSort(String name,Long type_id, String county, Pager pager){
+        return shopDao.shopSort(name,1l,"成都",pager);
+    }
 }
