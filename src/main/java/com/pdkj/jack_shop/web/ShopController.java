@@ -99,10 +99,48 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.searchBox(key,county,pager));
     }
 
+    /**
+     * 根据评分排序
+     * @param key 搜索框值
+     * @param county 地区
+     * @param type_id 商铺类型
+     * @param pager
+     * @return
+     */
     @GetMapping("shopSort")
-    public Result shopSort(String name , Pager pager){
-        return ResultGenerator.genSuccessResult(shopService.shopSort(name,1l,"成都",pager));
+    public Result shopSort(String key ,String county ,Long type_id, Pager pager){
+        return ResultGenerator.genSuccessResult(shopService.shopSort(key,type_id,county,pager));
     }
+
+    /**
+     * 按距离排序
+     * @param name
+     * @param type_id
+     * @param county
+     * @param pager
+     * @param latitude
+     * @param longitude
+     * @return
+     */
+    @GetMapping("shopDistanceSort")
+    public Result shopDistanceSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude){
+        return ResultGenerator.genSuccessResult(shopService.shopDistanceSort( name, type_id,  county,  pager, latitude, longitude));
+    }
+/*
+    *//**
+     * 按距离排序
+     * @param name
+     * @param type_id
+     * @param county
+     * @param pager
+     * @param latitude
+     * @param longitude
+     * @return
+     *//*
+    @GetMapping("shopDistanceValueSort")
+    public Result shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude,int distance){
+        return ResultGenerator.genSuccessResult(shopService.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance));
+    }*/
 
 
 

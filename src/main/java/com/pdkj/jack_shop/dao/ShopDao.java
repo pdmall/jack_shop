@@ -97,7 +97,38 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("where");
         String key = SQLTools.FuzzyKey(name);
 
-        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and state  = 1 order by score",key,key,type_id, county);
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by score DESC",key,key,type_id, county);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+    /*SQRT((39.513341-`longitude`)*(39.513341-`longitude`)+(39.513341-`latitude`)*(39.513341-`latitude`))*/
+    public List<Map<String, Object>> shopDistanceSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) ",key,key,type_id, county,longitude,longitude,latitude,latitude);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude,int distance) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append("SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) <= ? and ");
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) ",longitude,longitude,latitude,latitude,distance,key,key,type_id, county,longitude,longitude,latitude,latitude);
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }

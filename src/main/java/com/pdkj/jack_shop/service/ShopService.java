@@ -45,6 +45,12 @@ public class ShopService extends BaseService<Shop> {
     }
 
     public List<Map<String, Object>> shopSort(String name,Long type_id, String county, Pager pager){
-        return shopDao.shopSort(name,1l,"成都",pager);
+        return shopDao.shopSort(name,2L,"温江区",pager);
+    }
+    public List<Map<String, Object>> shopDistanceSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude){
+        return shopDao.shopDistanceSort( name, type_id,  county,  pager, latitude, longitude);
+    }
+    public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude ,int distance){
+        return shopDao.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance);
     }
 }

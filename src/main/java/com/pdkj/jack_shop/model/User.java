@@ -249,7 +249,7 @@ public class User implements Serializable {
         this.nickname = nickname;
     }
 
-    
+
     public String getIcon() {
         return icon;
     }
