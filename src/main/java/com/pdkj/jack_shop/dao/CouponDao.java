@@ -25,7 +25,7 @@ public class CouponDao extends DaoBase<ShopType> {
     public List<Map<String, Object>> getControllerByShopId(Long shopId) {
         String sql = " select " +
                 " id,title,`type`,discount,buy_price, " +
-                " final_price,is_refund,sub_time, " +
+                " final_price,is_refund,sub_time," +
                 " date_start,date_end,time_start,time_end, " +
                 " unable_date,coupon_img " +
                 " from coupon " +
@@ -35,7 +35,7 @@ public class CouponDao extends DaoBase<ShopType> {
     public Map<String, Object> getControllerById(Long id) {
         String sql = " select " +
                 " id,title,`type`,discount,buy_price, " +
-                " final_price,is_refund,sub_time, " +
+                " final_price,is_refund,sub_time,`describe`, " +
                 " date_start,date_end,time_start,time_end, " +
                 " unable_date,coupon_img " +
                 " from coupon " +

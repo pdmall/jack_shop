@@ -20,8 +20,10 @@ import java.util.Map;
 public class ShopService extends BaseService<Shop> {
 
     public List<Map<String,Object>> getShopList(Pager page) {
-
         List<Map<String, Object>> shop = shopDao.getShopList(page);
+        for (Map<String,Object> map : shop){
+            map.put("coupons",couponDao.getControllerByShopId(Long.valueOf(map.get("id").toString())));
+        }
         return shop;
     }
 
