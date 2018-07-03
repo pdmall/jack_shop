@@ -40,6 +40,8 @@ public class BaseService<T> {
     @Resource
     UserWalletDao userWalletDao;
 
+    @Resource
+    SignInDao signInDao;
 
     public Object getCache(String key) {
         Object value = null;

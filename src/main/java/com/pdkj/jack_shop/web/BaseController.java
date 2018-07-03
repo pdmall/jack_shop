@@ -39,6 +39,9 @@ public class BaseController {
     @Resource
     public WxPayService wxPayService;
 
+    @Resource
+    public SignInService signInService;
+
 
 
     public User getUser(){
