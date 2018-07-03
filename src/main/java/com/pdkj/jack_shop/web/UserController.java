@@ -48,9 +48,9 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.getLevel2ByLevel3(token));
     }
 
-    @GetMapping("getLevel1ByLevel2")
-    public Result getLevel1ByLevel2(String token) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel2(token));
+    @GetMapping("getLevel1ByLevel3")
+    public Result getLevel1ByLevel3(String token) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
     }
 
 }

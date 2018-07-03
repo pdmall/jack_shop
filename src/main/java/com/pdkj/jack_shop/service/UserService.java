@@ -97,7 +97,7 @@ public class UserService extends BaseService<User> {
         return  userDao.getLevel2ByLevel3(getUserByToken(token).getId());
     }
 
-    public List<Map<String,Object>> getLevel1ByLevel2(String token) {
-         return  userDao.getLevel1ByLevel2(getUserByToken(token).getId());
+    public List<Map<String,Object>> getLevel1ByLevel3(String token) {
+         return  userDao.getLevel1ByLevel3(getUserByToken(token).getId());
     }
 }
