@@ -65,6 +65,8 @@ public class Shop {
 
     private Integer enviro_score;
 
+    private String street;
+
     /**
      * 评分
      */
@@ -258,5 +260,13 @@ public class Shop {
 
     public void setDetail_imgs(String detail_imgs) {
         this.detail_imgs = detail_imgs;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
