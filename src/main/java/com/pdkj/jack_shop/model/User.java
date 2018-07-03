@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -26,6 +25,8 @@ public class User implements Serializable {
     private String email;
 
     private String token;
+
+    private String icon;
 
     /**
      * 身份证
@@ -246,5 +247,14 @@ public class User implements Serializable {
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

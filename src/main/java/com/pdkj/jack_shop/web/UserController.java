@@ -25,11 +25,30 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(message);
     }
 
-    @PostMapping("/register")
-    public Result register(User user, String vercode) throws CustomException {
-        userService.register(user, vercode);
-        return ResultGenerator.genSuccessResult();
+    @PostMapping("register")
+    public Result register(User user, String verCode) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.register(user, verCode));
     }
 
+/*    @GetMapping("getUser")
+    public Result getUser(@RequestParam Long id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getUser(id));
+    }*/
+
+    @GetMapping("getUserInfo")
+    public Result getUserInfo() throws CustomException {
+        return ResultGenerator.genSuccessResult(getUser());
+    }
+
+    @GetMapping("getLevel2ByLevel3")
+    public Result getLevel2ByLevel3(String token) throws CustomException {
+
+        return ResultGenerator.genSuccessResult(userService.getLevel2ByLevel3(token));
+    }
+
+    @GetMapping("getLevel1ByLevel3")
+    public Result getLevel1ByLevel3(String token) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
+    }
 
 }

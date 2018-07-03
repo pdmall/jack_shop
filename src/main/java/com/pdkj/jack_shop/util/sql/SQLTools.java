@@ -49,11 +49,11 @@ public  class SQLTools {
         return new SqlInfo(sql.toString(),list);
     }
 
-    public static void limit(StringBuilder sql, Pager<Map<String, Object>> pager) {
+    public static void limit(StringBuilder sql, Pager pager) {
         sql.append(" limit ");
-        sql.append((pager.getPage()-1)*pager.getRows());
+        sql.append((pager.getPage()-1)*pager.getRow());
         sql.append(",");
-        sql.append(pager.getRows());
+        sql.append(pager.getRow());
     }
 
     public static String FuzzyKey(String keyword) {

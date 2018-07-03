@@ -9,22 +9,15 @@ import java.util.List;
  * 后台easyui要求格式
  * @author hp
  *
- * @param <T>
  */
-public class Pager<T> {
+public class Pager {
 
-	private int rows = 30;//每页显示多少条
+	private int row = 30;//每页显示多少条
 	
 	private int page = 1;//当前页
 	
 	private long total = 0;
 	
-	private List<T> data = new ArrayList<T>();
-	
-	public long getTotalPage() {
-		return (long)Math.ceil((double)total / (double)rows);
-	}
-
 	public long getTotal() {
 		return total;
 	}
@@ -41,23 +34,14 @@ public class Pager<T> {
 		this.page = page;
 	}
 
-	public int getRows() {
-		return rows;
-	}
-	
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-	
-	public List<T> getData() {
-		return data;
-	}
-	
-	public void setData(List<T> data) {
-		this.data = data;
+	public int getRow() {
+		return row;
 	}
 
-	@Override
+	public void setRow(int row) {
+		this.row = row;
+	}
+
 	public String toString() {
 		return JSON.toJSONString(this);
 	}

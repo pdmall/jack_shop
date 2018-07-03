@@ -1,5 +1,9 @@
 package com.pdkj.jack_shop.model;
 
+import com.pdkj.jack_shop.util.DateUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -142,16 +146,22 @@ public class Shop {
         return buss_open;
     }
 
-    public void setBuss_open(Date buss_open) {
-        this.buss_open = buss_open;
+    public void setBuss_open(String buss_open) throws ParseException {
+       if(DateUtils.isLegalDate(buss_open,"HH:mm")){
+           SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+           Date date = sdf.parse(buss_open+":00");
+       }
     }
 
     public Date getBuss_close() {
         return buss_close;
     }
 
-    public void setBuss_close(Date buss_close) {
-        this.buss_close = buss_close;
+    public void setBuss_close(String buss_close) throws ParseException {
+        if(DateUtils.isLegalDate(buss_close,"HH:mm")){
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            Date date = sdf.parse(buss_close+":00");
+        }
     }
 
     public Date getCreated() {

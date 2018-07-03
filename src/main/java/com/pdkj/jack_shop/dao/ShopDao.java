@@ -8,9 +8,15 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.core.CustomException;
+import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.model.Shop;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
+import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.Pager;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -21,23 +27,134 @@ import java.util.Map;
  * @Description 类描述
  * @date 2018/6/28
  */
+@Repository
 public class ShopDao extends DaoBase<Shop> {
-    public ShopDao(){
-        rowMap = new BeanPropertyRowMapper<Shop>(Shop.class);
-        columnQ = "id,shop_name,shop_address,longitude," +
-                "latitude,average_cons,service_score," +
-                "enviro_score,taste_score,home_img, detail_imgs";
-        columnU =" id, shop_name, shop_address, city, province, shop_phone,  " +
-                "  buss_open, buss_close, " +
-                " longitude, latitude,  introduce, license_img,home_img, detail_imgs";
-        sqlDel = "update shop set shop_state = -1 where id in  ";
-    }
-    public List<Shop> selectAll(Object[] objects){
 
-        return super.findByCondtion(objects);
+    public List<Map<String, Object>> getShopList(Pager page) {
+        MySql sql = new MySql();
+        sql.append("select id,shop_name,shop_address,longitude,");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img from shop where shop_state=1");
+        sql.limit(page);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    public  Integer save(String sql, Object[] pramts)  {
-        return jdbcTemplate.update(sql,pramts);
-    };
+
+    public Long addShop(Shop shop) {
+        shop.setId(Tools.generatorId());
+        SqlInfo insertSQL = SQLTools.getInsertSQL(shop);
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+        return shop.getId();
+    }
+
+    public Map<String, Object> getShop(Long id) {
+        String sql = " SELECT id,shop_name,shop_address,province,city,county,shop_phone,shop_state,buss_open,buss_close,longitude,latitude,average_cons,introduce,license_img,service_score,enviro_score,taste_score,home_img,detail_imgs FROM shop where id = ? ";
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql, id);
+        return map;
+    }
+
+    public Map<String, Object> findAddressById(Long id) {
+        String sql = "select id,shop_name,shop_address,province,city,county,shop_phone," +
+                "longitude,latitude from shop where id=? ";
+        return jdbcTemplate.queryForMap(sql, id);
+    }
+
+    public List<Map<String, Object>> findByClassify(Long type_id, Pager pager) throws CustomException {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("    shop.id,shop_name,shop_address,longitude,");
+        sql.append("    latitude,average_cons,service_score,");
+        sql.append("    enviro_score,taste_score,home_img");
+        sql.append("    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id where type_id =?",type_id);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> searchBox(String name, String county, Pager pager) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and shop_state  = 1", key, key, county);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+
+    public List<Map<String, Object>> shopSort(String name,Long type_id, String county, Pager pager) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,(average_cons+service_score+");
+        sql.append("enviro_score)/3 score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by score DESC",key,key,type_id, county);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+    /*SQRT((39.513341-`longitude`)*(39.513341-`longitude`)+(39.513341-`latitude`)*(39.513341-`latitude`))*/
+    public List<Map<String, Object>> shopDistanceSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) ",key,key,type_id, county,longitude,longitude,latitude,latitude);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude,int distance) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append("SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) <= ? and ");
+        sql.append(" (shop_type.name like ? OR  shop_name like ?) and type_id =? and county = ? and shop_state  = 1 order by SQRT((?-`longitude`)*(?-`longitude`)+(?-`latitude`)*(?-`latitude`)) ",longitude,longitude,latitude,latitude,distance,key,key,type_id, county,longitude,longitude,latitude,latitude);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+    public List<Map<String, Object>> shopMealTime(String county, Pager pager,Long mealTimeId) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("DISTINCT(shop.id),shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_meal_time_rel on shop.id = shop_meal_time_rel.shop_id ");
+        sql.append("inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("where");
+        sql.append("shop_meal_time_rel.meal_time_id = ? and type_id = 2 and county = ? and shop_state  = 1",mealTimeId,county);
+       sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> getShopName(String name, Pager pager ) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append(" DISTINCT(shop_name) ");
+        sql.append(" from shop   ");
+        sql.append(" where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append(" shop_name like ? ",key);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
 
 }

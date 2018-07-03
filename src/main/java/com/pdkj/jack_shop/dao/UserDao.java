@@ -43,15 +43,39 @@ public class UserDao extends DaoBase {
         return users.get(0);
     }
 
-    public boolean phoneHasExist(String phone) {
-        String sql = "SELECT id from USER where phone=? ";
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, new Object[]{phone});
-        return users.size()>0;
+    public User getUserByPhone(String phone) {
+        String sql = "SELECT * from USER where phone=?";
+        RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
+        List<User> users = jdbcTemplate.query(sql, new Object[]{phone}, rowMap);
+        if (users.size() == 0) {
+            return null;
+        }
+        return users.get(0);
     }
 
     public Long save(User user) {
+        user.setId(Tools.generatorId());
         SqlInfo sqlInfo = SQLTools.getInsertSQL(user);
         jdbcTemplate.update(sqlInfo.getSql(), sqlInfo.getValues());
         return user.getId();
+    }
+
+    public Map<String, Object> getUser(Long id){
+        String sql ="Select id,`name` from user where id = ?";
+        return jdbcTemplate.queryForMap(sql,id);
+    }
+
+    public void update(User oldUser) {
+        SqlInfo sql = SQLTools.getUpdateById(oldUser, "user", oldUser.getId());
+        jdbcTemplate.update(sql.toString(),sql.getValues());
+    }
+
+    public List<Map<String,Object>> getLevel2ByLevel3(Long id) {
+        String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level2 where level3 = ? order by created desc";
+        return  jdbcTemplate.queryForList(sql,id);
+    }
+    public List<Map<String,Object>> getLevel1ByLevel3(Long id) {
+        String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level1 where level3 = ? order by created desc";
+        return  jdbcTemplate.queryForList(sql,id);
     }
 }

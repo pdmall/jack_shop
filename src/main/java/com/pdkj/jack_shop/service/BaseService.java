@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.service;
 
-import com.pdkj.jack_shop.dao.UserDao;
+import com.pdkj.jack_shop.dao.*;
+import com.pdkj.jack_shop.model.ShopType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,25 @@ public class BaseService<T> {
     @Resource
     UserDao userDao;
 
+    @Resource
+    ShopDao shopDao;
 
-    public Object getCache(String key){
+    @Resource
+    ShopTypeDao shopTypeDao;
+
+    @Resource
+    CouponDao couponDao;
+    @Resource
+    BannerDao bannerDao;
+
+    @Resource
+    UserOrderDao userOrderDao;
+
+    @Resource
+    UserWalletDao userWalletDao;
+
+
+    public Object getCache(String key) {
         Object value = null;
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);
@@ -35,12 +53,12 @@ public class BaseService<T> {
         return value;
     }
 
-    public void setCache(String key,Object value,int seconds){
+    public void setCache(String key, Object value, int seconds) {
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, value, seconds, TimeUnit.SECONDS);
     }
 
-    public void setCache(String key,Object value){
+    public void setCache(String key, Object value) {
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
         operations.set(key, value, 10, TimeUnit.SECONDS);
     }
