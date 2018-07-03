@@ -28,6 +28,16 @@ public class User implements Serializable {
 
     private String icon;
 
+    private String open_id;
+
+    public String getOpen_id() {
+        return open_id;
+    }
+
+    public void setOpen_id(String open_id) {
+        this.open_id = open_id;
+    }
+
     /**
      * 身份证
      */

@@ -68,7 +68,7 @@ public class UserService extends BaseService<User> {
                 return user;
             }else{
                 oldUser.setToken(Tools.uuid());
-                userDao.update(oldUser);
+                userDao.updateToken(oldUser.getId(),oldUser.getToken());
                 oldUser.setPassword(null);
                 return oldUser;
             }
