@@ -88,11 +88,7 @@
             <version>23.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>4.2.1</version>
-        </dependency>
+
         <!--阿里 FastJson依赖-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -120,7 +116,6 @@
         </dependency>
         <!--========================-->
 
-
         <!--常用库依赖-->
         <dependency>
             <groupId>commons-codec</groupId>
@@ -131,8 +126,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
