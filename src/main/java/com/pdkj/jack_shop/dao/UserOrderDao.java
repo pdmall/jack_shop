@@ -16,6 +16,7 @@ import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -59,5 +60,19 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append(" where user_id = ?",user_id);
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
+
+    public String getOrderPrice(String order_id) {
+        String sql = "select final_price from user_order where id =  ? and state = 0";
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, order_id);
+        if(maps.size()>0){
+            return maps.get(0).get("final_price").toString();
+        }
+        return null;
+    }
+
+    public void paySuccess(String orderId) {
+        String sql = "update user_order set state = 1 where id = ? and state = 0";
+        jdbcTemplate.update(sql,orderId);
     }
 }

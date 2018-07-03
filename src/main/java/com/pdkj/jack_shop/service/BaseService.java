@@ -17,10 +17,8 @@ public class BaseService<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
-
     @Autowired
     RedisTemplate redisTemplate;
-
 
     @Resource
     UserDao userDao;

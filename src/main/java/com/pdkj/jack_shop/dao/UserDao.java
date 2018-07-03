@@ -78,4 +78,17 @@ public class UserDao extends DaoBase {
         String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level1 where level3 = ? order by created desc";
         return  jdbcTemplate.queryForList(sql,id);
     }
+
+    public User getUserByOpenId(String openid) {
+        String sql = "select * from user where open_id = ?";
+        RowMapper<User> rowMap = new BeanPropertyRowMapper(User.class);
+        User user = jdbcTemplate.queryForObject(sql, new Object[]{openid}, rowMap);
+        return  user;
+    }
+
+    public int updateToken(Long id, String token) {
+        String sql = "update user set token = ? where id = ?";
+        int effect = jdbcTemplate.update(sql, token, id);
+        return effect;
+    }
 }
