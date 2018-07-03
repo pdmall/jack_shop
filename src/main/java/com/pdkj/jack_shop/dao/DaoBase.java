@@ -45,6 +45,8 @@ public class DaoBase<E> {
     public  Integer update(Object[] pramts) {
         return jdbcTemplate.update(sqlUpd,pramts);
     };
+
+
     /**
      * @Title: findById
      * @Description: 根据Id查询数据
