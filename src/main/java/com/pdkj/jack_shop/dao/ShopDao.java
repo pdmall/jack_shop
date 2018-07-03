@@ -32,11 +32,12 @@ public class ShopDao extends DaoBase<Shop> {
 
     public List<Map<String, Object>> getShopList(Pager page) {
         MySql sql = new MySql();
-        sql.append("select id,shop_name,shop_address,longitude,");
+        sql.append("select DISTINCT(shop.id),shop_name,shop_address,longitude,");
         sql.append("latitude,average_cons,service_score,street,");
-        sql.append("enviro_score,taste_score,home_img,shop_type.name");
+        sql.append("enviro_score,taste_score,home_img,label.name");
         sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
         sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("inner join label on shop.id = label.shop_id ");
         sql.append(" where shop_state=1 ");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
