@@ -119,7 +119,7 @@ public class ShopDao extends DaoBase<Shop> {
     public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude,int distance) {
         MySql sql = new MySql();
         sql.append("select ");
-        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("DISTINCT(shop.id),shop_name,shop_address,longitude, ");
         sql.append("latitude,average_cons,service_score,");
         sql.append("enviro_score,taste_score,home_img  ");
         sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
@@ -131,6 +131,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     public List<Map<String, Object>> shopMealTime(String county, Pager pager,Long mealTimeId) {
         MySql sql = new MySql();
         sql.append("select ");
