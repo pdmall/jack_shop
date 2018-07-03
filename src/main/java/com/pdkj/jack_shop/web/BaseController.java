@@ -4,6 +4,7 @@ import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.service.ShopTypeService;
 import com.pdkj.jack_shop.service.*;
 import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -31,6 +32,15 @@ public class BaseController {
 
     @Resource
     public UserOrderService userOrderService;
+
+    @Resource
+    public WxService wxService;
+
+    @Resource
+    public WxPayService wxPayService;
+
+    @Resource
+    public SignInService signInService;
 
 
 

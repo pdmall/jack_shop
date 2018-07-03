@@ -133,11 +133,11 @@ public class ShopController extends BaseController {
      * @param county
      * @param pager
      * @return
-     *//*
+     */
     @GetMapping("shopDistanceValueSort")
     public Result shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude,int distance){
         return ResultGenerator.genSuccessResult(shopService.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance));
-    }*/
+    }
 
     /**
      * 按时段查询

@@ -36,7 +36,7 @@ public class UserController extends BaseController {
     }*/
 
     @GetMapping("getUserInfo")
-    public Result getUserInfo() throws CustomException {
+    public Result getUserInfo(String token) throws CustomException {
         return ResultGenerator.genSuccessResult(getUser());
     }
 

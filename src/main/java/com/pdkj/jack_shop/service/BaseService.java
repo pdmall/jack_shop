@@ -17,10 +17,8 @@ public class BaseService<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
-
     @Autowired
     RedisTemplate redisTemplate;
-
 
     @Resource
     UserDao userDao;
@@ -42,6 +40,8 @@ public class BaseService<T> {
     @Resource
     UserWalletDao userWalletDao;
 
+    @Resource
+    SignInDao signInDao;
 
     public Object getCache(String key) {
         Object value = null;
