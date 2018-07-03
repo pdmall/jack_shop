@@ -132,4 +132,30 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+    public List<Map<String, Object>> shopMealTime(String county, Pager pager,Long mealTimeId) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append("DISTINCT(shop.id),shop_name,shop_address,longitude, ");
+        sql.append("latitude,average_cons,service_score,");
+        sql.append("enviro_score,taste_score,home_img  ");
+        sql.append("from shop inner join shop_meal_time_rel on shop.id = shop_meal_time_rel.shop_id ");
+        sql.append("inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
+        sql.append("where");
+        sql.append("shop_meal_time_rel.meal_time_id = ? and type_id = 2 and county = ? and shop_state  = 1",mealTimeId,county);
+       sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> getShopName(String name, Pager pager ) {
+        MySql sql = new MySql();
+        sql.append("select ");
+        sql.append(" DISTINCT(shop_name) ");
+        sql.append(" from shop   ");
+        sql.append(" where");
+        String key = SQLTools.FuzzyKey(name);
+        sql.append(" shop_name like ? ",key);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
 }

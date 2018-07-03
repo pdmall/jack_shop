@@ -4,6 +4,8 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
+import com.pdkj.jack_shop.core.Result;
+import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
 import org.hibernate.annotations.Cache;
@@ -85,7 +87,17 @@ public class UserService extends BaseService<User> {
         return String.valueOf(verCode);
     }
 
-    public Map<String,Object> getUser(@RequestParam Long id){
+    public Map<String,Object> getUser( Long id){
         return  userDao.getUser(id);
+    }
+
+
+    public List<Map<String,Object>> getLevel2ByLevel3(String token) {
+
+        return  userDao.getLevel2ByLevel3(getUserByToken(token).getId());
+    }
+
+    public List<Map<String,Object>> getLevel1ByLevel2(String token) {
+         return  userDao.getLevel1ByLevel2(getUserByToken(token).getId());
     }
 }

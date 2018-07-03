@@ -129,12 +129,9 @@ public class ShopController extends BaseController {
 /*
     *//**
      * 按距离排序
-     * @param name
-     * @param type_id
+     * @param mealTimeId
      * @param county
      * @param pager
-     * @param latitude
-     * @param longitude
      * @return
      *//*
     @GetMapping("shopDistanceValueSort")
@@ -142,6 +139,19 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance));
     }*/
 
-
-
+    /**
+     * 按时段查询
+     * @param mealTimeId
+     * @param county
+     * @param pager
+     * @return
+     */
+    @GetMapping("shopMealTime")
+    public Result shopMealTime(Long mealTimeId, String county, Pager pager){
+        return ResultGenerator.genSuccessResult(shopService.shopMealTime(  mealTimeId,  county,  pager));
+    }
+    @GetMapping("getShopName")
+    public Result getShopName(String name , Pager pager ){
+        return ResultGenerator.genSuccessResult(shopService.getShopName(name,pager));
+    }
 }

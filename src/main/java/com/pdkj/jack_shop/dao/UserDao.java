@@ -69,4 +69,13 @@ public class UserDao extends DaoBase {
         SqlInfo sql = SQLTools.getUpdateById(oldUser, "user", oldUser.getId());
         jdbcTemplate.update(sql.toString(),sql.getValues());
     }
+
+    public List<Map<String,Object>> getLevel2ByLevel3(Long id) {
+        String sql = "select nickname,count(level2) from share_orgin inner join `user` on `user`.id = share_orgin.level2 where level3 = ? group by level2 ";
+        return  jdbcTemplate.queryForList(sql,id);
+    }
+    public List<Map<String,Object>> getLevel1ByLevel2(Long id) {
+        String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level1 where level2 = ?  group by level2";
+        return  jdbcTemplate.queryForList(sql,id);
+    }
 }

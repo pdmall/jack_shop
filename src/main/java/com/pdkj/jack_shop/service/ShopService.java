@@ -53,4 +53,12 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude ,int distance){
         return shopDao.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance);
     }
+    public List<Map<String, Object>> shopMealTime(Long mealTimeId, String county, Pager pager){
+        return shopDao.shopMealTime( county,pager, mealTimeId);
+    }
+
+    public List<Map<String, Object>> getShopName(String name , Pager pager ){
+        return shopDao.getShopName( name,pager);
+    }
+
 }
