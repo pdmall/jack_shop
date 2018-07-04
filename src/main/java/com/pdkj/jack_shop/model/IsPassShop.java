@@ -43,7 +43,7 @@ public class IsPassShop {
     private String longitude;
 
     private String latitude;
-
+    private String county;
     /**
      * 平均消费
      */
@@ -266,5 +266,13 @@ public class IsPassShop {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 }
