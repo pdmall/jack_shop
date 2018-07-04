@@ -3,6 +3,7 @@ package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.IsPassShop;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -49,7 +50,7 @@ public class ShopController extends BaseController {
      * @throws CustomException
      */
     @GetMapping("addShop")
-    public Result addShop(Shop shop) throws CustomException {
+    public Result addShop(IsPassShop shop) throws CustomException {
          shopService.addShop(shop);
         return ResultGenerator.genSuccessResult();
     }
@@ -129,7 +130,6 @@ public class ShopController extends BaseController {
 /*
     *//**
      * 按距离排序
-     * @param mealTimeId
      * @param county
      * @param pager
      * @return
