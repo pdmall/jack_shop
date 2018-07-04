@@ -51,4 +51,5 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
     }
 
+
 }

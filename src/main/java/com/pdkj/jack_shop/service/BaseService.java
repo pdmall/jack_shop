@@ -43,6 +43,9 @@ public class BaseService<T> {
     @Resource
     SignInDao signInDao;
 
+    @Resource
+    WxService wxService;
+
     public Object getCache(String key) {
         Object value = null;
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();

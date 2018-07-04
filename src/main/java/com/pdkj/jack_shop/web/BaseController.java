@@ -43,7 +43,6 @@ public class BaseController {
     public SignInService signInService;
 
 
-
     public User getUser(){
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);

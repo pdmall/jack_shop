@@ -50,7 +50,7 @@ public class CouponDao extends DaoBase<ShopType> {
                 " date_start,date_end,time_start,time_end, " +
                 " unable_date,coupon_img " +
                 " from coupon inner join user_coupon_rel on coupon.id = user_coupon_rel.coupon_id" +
-                " where user_coupon_rel.user_id = ? ";
+                " where user_coupon_rel.user_id = ? and user_coupon_rel.is_use = 1";
         return jdbcTemplate.queryForList(sql, UserId);
     }
 
