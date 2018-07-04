@@ -45,7 +45,7 @@ public class ShopDao extends DaoBase<Shop> {
 
     public Long addShop(IsPassShop shop) {
         shop.setId(Tools.generatorId());
-        SqlInfo insertSQL = SQLTools.getInsertSQL(shop);
+        SqlInfo insertSQL = SQLTools.getInsertSQL(shop,"is_pass_shop");
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return shop.getId();
     }
