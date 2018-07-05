@@ -17,7 +17,8 @@ public class BaseController {
 
     @Resource
     public ShopService shopService;
-
+    @Resource
+    public LabelService labelService;
     @Resource
     public ShopTypeService shopTypeService;
 
@@ -43,7 +44,7 @@ public class BaseController {
     public SignInService signInService;
 
 
-    public User getUser(){
+    public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);
     }

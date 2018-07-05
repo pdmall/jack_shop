@@ -9,7 +9,6 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.Label;
-import com.pdkj.jack_shop.model.ShopType;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
@@ -21,9 +20,9 @@ import com.pdkj.jack_shop.util.sql.SqlInfo;
  * @date 2018/7/4
  */
 public class LabelDao extends DaoBase<LabelDao> {
-    public void addLabel(Label label){
+    public int addLabel(Label label) {
         label.setId(Tools.generatorId());
         SqlInfo insertSQL = SQLTools.getInsertSQL(label);
-        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+        return jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
     }
 }
