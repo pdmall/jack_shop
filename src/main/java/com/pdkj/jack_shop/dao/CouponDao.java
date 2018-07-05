@@ -8,7 +8,11 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.ShopType;
+import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -52,6 +56,13 @@ public class CouponDao extends DaoBase<ShopType> {
                 " from coupon inner join user_coupon_rel on coupon.id = user_coupon_rel.coupon_id" +
                 " where user_coupon_rel.user_id = ? and user_coupon_rel.is_use = 1";
         return jdbcTemplate.queryForList(sql, UserId);
+    }
+
+    public Long addCoupon(Coupon coupon){
+        coupon.setId(Tools.generatorId());
+         SqlInfo insertSQL = SQLTools.getInsertSQL(coupon);
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+        return coupon.getId();
     }
 
 }
