@@ -11,6 +11,7 @@ package com.pdkj.jack_shop.dao;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.model.ShopType;
+import com.pdkj.jack_shop.model.ShopTypeRel;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
@@ -33,5 +34,11 @@ public class ShopTypeDao extends DaoBase<ShopType> {
         return jdbcTemplate.queryForList(sql);
     }
 
+    public Long addShopTypeRel(ShopTypeRel shopTypeRel){
+            shopTypeRel.setId(Tools.generatorId());
+            SqlInfo sqlInfo = SQLTools.getInsertSQL(shopTypeRel,"shop_type_rel");
+            jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+            return shopTypeRel.getId();
+    }
 
 }

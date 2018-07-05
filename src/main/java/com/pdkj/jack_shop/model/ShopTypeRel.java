@@ -11,6 +11,10 @@ public class ShopTypeRel {
 
     private Long type_id;
 
+    public ShopTypeRel(Long shop_id, Long type_id) {
+        this.shop_id = shop_id;
+        this.type_id = type_id;
+    }
 
     public Long getId() {
         return id;

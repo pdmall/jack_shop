@@ -12,6 +12,7 @@ import com.pdkj.jack_shop.model.Label;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author lvchong
@@ -19,6 +20,7 @@ import com.pdkj.jack_shop.util.sql.SqlInfo;
  * @Description 类描述
  * @date 2018/7/4
  */
+@Repository
 public class LabelDao extends DaoBase<LabelDao> {
     public int addLabel(Label label) {
         label.setId(Tools.generatorId());

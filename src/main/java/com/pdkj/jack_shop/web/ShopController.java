@@ -3,10 +3,7 @@ package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
-import com.pdkj.jack_shop.model.IsPassShop;
-import com.pdkj.jack_shop.model.Label;
-import com.pdkj.jack_shop.model.Shop;
-import com.pdkj.jack_shop.model.User;
+import com.pdkj.jack_shop.model.*;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +38,7 @@ public class ShopController extends BaseController {
      */
     @GetMapping("getShopList")
     public Result getShopList(Pager pager) throws CustomException {
-        List<Map<String, Object>> list = shopService.getShopList(pager);
-        return ResultGenerator.genSuccessResult(list);
+        return ResultGenerator.genSuccessResult(shopService.getShopList(pager));
     }
 
     /**
@@ -53,9 +49,12 @@ public class ShopController extends BaseController {
      * @throws CustomException
      */
     @GetMapping("addShop")
-    public Result addShop(IsPassShop shop,Label label) throws CustomException {
-        label.setShop_id(shopService.addShop(shop));
+    public Result addShop(IsPassShop shop, Label label, ShopType shopType) throws CustomException {
+        Long shopId = shopService.addShop(shop);
+        label.setShop_id(shopId);
         labelService.addLabel(label);
+        shopTypeService.addShopTypeRel(new ShopTypeRel(shopId,shopType.getId()) );
+        shopId=null;
         return ResultGenerator.genSuccessResult();
     }
 

@@ -85,6 +85,16 @@ public class Shop {
 
     private String county;
 
+    private String food_safety_permit_img;
+
+    public String getFood_safety_permit_img() {
+        return food_safety_permit_img;
+    }
+
+    public void setFood_safety_permit_img(String food_safety_permit_img) {
+        this.food_safety_permit_img = food_safety_permit_img;
+    }
+
     public String getCounty() {
         return county;
     }

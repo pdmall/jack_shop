@@ -20,9 +20,9 @@ public class IsPassShop {
     private String shop_phone;
 
     /**
-     * 2，打洋
-1，营业
-0，冻结
+     *  2，打洋
+     *  1，营业
+     *  0，冻结
      */
     private Integer shop_state;
 
@@ -43,7 +43,27 @@ public class IsPassShop {
     private String longitude;
 
     private String latitude;
+
     private String county;
+
+    private String food_safety_permit_img;
+    private Long shop_id;
+
+    public Long getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public String getFood_safety_permit_img() {
+        return food_safety_permit_img;
+    }
+
+    public void setFood_safety_permit_img(String food_safety_permit_img) {
+        this.food_safety_permit_img = food_safety_permit_img;
+    }
     /**
      * 平均消费
      */
