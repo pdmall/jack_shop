@@ -47,15 +47,8 @@ public class IsPassShop {
     private String county;
 
     private String food_safety_permit_img;
-    private Long shop_id;
 
-    public Long getShop_id() {
-        return shop_id;
-    }
 
-    public void setShop_id(Long shop_id) {
-        this.shop_id = shop_id;
-    }
 
     public String getFood_safety_permit_img() {
         return food_safety_permit_img;
