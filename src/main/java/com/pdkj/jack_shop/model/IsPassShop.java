@@ -149,7 +149,7 @@ public class IsPassShop {
     public void setBuss_open(String buss_open) throws ParseException {
        if(DateUtils.isLegalDate(buss_open,"HH:mm")){
            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-           Date date = sdf.parse(buss_open+":00");
+           this.buss_open = sdf.parse(buss_open+":00");
        }
     }
 
@@ -160,7 +160,7 @@ public class IsPassShop {
     public void setBuss_close(String buss_close) throws ParseException {
         if(DateUtils.isLegalDate(buss_close,"HH:mm")){
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            Date date = sdf.parse(buss_close+":00");
+            this.buss_close = sdf.parse(buss_close+":00");
         }
     }
 
