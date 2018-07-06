@@ -168,4 +168,10 @@ public class ShopController extends BaseController {
     public Result getShopName(String name, Pager pager) {
         return ResultGenerator.genSuccessResult(shopService.getShopName(name, pager));
     }
+
+    @GetMapping("getShopPassFinish")
+    public Result getShopPassFinish(Long id) {
+        return ResultGenerator.genSuccessResult(shopService.getShopPassFinish(id));
+    }
+
 }
