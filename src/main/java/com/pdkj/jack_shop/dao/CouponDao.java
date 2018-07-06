@@ -11,6 +11,7 @@ package com.pdkj.jack_shop.dao;
 import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.ShopType;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
@@ -26,17 +27,20 @@ import java.util.Map;
  */
 @Repository
 public class CouponDao extends DaoBase<ShopType> {
-    public List<Map<String, Object>> getControllerByShopId(Long shopId) {
-        String sql = " select " +
-                " id,title,`type`,discount,buy_price, " +
-                " final_price,is_refund,sub_time," +
-                " date_start,date_end,time_start,time_end, " +
-                " unable_date,coupon_img " +
-                " from coupon " +
-                " where shop_id = ? ";
-        return jdbcTemplate.queryForList(sql, shopId);
+    public List<Map<String, Object>> getCouponByShopId(Long shopId) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("c.title,c.type,c.buy_price,c.final_price,c.appointment,c.stock_count,");
+        sql.append("c.once_count,cgr.`name`,c.id,r.discrete,ct.`name`");
+        sql.append("FROM");
+        sql.append("coupon c ,coupon_goods_range cgr ,");
+        sql.append("coupon_rules_rel ,rules r ,coupon_type ct");
+        sql.append("WHERE");
+        sql.append("goods_range_id = cgr.id AND c.id = cr.coupon_id AND rules_id = r.id AND");
+        sql.append("ct.id = c.type AND shop_id = ? AND coupon_state = 1");
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    public Map<String, Object> getControllerById(Long id) {
+    public Map<String, Object> getCouponById(Long id) {
         String sql = " select " +
                 " id,title,`type`,discount,buy_price, " +
                 " final_price,is_refund,sub_time,`describe`, " +
@@ -47,7 +51,7 @@ public class CouponDao extends DaoBase<ShopType> {
         return jdbcTemplate.queryForMap(sql, id);
     }
 
-    public List<Map<String, Object>> getControllerByUserId(Long UserId) {
+    public List<Map<String, Object>> getCouponByUserId(Long UserId) {
         String sql = " select " +
                 " coupon.id,title,`type`,discount,buy_price, " +
                 " final_price,is_refund,sub_time, " +

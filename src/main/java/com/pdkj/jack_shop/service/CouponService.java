@@ -17,16 +17,16 @@ import java.util.Map;
 public class CouponService extends BaseService<ShopType> {
 
     public List<Map<String, Object>> getCouponByShopId(Long shopId) {
-        List<Map<String, Object>> list = couponDao.getControllerByShopId(shopId);
+        List<Map<String, Object>> list = couponDao.getCouponByShopId(shopId);
         return list;
     }
 
     public Map<String, Object> getCouponById(Long id) {
-        Map<String, Object> map = couponDao.getControllerById(id);
+        Map<String, Object> map = couponDao.getCouponById(id);
         return map;
     }
     public List<Map<String, Object>> getCouponByUserId(Long userId) {
-        List<Map<String, Object>> list = couponDao.getControllerByUserId(userId);
+        List<Map<String, Object>> list = couponDao.getCouponByUserId(userId);
         return list;
     }
     public Long addCoupon(Coupon coupon) {
