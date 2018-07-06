@@ -34,10 +34,10 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("c.once_count,cgr.`name`,c.id,r.discrete,ct.`name`");
         sql.append("FROM");
         sql.append("coupon c ,coupon_goods_range cgr ,");
-        sql.append("coupon_rules_rel ,rules r ,coupon_type ct");
+        sql.append("coupon_rules_rel crr,rules r ,coupon_type ct");
         sql.append("WHERE");
-        sql.append("goods_range_id = cgr.id AND c.id = cr.coupon_id AND rules_id = r.id AND");
-        sql.append("ct.id = c.type AND shop_id = ? AND coupon_state = 1");
+        sql.append("goods_range_id = cgr.id AND c.id = crr.coupon_id AND rules_id = r.id AND");
+        sql.append("ct.id = c.type AND shop_id = ? AND coupon_state = 1",shopId);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     public Map<String, Object> getCouponById(Long id) {
