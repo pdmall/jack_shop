@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author lvchong
  * @ClassName CouponController
@@ -40,7 +44,10 @@ public class CouponController extends BaseController {
 
     @GetMapping("getCouponByShopId")
     public Result getCouponByShopId(@RequestParam(value = "shopId") Long shopId) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shopId));
+        List<Map<String, Object>> list = couponService.getCouponByShopId(shopId);
+        for (Map<String, Object> map :list)
+        map.put("sale_volume", "10");
+        return ResultGenerator.genSuccessResult(list);
     }
 
     @GetMapping("addCoupon")

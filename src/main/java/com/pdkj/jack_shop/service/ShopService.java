@@ -62,4 +62,8 @@ public class ShopService extends BaseService<Shop> {
         return shopDao.getShopName( name,pager);
     }
 
+    public List<Map<String, Object>> getShopPassFinish(Long id){
+        return shopDao.getShopPassFinish(id);
+    }
+
 }

@@ -166,4 +166,16 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
+    public List<Map<String, Object>> getShopPassFinish(Long id){
+        MySql sql = new MySql();
+        sql.append("SELECT  ");
+        sql.append("spl.id,spl.shop_id,reason,created");
+        sql.append("FROM");
+        sql.append("shop_pass_log AS spl ,user_shop_rel AS usr");
+        sql.append("WHERE");
+        sql.append("spl.shop_id =  usr.shop_id AND");
+        sql.append("usr.user_id = ?",id);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
 }
