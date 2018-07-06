@@ -2,7 +2,6 @@ package com.pdkj.jack_shop.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
 
 public class Coupon {
 
@@ -21,19 +20,7 @@ public class Coupon {
 
     private BigDecimal final_price;
 
-    /**
-     * 是否可退
-1，随时退
-0，不可退
-     */
-    private Integer is_refund;
-
-    /**
-     * 0,免预约
-1,提前一小时预约
-2，提前2销售预约
-     */
-    private Integer sub_time;
+    private String appointment;
 
     /**
      * 优惠描述，团餐菜品介绍 ；好换行
@@ -60,14 +47,6 @@ public class Coupon {
      */
     private Date time_end;
 
-    /**
-     * 0,随时可用
-1,周末不可用
-2,周六，周日不可用
-3,节假日不可用
-     */
-    private Integer unable_date;
-
     private String coupon_img;
 
     private Date created;
@@ -77,6 +56,11 @@ public class Coupon {
      */
     private Long shop_id;
 
+    private int coupon_state;
+    private int goods_range;
+    private int buy_person_limit;
+    private int stock_count;
+    private int once_count;
 
     public Long getId() {
         return id;
@@ -126,20 +110,12 @@ public class Coupon {
         this.final_price = final_price;
     }
 
-    public Integer getIs_refund() {
-        return is_refund;
+    public String getAppointment() {
+        return appointment;
     }
 
-    public void setIs_refund(Integer is_refund) {
-        this.is_refund = is_refund;
-    }
-
-    public Integer getSub_time() {
-        return sub_time;
-    }
-
-    public void setSub_time(Integer sub_time) {
-        this.sub_time = sub_time;
+    public void setAppointment(String appointment) {
+        this.appointment = appointment;
     }
 
     public String getDescribe() {
@@ -182,14 +158,6 @@ public class Coupon {
         this.time_end = time_end;
     }
 
-    public Integer getUnable_date() {
-        return unable_date;
-    }
-
-    public void setUnable_date(Integer unable_date) {
-        this.unable_date = unable_date;
-    }
-
     public String getCoupon_img() {
         return coupon_img;
     }
@@ -212,5 +180,45 @@ public class Coupon {
 
     public void setShop_id(Long shop_id) {
         this.shop_id = shop_id;
+    }
+
+    public int getCoupon_state() {
+        return coupon_state;
+    }
+
+    public void setCoupon_state(int coupon_state) {
+        this.coupon_state = coupon_state;
+    }
+
+    public int getGoods_range() {
+        return goods_range;
+    }
+
+    public void setGoods_range(int goods_range) {
+        this.goods_range = goods_range;
+    }
+
+    public int getBuy_person_limit() {
+        return buy_person_limit;
+    }
+
+    public void setBuy_person_limit(int buy_person_limit) {
+        this.buy_person_limit = buy_person_limit;
+    }
+
+    public int getStock_count() {
+        return stock_count;
+    }
+
+    public void setStock_count(int stock_count) {
+        this.stock_count = stock_count;
+    }
+
+    public int getOnce_count() {
+        return once_count;
+    }
+
+    public void setOnce_count(int once_count) {
+        this.once_count = once_count;
     }
 }
