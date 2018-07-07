@@ -31,12 +31,12 @@ public class CouponDao extends DaoBase<ShopType> {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("c.title,c.type,c.buy_price,c.final_price,c.appointment,c.stock_count,");
-        sql.append("c.once_count,cgr.`name`,c.id,r.discrete,ct.`name`");
+        sql.append("c.once_count,`range_name`,c.id,`type_name`");
         sql.append("FROM");
         sql.append("coupon c ,coupon_goods_range cgr ,");
-        sql.append("coupon_rules_rel crr,rules r ,coupon_type ct");
+        sql.append("coupon_type ct");
         sql.append("WHERE");
-        sql.append("goods_range_id = cgr.id AND c.id = crr.coupon_id AND rules_id = r.id AND");
+        sql.append("goods_range_id = cgr.id   AND");
         sql.append("ct.id = c.type AND shop_id = ? AND coupon_state = 1",shopId);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
