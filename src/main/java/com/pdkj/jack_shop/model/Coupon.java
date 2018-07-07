@@ -61,6 +61,15 @@ public class Coupon {
     private int buy_person_limit;
     private int stock_count;
     private int once_count;
+    private String unavailable_date;
+
+    public String getUnavailable_date() {
+        return unavailable_date;
+    }
+
+    public void setUnavailable_date(String unavailable_date) {
+        this.unavailable_date = unavailable_date;
+    }
 
     public Long getId() {
         return id;

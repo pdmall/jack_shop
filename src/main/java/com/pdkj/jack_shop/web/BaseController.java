@@ -43,6 +43,9 @@ public class BaseController {
     @Resource
     public SignInService signInService;
 
+    @Resource
+    public ShopCommentService shopCommentService;
+
 
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();

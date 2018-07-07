@@ -47,6 +47,8 @@ public class BaseService<T> {
     WxService wxService;
     @Resource
     LabelDao labelDao;
+    @Resource
+    ShopCommentDao shopCommentDao;
 
     public Object getCache(String key) {
         Object value = null;

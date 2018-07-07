@@ -12,6 +12,7 @@ import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Coupon;
+import com.pdkj.jack_shop.model.IsPassCoupon;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +52,7 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("addCoupon")
-    public Result addCoupon(Coupon coupon) throws CustomException {
+    public Result addCoupon(IsPassCoupon coupon) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
     }
 }

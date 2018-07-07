@@ -2,6 +2,7 @@ package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.dao.CouponDao;
 import com.pdkj.jack_shop.model.Coupon;
+import com.pdkj.jack_shop.model.IsPassCoupon;
 import com.pdkj.jack_shop.model.ShopType;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class CouponService extends BaseService<ShopType> {
         List<Map<String, Object>> list = couponDao.getCouponByUserId(userId);
         return list;
     }
-    public Long addCoupon(Coupon coupon) {
+    public Long addCoupon(IsPassCoupon coupon) {
         return couponDao.addCoupon(coupon);
     }
 }
