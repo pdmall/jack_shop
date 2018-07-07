@@ -169,6 +169,11 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.getShopName(name, pager));
     }
 
+    /**
+     * 商铺添加返回消息
+     * @param id
+     * @return
+     */
     @GetMapping("getShopPassFinish")
     public Result getShopPassFinish(Long id) {
         return ResultGenerator.genSuccessResult(shopService.getShopPassFinish(id));

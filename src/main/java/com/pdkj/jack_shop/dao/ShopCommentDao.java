@@ -32,4 +32,13 @@ public class ShopCommentDao extends DaoBase<Banner> {
         sql.append("shop_comment where shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+    public List<Map<String,Object>> getCommentReply(Long order_id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append(" id,`comment`,created,user_img,comment_img,state,user_or_shop,order_id");
+        sql.append(" FROM");
+        sql.append(" comment_reply where");
+        sql.append("order_id = ?",order_id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
 }

@@ -19,4 +19,9 @@ public class ShopCommentService extends BaseService<ShopComment> {
     public List<Map<String,Object>> getCommentList(Long shopId) {
         return shopCommentDao.getCommentList(shopId);
     }
+
+    public List<Map<String,Object>> getCommentReply(Long order_id) {
+        return shopCommentDao.getCommentReply(order_id);
+    }
+
 }

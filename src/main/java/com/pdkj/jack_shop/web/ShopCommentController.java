@@ -18,10 +18,14 @@ import java.util.Map;
 public class ShopCommentController extends BaseController {
 
     @GetMapping("getCommentList")
-    public Result getComment(Long shopId) throws CustomException {
+    public Result getCommentList(Long shopId) throws CustomException {
         return ResultGenerator.genSuccessResult(shopCommentService.getCommentList(shopId));
     }
 
+    @GetMapping("getCommentReply")
+    public Result getCommentReply(Long order_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopCommentService.getCommentReply(order_id));
+    }
 
 
 }
