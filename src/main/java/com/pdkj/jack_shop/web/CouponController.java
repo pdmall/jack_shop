@@ -33,7 +33,7 @@ public class CouponController extends BaseController {
 
 
     @GetMapping("getCouponById")
-    public Result getCouponById(@RequestParam(value = "id") Long id) throws CustomException {
+    public Result getCouponById(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.getCouponById(id));
     }
 
@@ -43,7 +43,7 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("getCouponByShopId")
-    public Result getCouponByShopId(@RequestParam(value = "shopId") Long shopId) throws CustomException {
+    public Result getCouponByShopId(Long shopId) throws CustomException {
         List<Map<String, Object>> list = couponService.getCouponByShopId(shopId);
         for (Map<String, Object> map :list)
         map.put("sale_volume", "10");
