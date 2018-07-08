@@ -45,7 +45,8 @@ public class BaseController {
 
     @Resource
     public ShopCommentService shopCommentService;
-
+    @Resource
+    public ShopGoodsService shopGoodsService;
 
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();

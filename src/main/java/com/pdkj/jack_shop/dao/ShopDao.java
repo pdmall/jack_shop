@@ -177,5 +177,6 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("usr.user_id = ?",id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+    
 
 }

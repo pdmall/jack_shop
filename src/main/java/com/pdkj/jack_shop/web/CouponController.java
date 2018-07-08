@@ -39,20 +39,21 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("getCouponByUserId")
-    public Result getCouponByUserId(String token) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId()));
+    public Result getCouponByUserId(String token,Integer coupon_state) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),coupon_state));
     }
 
     @GetMapping("getCouponByShopId")
-    public Result getCouponByShopId(Long shopId) throws CustomException {
-        List<Map<String, Object>> list = couponService.getCouponByShopId(shopId);
-        for (Map<String, Object> map :list)
-        map.put("sale_volume", "10");
+    public Result getCouponByShopId(Long shopId,int coupon_state) throws CustomException {
+        List<Map<String, Object>> list = couponService.getCouponByShopId(shopId,coupon_state);
         return ResultGenerator.genSuccessResult(list);
     }
 
     @GetMapping("addCoupon")
     public Result addCoupon(IsPassCoupon coupon) throws CustomException {
+
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
+
     }
+
 }
