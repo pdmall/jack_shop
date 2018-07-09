@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("sysUser")
 public class SysUserController extends BaseController{
 
-    @PostMapping("login")
-    public Result login(String username,String password){
-        sysUserService.login(username,password);
-        return ResultGenerator.genSuccessResult("aaa");
-    }
+
 
 }
