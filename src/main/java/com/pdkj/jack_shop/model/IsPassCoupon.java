@@ -1,6 +1,10 @@
 package com.pdkj.jack_shop.model;
 
+import com.pdkj.jack_shop.util.DateUtils;
+
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class IsPassCoupon {
@@ -157,33 +161,43 @@ public class IsPassCoupon {
         return date_start;
     }
 
-    public void setDate_start(Date date_start) {
-        this.date_start = date_start;
+    public void setDate_start(String date_start) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.date_start = sdf.parse(date_start);
     }
 
     public Date getDate_end() {
         return date_end;
     }
 
-    public void setDate_end(Date date_end) {
-        this.date_end = date_end;
+    public void setDate_end(String date_end) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.date_end = sdf.parse(date_end);
     }
+
+
 
     public Date getTime_start() {
         return time_start;
     }
-
-    public void setTime_start(Date time_start) {
-        this.time_start = time_start;
+    public void setTime_start(String time_start) throws ParseException {
+        if(DateUtils.isLegalDate(time_start,"HH:mm")){
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            this.time_start = sdf.parse(time_start+":00");
+        }
     }
 
     public Date getTime_end() {
         return time_end;
     }
-
-    public void setTime_end(Date time_end) {
-        this.time_end = time_end;
+    public void setTime_end(String time_end) throws ParseException {
+        if(DateUtils.isLegalDate(time_end,"HH:mm")){
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            this.time_end = sdf.parse(time_end+":00");
+        }
     }
+
+
 
     public String getCoupon_img() {
         return coupon_img;
