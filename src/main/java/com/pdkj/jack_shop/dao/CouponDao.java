@@ -70,10 +70,6 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("ct.id = c.type AND user_id = ? AND coupon_state = ?",UserId,coupon_state);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    public int couponSaleVolume(Long coupon_id){
-        String sql = "SELECT count(id) FROM `user_order` WHERE use_coupon_id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{coupon_id}, Integer.class);
-    }
 
     /**
      * @Title:

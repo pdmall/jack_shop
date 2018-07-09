@@ -57,12 +57,21 @@ public class IsPassCoupon {
     private Long shop_id;
 
     private int coupon_state;
-    private int goods_range;
+    private int goods_range_id;
     private int buy_person_limit;
     private int stock_count;
     private int once_count;
     private String unavailable_date;
     private String diners_number;
+    private int is_limit;
+
+    public int getIs_limit() {
+        return is_limit;
+    }
+
+    public void setIs_limit(int is_limit) {
+        this.is_limit = is_limit;
+    }
 
     public String getDiners_number() {
         return diners_number;
@@ -71,6 +80,15 @@ public class IsPassCoupon {
     public void setDiners_number(String diners_number) {
         this.diners_number = diners_number;
     }
+
+    public String getUnavailable_date() {
+        return unavailable_date;
+    }
+
+    public void setUnavailable_date(String unavailable_date) {
+        this.unavailable_date = unavailable_date;
+    }
+
     public Long getId() {
         return id;
     }
@@ -199,12 +217,12 @@ public class IsPassCoupon {
         this.coupon_state = coupon_state;
     }
 
-    public int getGoods_range() {
-        return goods_range;
+    public int getGoods_range_id() {
+        return goods_range_id;
     }
 
-    public void setGoods_range(int goods_range) {
-        this.goods_range = goods_range;
+    public void setGoods_range_id(int goods_range_id) {
+        this.goods_range_id = goods_range_id;
     }
 
     public int getBuy_person_limit() {
@@ -229,13 +247,5 @@ public class IsPassCoupon {
 
     public void setOnce_count(int once_count) {
         this.once_count = once_count;
-    }
-
-    public String getUnavailable_date() {
-        return unavailable_date;
-    }
-
-    public void setUnavailable_date(String unavailable_date) {
-        this.unavailable_date = unavailable_date;
     }
 }

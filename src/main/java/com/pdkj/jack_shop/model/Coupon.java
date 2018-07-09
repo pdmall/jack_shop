@@ -57,7 +57,7 @@ public class Coupon {
     private Long shop_id;
 
     private int coupon_state;
-    private int goods_range;
+    private int goods_range_id;
     private int buy_person_limit;
     private int stock_count;
     private int once_count;
@@ -217,12 +217,12 @@ public class Coupon {
         this.coupon_state = coupon_state;
     }
 
-    public int getGoods_range() {
-        return goods_range;
+    public int getGoods_range_id() {
+        return goods_range_id;
     }
 
-    public void setGoods_range(int goods_range) {
-        this.goods_range = goods_range;
+    public void setGoods_range_id(int goods_range_id) {
+        this.goods_range_id = goods_range_id;
     }
 
     public int getBuy_person_limit() {

@@ -20,8 +20,6 @@ public class CouponService extends BaseService<ShopType> {
 
     public List<Map<String, Object>> getCouponByShopId(Long shopId , Integer coupon_state) {
         List<Map<String, Object>> list = couponDao.getCouponByShopId(shopId,coupon_state);
-
-
         return list;
     }
 
@@ -37,5 +35,6 @@ public class CouponService extends BaseService<ShopType> {
     public Long addCoupon(IsPassCoupon coupon) {
         return couponDao.addCoupon(coupon);
     }
+
 
 }
