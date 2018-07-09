@@ -3,7 +3,7 @@ package com.pdkj.jack_shop.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Coupon {
+public class IsPassCoupon {
 
     private Long id;
 
@@ -62,14 +62,6 @@ public class Coupon {
     private int stock_count;
     private int once_count;
     private String unavailable_date;
-
-    public String getUnavailable_date() {
-        return unavailable_date;
-    }
-
-    public void setUnavailable_date(String unavailable_date) {
-        this.unavailable_date = unavailable_date;
-    }
 
     public Long getId() {
         return id;
@@ -229,5 +221,13 @@ public class Coupon {
 
     public void setOnce_count(int once_count) {
         this.once_count = once_count;
+    }
+
+    public String getUnavailable_date() {
+        return unavailable_date;
+    }
+
+    public void setUnavailable_date(String unavailable_date) {
+        this.unavailable_date = unavailable_date;
     }
 }

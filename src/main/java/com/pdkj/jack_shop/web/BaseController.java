@@ -17,7 +17,8 @@ public class BaseController {
 
     @Resource
     public ShopService shopService;
-
+    @Resource
+    public LabelService labelService;
     @Resource
     public ShopTypeService shopTypeService;
 
@@ -39,9 +40,15 @@ public class BaseController {
     @Resource
     public WxPayService wxPayService;
 
+    @Resource
+    public SignInService signInService;
 
+    @Resource
+    public ShopCommentService shopCommentService;
+    @Resource
+    public ShopGoodsService shopGoodsService;
 
-    public User getUser(){
+    public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);
     }

@@ -36,7 +36,7 @@ public class UserController extends BaseController {
     }*/
 
     @GetMapping("getUserInfo")
-    public Result getUserInfo() throws CustomException {
+    public Result getUserInfo(String token) throws CustomException {
         return ResultGenerator.genSuccessResult(getUser());
     }
 
@@ -50,5 +50,6 @@ public class UserController extends BaseController {
     public Result getLevel1ByLevel3(String token) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
     }
+
 
 }

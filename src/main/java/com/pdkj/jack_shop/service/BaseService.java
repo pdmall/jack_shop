@@ -40,6 +40,17 @@ public class BaseService<T> {
     @Resource
     UserWalletDao userWalletDao;
 
+    @Resource
+    SignInDao signInDao;
+
+    @Resource
+    WxService wxService;
+    @Resource
+    LabelDao labelDao;
+    @Resource
+    ShopCommentDao shopCommentDao;
+    @Resource
+    ShopGoodsDao shopGoodsDao;
 
     public Object getCache(String key) {
         Object value = null;

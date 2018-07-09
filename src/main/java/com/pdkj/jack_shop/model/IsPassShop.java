@@ -5,10 +5,8 @@ import com.pdkj.jack_shop.util.DateUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.*;
 
-public class Shop {
-    @Id
+public class IsPassShop {
     private Long id;
 
     private String shop_name;
@@ -22,9 +20,9 @@ public class Shop {
     private String shop_phone;
 
     /**
-     * 2，打洋
-1，营业
-0，冻结
+     *  2，打洋
+     *  1，营业
+     *  0，冻结
      */
     private Integer shop_state;
 
@@ -46,6 +44,19 @@ public class Shop {
 
     private String latitude;
 
+    private String county;
+
+    private String food_safety_permit_img;
+
+
+
+    public String getFood_safety_permit_img() {
+        return food_safety_permit_img;
+    }
+
+    public void setFood_safety_permit_img(String food_safety_permit_img) {
+        this.food_safety_permit_img = food_safety_permit_img;
+    }
     /**
      * 平均消费
      */
@@ -81,27 +92,6 @@ public class Shop {
      * 店铺详情图片","号分割
      */
     private String detail_imgs;
-
-
-    private String county;
-
-    private String food_safety_permit_img;
-
-    public String getFood_safety_permit_img() {
-        return food_safety_permit_img;
-    }
-
-    public void setFood_safety_permit_img(String food_safety_permit_img) {
-        this.food_safety_permit_img = food_safety_permit_img;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
 
     /**
      * @return id
@@ -289,5 +279,13 @@ public class Shop {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 }

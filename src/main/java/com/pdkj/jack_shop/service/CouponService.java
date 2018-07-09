@@ -1,7 +1,10 @@
 package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.dao.CouponDao;
+import com.pdkj.jack_shop.model.Coupon;
+import com.pdkj.jack_shop.model.IsPassCoupon;
 import com.pdkj.jack_shop.model.ShopType;
+import org.apache.ibatis.javassist.runtime.Inner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +18,23 @@ import java.util.Map;
 @Service
 public class CouponService extends BaseService<ShopType> {
 
-    public List<Map<String, Object>> getControllerByShopId(Long shopId) {
-        List<Map<String, Object>> list = couponDao.getControllerByShopId(shopId);
+    public List<Map<String, Object>> getCouponByShopId(Long shopId , Integer coupon_state) {
+        List<Map<String, Object>> list = couponDao.getCouponByShopId(shopId,coupon_state);
+
+
         return list;
     }
 
-    public Map<String, Object> getControllerById(Long id) {
-        Map<String, Object> map = couponDao.getControllerById(id);
+    public Map<String, Object> getCouponById(Long id) {
+        Map<String, Object> map = couponDao.getCouponById(id);
         return map;
     }
-    public List<Map<String, Object>> getControllerByUserId(Long userId) {
-        List<Map<String, Object>> list = couponDao.getControllerByUserId(userId);
+
+    public List<Map<String, Object>> getCouponByUserId(Long userId, Integer coupon_state) {
+        List<Map<String, Object>> list = couponDao.getCouponByUserId(userId,coupon_state);
         return list;
     }
-
+    public Long addCoupon(IsPassCoupon coupon) {
+        return couponDao.addCoupon(coupon);
+    }
 }

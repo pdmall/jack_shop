@@ -11,7 +11,7 @@ public class XCXInfo {
     public static String AUTHORIZATION_CODE = "authorization_code";
 
     public final static String URL_OPENID = "https://api.weixin.qq.com/sns/jscode2session";
-
+    public final static String URL_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token";
 
 
     //微信支付的商户id

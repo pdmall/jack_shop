@@ -31,6 +31,12 @@ public class WXController extends BaseController {
         return ResultGenerator.genSuccessResult(data);
     }
 
+    @GetMapping("getToken")
+    public Result getToken() throws Exception {
+        return ResultGenerator.genSuccessResult( wxService.getToken());
+    }
+
+
     @RequestMapping("notifyInfo")
     public Result notifyInfo(HttpServletRequest request) throws Exception {
         String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());

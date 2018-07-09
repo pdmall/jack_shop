@@ -3,6 +3,7 @@ package com.pdkj.jack_shop.service;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.IsPassShop;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String,Object>> getShopList(Pager page) {
         List<Map<String, Object>> shop = shopDao.getShopList(page);
         for (Map<String,Object> map : shop){
-            map.put("coupons",couponDao.getControllerByShopId(Long.valueOf(map.get("id").toString())));
+            map.put("coupons",couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()),1));
         }
         return shop;
     }
 
 
-    public Long addShop(Shop shop){
+    public Long addShop(IsPassShop shop){
         return shopDao.addShop(shop);
     }
     public Map<String, Object> getShop(Long id){
@@ -59,6 +60,10 @@ public class ShopService extends BaseService<Shop> {
 
     public List<Map<String, Object>> getShopName(String name , Pager pager ){
         return shopDao.getShopName( name,pager);
+    }
+
+    public List<Map<String, Object>> getShopPassFinish(Long id){
+        return shopDao.getShopPassFinish(id);
     }
 
 }

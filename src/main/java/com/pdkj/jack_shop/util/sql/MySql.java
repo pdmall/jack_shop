@@ -61,7 +61,7 @@ public class MySql {
 
     @Override
     public String toString() {
-        System.out.println( sql.toString());
+
         for (int i=0; i<values.size(); i++){
             System.out.print(values.get(i).toString());
         }

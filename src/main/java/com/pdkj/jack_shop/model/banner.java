@@ -17,9 +17,9 @@ package com.pdkj.jack_shop.model;
 public class banner {
     private String id;
     private String img_url;
-    private String typeA;
+    private String type;
     private String value;
-    private String is_availableA;
+    private String is_available;
 
     public String getId() {
         return id;
@@ -37,12 +37,12 @@ public class banner {
         this.img_url = img_url;
     }
 
-    public String getTypeA() {
-        return typeA;
+    public String getType() {
+        return type;
     }
 
-    public void setTypeA(String typeA) {
-        this.typeA = typeA;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getValue() {
@@ -53,11 +53,11 @@ public class banner {
         this.value = value;
     }
 
-    public String getIs_availableA() {
-        return is_availableA;
+    public String getIs_available() {
+        return is_available;
     }
 
-    public void setIs_availableA(String is_availableA) {
-        this.is_availableA = is_availableA;
+    public void setIs_available(String is_available) {
+        this.is_available = is_available;
     }
 }
