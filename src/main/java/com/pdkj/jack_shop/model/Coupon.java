@@ -63,6 +63,15 @@ public class Coupon {
     private int once_count;
     private String unavailable_date;
     private String diners_number;
+    private int is_limit;
+
+    public int getIs_limit() {
+        return is_limit;
+    }
+
+    public void setIs_limit(int is_limit) {
+        this.is_limit = is_limit;
+    }
 
     public String getDiners_number() {
         return diners_number;
