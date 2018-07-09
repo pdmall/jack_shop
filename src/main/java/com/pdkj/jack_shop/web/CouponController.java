@@ -51,7 +51,6 @@ public class CouponController extends BaseController {
 
     @GetMapping("addCoupon")
     public Result addCoupon(IsPassCoupon coupon) throws CustomException {
-
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
 
     }

@@ -37,4 +37,5 @@ public class CouponService extends BaseService<ShopType> {
     public Long addCoupon(IsPassCoupon coupon) {
         return couponDao.addCoupon(coupon);
     }
+
 }

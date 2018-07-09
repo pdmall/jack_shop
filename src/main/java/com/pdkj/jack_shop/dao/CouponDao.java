@@ -47,7 +47,7 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("SELECT");
         sql.append("c.id,c.title,c.type,c.buy_price,c.final_price,c.appointment,c.`describe`,c.date_start,");
         sql.append(" c.date_end,c.time_start,c.time_end,c.coupon_img,c.shop_id,c.buy_person_limit,");
-        sql.append(" c.stock_count,c.once_count,c.unavailable_date,cgr.range_name,ct.type_name");
+        sql.append(" c.stock_count,c.once_count,diners_number,c.unavailable_date,cgr.range_name,ct.type_name");
         sql.append("FROM");
         sql.append("coupon c ,coupon_goods_range cgr ,");
         sql.append("coupon_type ct");
@@ -75,6 +75,19 @@ public class CouponDao extends DaoBase<ShopType> {
         return jdbcTemplate.queryForObject(sql, new Object[]{coupon_id}, Integer.class);
     }
 
-
+    /**
+     * @Title:
+     * @Description: 添加卷
+     * @author lvchong
+     * @params * @param null
+     * @date 2018-07-07
+     * @throw YnCorpSysException
+     */
+    public Long addCoupon(IsPassCoupon coupon){
+        coupon.setId(Tools.generatorId());
+        SqlInfo insertSQL = SQLTools.getInsertSQL(coupon,"is_pass_coupon");
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+        return coupon.getId();
+    }
 
 }
