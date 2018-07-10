@@ -127,5 +127,8 @@ public class MySql {
         sql.append(s);
     }
 
+    public void delLast(){
+        sql.deleteCharAt(sql.length()-1);
+    }
 
 }

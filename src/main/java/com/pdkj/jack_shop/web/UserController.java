@@ -51,5 +51,11 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
     }
 
+    @GetMapping("delImg")
+    public Result delImg(String img_url) throws CustomException {
+        userService.delImg(img_url);
+        return ResultGenerator.genSuccessResult();
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.pdkj.jack_shop.service;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.Goods;
 import com.pdkj.jack_shop.model.IsPassShop;
 import com.pdkj.jack_shop.model.Shop;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -65,5 +66,12 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> getShopPassFinish(Long id){
         return shopDao.getShopPassFinish(id);
     }
+
+    //添加属于哪个商铺的菜品
+    public void addShopGoods(Goods goods,Long shop_id){
+        shopDao.addShopGoodsRel(shop_id,goodsDao.addGoods(goods));
+    }
+
+
 
 }

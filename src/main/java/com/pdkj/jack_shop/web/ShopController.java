@@ -84,7 +84,6 @@ public class ShopController extends BaseController {
 
     /**
      * 根据类型分类
-     *
      * @param id 传入类型ID
      * @return
      * @throws CustomException
@@ -179,4 +178,10 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.getShopPassFinish(id));
     }
 
+    //添加商铺的商品
+    @GetMapping("addShopGoods")
+    public Result addShopGoods(Goods goods,Long shop_id) {
+        shopService.addShopGoods(goods,shop_id);
+        return ResultGenerator.genSuccessResult();
+    }
 }

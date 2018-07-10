@@ -14,7 +14,7 @@ package com.pdkj.jack_shop.model;
  * @Description 类描述
  * @date 2018/7/7
  */
-public class ShopGoods {
+public class Goods {
     private Long id;
     private String name;
     private Integer unit_id;

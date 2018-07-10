@@ -3,13 +3,10 @@ package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.service.ShopTypeService;
 import com.pdkj.jack_shop.service.*;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
     @Resource
@@ -46,7 +43,9 @@ public class BaseController {
     @Resource
     public ShopCommentService shopCommentService;
     @Resource
-    public ShopGoodsService shopGoodsService;
+    public GoodsService goodsService;
+    @Resource
+    public GroupBuyService groupBuyService;
 
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();

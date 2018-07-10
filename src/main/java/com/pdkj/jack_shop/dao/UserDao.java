@@ -1,5 +1,6 @@
 package com.pdkj.jack_shop.dao;
 
+import com.pdkj.jack_shop.configurer.AliYunOSS;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.SQLTools;
@@ -90,5 +91,9 @@ public class UserDao extends DaoBase {
         String sql = "update user set token = ? where id = ?";
         int effect = jdbcTemplate.update(sql, token, id);
         return effect;
+    }
+
+    public void delImg(String img_url){
+        AliYunOSS.deleteFile(img_url);
     }
 }

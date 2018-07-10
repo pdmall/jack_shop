@@ -114,6 +114,13 @@
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- oss 文件服务器其-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>2.8.3</version>
+        </dependency>
         <!--========================-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

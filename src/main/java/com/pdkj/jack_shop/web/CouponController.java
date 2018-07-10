@@ -12,13 +12,12 @@ import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Coupon;
-import com.pdkj.jack_shop.model.IsPassCoupon;
+import com.pdkj.jack_shop.model.GroupBuy;
+import com.pdkj.jack_shop.model.Goods;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,14 +44,12 @@ public class CouponController extends BaseController {
 
     @GetMapping("getCouponByShopId")
     public Result getCouponByShopId(Long shopId,int coupon_state) throws CustomException {
-        List<Map<String, Object>> list = couponService.getCouponByShopId(shopId,coupon_state);
-        return ResultGenerator.genSuccessResult(list);
+        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shopId,coupon_state));
     }
 
     @GetMapping("addCoupon")
-    public Result addCoupon(IsPassCoupon coupon) throws CustomException {
+    public Result addCoupon(Coupon coupon) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
-
     }
 
 

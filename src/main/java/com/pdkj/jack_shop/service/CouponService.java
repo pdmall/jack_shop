@@ -1,10 +1,9 @@
 package com.pdkj.jack_shop.service;
 
-import com.pdkj.jack_shop.dao.CouponDao;
 import com.pdkj.jack_shop.model.Coupon;
-import com.pdkj.jack_shop.model.IsPassCoupon;
+import com.pdkj.jack_shop.model.GroupBuy;
+import com.pdkj.jack_shop.model.Goods;
 import com.pdkj.jack_shop.model.ShopType;
-import org.apache.ibatis.javassist.runtime.Inner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class CouponService extends BaseService<ShopType> {
         List<Map<String, Object>> list = couponDao.getCouponByUserId(userId,coupon_state);
         return list;
     }
-    public Long addCoupon(IsPassCoupon coupon) {
+    public Long addCoupon(Coupon coupon) {
         return couponDao.addCoupon(coupon);
     }
 

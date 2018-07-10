@@ -43,12 +43,6 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    public Long addShop(IsPassShop shop) {
-        shop.setId(Tools.generatorId());
-        SqlInfo insertSQL = SQLTools.getInsertSQL(shop,"is_pass_shop");
-        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
-        return shop.getId();
-    }
 
     public Map<String, Object> getShop(Long id) {
         MySql sql = new MySql();
@@ -177,6 +171,17 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("usr.user_id = ?",id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    
+
+    public Long addShop(IsPassShop shop) {
+        shop.setId(Tools.generatorId());
+        SqlInfo insertSQL = SQLTools.getInsertSQL(shop,"is_pass_shop");
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+        return shop.getId();
+    }
+    //添加商铺菜品
+    public void addShopGoodsRel(Long shop_id,Long goods_id){
+        String sql = "INSERT INTO shop_goods_rel (`id`, `shop_id`, `goods_id`) VALUES (?, ?, ?);";
+        jdbcTemplate.update(sql,Tools.generatorId(),shop_id,goods_id);
+    }
 
 }

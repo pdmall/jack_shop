@@ -11,7 +11,6 @@ package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
-import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2018/7/7
  */
 @RestController
-@RequestMapping("shopGoods")
-public class ShopGoodsController extends BaseController{
-    @GetMapping("getCouponGoods")
-    public Result getCouponGoods(Long coupon_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopGoodsService.getCouponGoods(coupon_id));
+@RequestMapping("Goods")
+public class GoodsController extends BaseController{
+
+    @GetMapping("getGroupBuyGoods")
+    public Result getGroupBuyGoods(Long coupon_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(goodsService.getGroupBuyGoods(coupon_id));
     }
 }

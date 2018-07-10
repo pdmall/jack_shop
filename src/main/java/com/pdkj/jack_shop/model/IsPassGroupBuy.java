@@ -1,8 +1,8 @@
 package com.pdkj.jack_shop.model;
 
-public class Coupon {
+public class IsPassGroupBuy {
     private Long id;
-    private Integer type;
+    private String title;
     private Double buy_price;
     private Double original_price;
     private String appointment;
@@ -10,14 +10,16 @@ public class Coupon {
     private String date_end;
     private String time_start;
     private String time_end;
+    private String group_buy_img;
     private String created;
     private Long shop_id;
-    private Integer coupon_state;
-    private Integer goods_range_id;
+    private Integer state;
     private Integer buy_person_limit;
     private Integer stock_count;
     private Integer once_count;
     private String unavailable_date;
+    private String diners_number;
+
 
     public Long getId() {
         return id;
@@ -27,12 +29,12 @@ public class Coupon {
         this.id = id;
     }
 
-    public Integer getType() {
-        return type;
+    public String getTitle() {
+        return title;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Double getBuy_price() {
@@ -41,14 +43,6 @@ public class Coupon {
 
     public void setBuy_price(Double buy_price) {
         this.buy_price = buy_price;
-    }
-
-    public Double getOriginal_price() {
-        return original_price;
-    }
-
-    public void setOriginal_price(Double original_price) {
-        this.original_price = original_price;
     }
 
     public String getAppointment() {
@@ -65,6 +59,14 @@ public class Coupon {
 
     public void setDate_start(String date_start) {
         this.date_start = date_start;
+    }
+
+    public Double getOriginal_price() {
+        return original_price;
+    }
+
+    public void setOriginal_price(Double original_price) {
+        this.original_price = original_price;
     }
 
     public String getDate_end() {
@@ -91,6 +93,14 @@ public class Coupon {
         this.time_end = time_end;
     }
 
+    public String getGroup_buy_img() {
+        return group_buy_img;
+    }
+
+    public void setGroup_buy_img(String group_buy_img) {
+        this.group_buy_img = group_buy_img;
+    }
+
     public String getCreated() {
         return created;
     }
@@ -107,20 +117,12 @@ public class Coupon {
         this.shop_id = shop_id;
     }
 
-    public Integer getCoupon_state() {
-        return coupon_state;
+    public Integer getState() {
+        return state;
     }
 
-    public void setCoupon_state(Integer coupon_state) {
-        this.coupon_state = coupon_state;
-    }
-
-    public Integer getGoods_range_id() {
-        return goods_range_id;
-    }
-
-    public void setGoods_range_id(Integer goods_range_id) {
-        this.goods_range_id = goods_range_id;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Integer getBuy_person_limit() {
@@ -153,5 +155,13 @@ public class Coupon {
 
     public void setUnavailable_date(String unavailable_date) {
         this.unavailable_date = unavailable_date;
+    }
+
+    public String getDiners_number() {
+        return diners_number;
+    }
+
+    public void setDiners_number(String diners_number) {
+        this.diners_number = diners_number;
     }
 }

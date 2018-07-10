@@ -1,12 +1,9 @@
 package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.dao.*;
-import com.pdkj.jack_shop.model.ShopType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
@@ -50,7 +47,9 @@ public class BaseService<T> {
     @Resource
     ShopCommentDao shopCommentDao;
     @Resource
-    ShopGoodsDao shopGoodsDao;
+    GoodsDao goodsDao;
+    @Resource
+    GroupBuyDao groupBuyDao;
 
     public Object getCache(String key) {
         Object value = null;
