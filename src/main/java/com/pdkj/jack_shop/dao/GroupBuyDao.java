@@ -36,12 +36,13 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     }
 
     //添加套餐中的菜品
-    public void addGroupBuyGoods(Long group_buy_id, Long[] GroupBuy_ids) {
+    public void addGroupBuyGoods(Long group_buy_id, String groupBuy_ids) {
+        String[] GroupBuy_ids = groupBuy_ids.split(",");
         if (GroupBuy_ids.length > 0) {
             MySql sql = new MySql();
             sql.append("INSERT INTO `group_buy_goods_rel` (`id`, `group_buy_id`, `goods_id`) VALUES ");
-            for (Long GroupBuy_id : GroupBuy_ids) {
-                sql.append("(?, ?, ?)", Tools.generatorId(), group_buy_id, GroupBuy_id);
+            for (String GroupBuy_id : GroupBuy_ids) {
+                sql.append("(?, ?, ?)", Tools.generatorId(), group_buy_id, Long.parseLong(GroupBuy_id));
             }
             sql.delLast();
             jdbcTemplate.update(sql.toString(), sql.getValues());

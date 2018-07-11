@@ -15,7 +15,7 @@ import java.util.Map;
 public class GroupBuyService extends BaseService<IsPassGroupBuy> {
 
     // 添加套餐卷
-    public Long addGroupBuy(IsPassGroupBuy groupBuy,Long[] goods_ids) {
+    public Long addGroupBuy(IsPassGroupBuy groupBuy,String goods_ids) {
         Long group_buy_id = groupBuyDao.addGroupBuy(groupBuy);
         groupBuyDao.addGroupBuyGoods(group_buy_id,goods_ids);
         return group_buy_id;
