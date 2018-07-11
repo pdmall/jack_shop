@@ -40,11 +40,11 @@ public class GoodsDao extends DaoBase<Goods> {
     public List<Map<String, Object>> getShopGoods(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit");
+        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit,gt.name type_name");
         sql.append("FROM");
-        sql.append("goods AS sg ,goods_unit AS sgu ,shop_goods_rel sgr");
+        sql.append("goods AS sg ,goods_unit AS sgu ,goods_type gt ");
         sql.append("WHERE");
-        sql.append("sg.unit_id = sgu.id AND sg.id = sgr.goods_id AND sgr.shop_id=?",shop_id);
+        sql.append("sg.unit_id = sgu.id AND sg.type_id = gt.id AND sg.id = sgr.goods_id AND sg.shop_id=?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
