@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Repository
 public class ShopDao extends DaoBase<Shop> {
-
+    //获得全部营业商铺
     public List<Map<String, Object>> getShopList(Pager page) {
         MySql sql = new MySql();
         sql.append("select DISTINCT(shop.id),shop_name,shop_address,longitude,");
@@ -43,7 +43,7 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-
+    //获得商铺详情
     public Map<String, Object> getShop(Long id) {
         MySql sql = new MySql();
         sql.append("SELECT");
@@ -53,13 +53,13 @@ public class ShopDao extends DaoBase<Shop> {
         Map<String, Object> map = jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
         return map;
     }
-
+    //获得商铺的地址 以及电话
     public Map<String, Object> findAddressById(Long id) {
         String sql = "select id,shop_name,shop_address,province,city,county,shop_phone," +
                 "longitude,latitude from shop where id=? ";
         return jdbcTemplate.queryForMap(sql, id);
     }
-
+    //按分类查询商铺
     public List<Map<String, Object>> findByClassify(Long type_id, Pager pager) throws CustomException {
         MySql sql = new MySql();
         sql.append("select ");
@@ -70,7 +70,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //搜索框查询商铺
     public List<Map<String, Object>> searchBox(String name, String county, Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
@@ -86,7 +86,7 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-
+    //按评分排序
     public List<Map<String, Object>> shopSort(String name, Long type_id, String county, Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
@@ -102,6 +102,7 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
+    //按距离排序
     /*SQRT((39.513341-`longitude`)*(39.513341-`longitude`)+(39.513341-`latitude`)*(39.513341-`latitude`))*/
     public List<Map<String, Object>> shopDistanceSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude) {
         MySql sql = new MySql();
@@ -117,7 +118,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //获得多少距离以内的商铺
     public List<Map<String, Object>> shopDistanceValueSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude, int distance) {
         MySql sql = new MySql();
         sql.append("select ");
@@ -133,7 +134,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //按用餐时段查询
     public List<Map<String, Object>> shopMealTime(String county, Pager pager, Long mealTimeId) {
         MySql sql = new MySql();
         sql.append("select ");
@@ -147,7 +148,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //搜索框 提示 根据店铺名称
     public List<Map<String, Object>> getShopName(String name, Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
@@ -159,7 +160,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //获得用户的商铺审核日志
     public List<Map<String, Object>> getShopPassFinish(Long id){
         MySql sql = new MySql();
         sql.append("SELECT  ");
@@ -167,11 +168,11 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("FROM");
         sql.append("shop_pass_log AS spl ,user_shop_rel AS usr");
         sql.append("WHERE");
-        sql.append("spl.shop_id =  usr.shop_id AND");
+        sql.append("spl.shop_id =  usr.shop_id AND usr.master = 1");
         sql.append("usr.user_id = ?",id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //添加一个商铺
     public Long addShop(IsPassShop shop) {
         shop.setId(Tools.generatorId());
         SqlInfo insertSQL = SQLTools.getInsertSQL(shop,"is_pass_shop");
@@ -194,7 +195,18 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("FROM");
         sql.append("shop AS s ,user_shop_rel AS usr , shop_state ss");
         sql.append("WHERE");
-        sql.append("s.id = usr.shop_id AND ss.id = s.shop_state and  usr.user_id = ?",user_id);
+        sql.append("s.id = usr.shop_id AND ss.id = s.shop_state and  usr.user_id = ? and usr.master = 1",user_id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
+    //获得商铺的店员
+    public List<Map<String,Object>> getEmployee(Long shop_id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("u.icon,usr.id,usr.role_name,usr.user_name,u.phone");
+        sql.append("FROM");
+        sql.append("user_shop_rel AS usr , `user` AS u");
+        sql.append("WHERE");
+        sql.append("usr.user_id = u.id AND usr.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 }

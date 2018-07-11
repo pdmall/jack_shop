@@ -185,4 +185,10 @@ public class ShopController extends BaseController {
         shopService.addShopGoods(goods,shop_id);
         return ResultGenerator.genSuccessResult();
     }
+
+    //获得商铺的店员
+    @GetMapping("getEmployee")
+    public Result getEmployee(Long shop_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.getEmployee(shop_id));
+    }
 }

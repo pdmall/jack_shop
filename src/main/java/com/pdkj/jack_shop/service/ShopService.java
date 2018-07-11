@@ -75,5 +75,8 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> getMyShopList(Long user_id) {
         return shopDao.getMyShopList(user_id);
     }
-
+    //获得商铺的店员
+    public List<Map<String, Object>> getEmployee(Long shop_id) {
+        return shopDao.getEmployee(shop_id);
+    }
 }
