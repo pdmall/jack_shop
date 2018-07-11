@@ -57,5 +57,11 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @GetMapping("getMyShopList")
+    public Result getMyShopList(String token) throws CustomException {
+        shopService.getMyShopList(getUser().getId());
+        return ResultGenerator.genSuccessResult();
+    }
+
 
 }
