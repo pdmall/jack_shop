@@ -168,6 +168,7 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(shopService.getShopName(name, pager));
     }
 
+
     /**
      * 商铺添加返回消息
      * @param id

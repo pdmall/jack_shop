@@ -71,7 +71,9 @@ public class ShopService extends BaseService<Shop> {
     public void addShopGoods(Goods goods,Long shop_id){
         shopDao.addShopGoodsRel(shop_id,goodsDao.addGoods(goods));
     }
-
-
+    //查询用户的商铺
+    public List<Map<String, Object>> getMyShopList(Long user_id) {
+        return shopDao.getMyShopList(user_id);
+    }
 
 }
