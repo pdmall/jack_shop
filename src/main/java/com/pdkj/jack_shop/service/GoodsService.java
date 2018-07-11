@@ -16,8 +16,8 @@ public class GoodsService extends BaseService<Goods> {
     public List<Map<String, Object>> getGroupBuyGoods(Long group_buy_id) {
         return goodsDao.getGroupBuyGoods(group_buy_id);
     }
-    public List<Map<String, Object>> getShopGoods(Long group_buy_id) {
-        return goodsDao.getShopGoods(group_buy_id);
+    public List<Map<String, Object>> getShopGoods(Long shop_id) {
+        return goodsDao.getShopGoods(shop_id);
     }
     public Long addGoods(Goods goods) {
         return goodsDao.addGoods(goods);
