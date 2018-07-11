@@ -48,28 +48,44 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         }
     }
 
-    //查询套餐详情
+    //查询套餐的详情
     public Map<String, Object> getGroupBuyById(Long id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("title,id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count ");
+        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
+        sql.append("unavailable_date,once_count  ");
         sql.append("FROM ");
-        sql.append(" group_buy ");
+        sql.append(" group_buy gb , user_group_buy_rel ugbr");
         sql.append(" WHERE ");
-        sql.append(" shop_id = ? ",id);
-        return null;
-
+        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?",id);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
-    //查询用户购买套餐
-    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state) {
-        return null;
+    //查询用户购买的套餐
+    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state,Integer is_use) {
+        MySql sql = new MySql();
+        sql.append("SELECT ");
+        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
+        sql.append("unavailable_date,once_count  ");
+        sql.append("FROM ");
+        sql.append(" group_buy gb , user_group_buy_rel ugbr");
+        sql.append(" WHERE ");
+        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?",userId,coupon_state,is_use);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    //查询商铺发布套餐
+    //查询商铺发布的套餐
     public List<Map<String, Object>> getGroupBuyByShopId(Long shopId, Integer coupon_state) {
-        return null;
+        MySql sql = new MySql();
+        sql.append("SELECT ");
+        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
+        sql.append("unavailable_date,once_count ,count(item_id) sale_volume ");
+        sql.append("FROM ");
+        sql.append(" group_buy gb,user_order_details uod");
+        sql.append(" WHERE ");
+        sql.append("gb.id = uod.item_id and shop_id = ? and  uod.type = 0 and state = ?",shopId,coupon_state);
+        sql.append("group by item_id ");
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
 

@@ -30,7 +30,7 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
     }
 
     public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state) {
-        return groupBuyDao.getGroupBuyByUserId(userId,coupon_state);
+        return null; /*groupBuyDao.getGroupBuyByUserId(userId,coupon_state);*/
     }
 
 }

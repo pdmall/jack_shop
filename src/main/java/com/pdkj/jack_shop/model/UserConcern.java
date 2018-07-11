@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "user_concern")
 public class UserConcern {
@@ -8,12 +9,7 @@ public class UserConcern {
     private Long id;
 
     /**
-     * 用户id 和 商户id 二选一
-     */
-    private Long user_id;
-
-    /**
-     * 商户id 和 用户id 二选一
+     * 商户id
      */
     private Long shop_id;
 
@@ -21,6 +17,26 @@ public class UserConcern {
      * 粉丝id
      */
     private Long be_user_id;
+
+    private String created;
+
+    private Integer is_cancel;
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public Integer getIs_cancel() {
+        return is_cancel;
+    }
+
+    public void setIs_cancel(Integer is_cancel) {
+        this.is_cancel = is_cancel;
+    }
 
     /**
      * @return id
@@ -36,14 +52,6 @@ public class UserConcern {
         this.id = id;
     }
 
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
-    }
 
     public Long getShop_id() {
         return shop_id;

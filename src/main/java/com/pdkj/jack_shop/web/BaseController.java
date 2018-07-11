@@ -46,6 +46,8 @@ public class BaseController {
     public GoodsService goodsService;
     @Resource
     public GroupBuyService groupBuyService;
+    @Resource
+    UserConcernService userConcernService;
 
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
