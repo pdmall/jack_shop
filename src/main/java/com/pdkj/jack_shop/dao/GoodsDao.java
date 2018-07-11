@@ -44,7 +44,7 @@ public class GoodsDao extends DaoBase<Goods> {
         sql.append("FROM");
         sql.append("goods AS sg ,goods_unit AS sgu ,goods_type gt ");
         sql.append("WHERE");
-        sql.append("sg.unit_id = sgu.id AND sg.type_id = gt.id AND sg.id = sgr.goods_id AND sg.shop_id=?",shop_id);
+        sql.append("sg.unit_id = sgu.id AND sg.type_id = gt.id AND sg.shop_id=?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
