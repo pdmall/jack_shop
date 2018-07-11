@@ -23,4 +23,5 @@ public class GroupBuyController extends BaseController {
     public Result addGroupBuy(IsPassGroupBuy groupBuy , String goods_ids) throws CustomException {
         return ResultGenerator.genSuccessResult(groupBuyService.addGroupBuy(groupBuy,goods_ids));
     }
+
 }
