@@ -32,7 +32,7 @@ public class GoodsDao extends DaoBase<Goods> {
         sql.append("SELECT");
         sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit");
         sql.append("FROM");
-        sql.append("shop_goods AS sg ,shop_goods_unit AS sgu ,group_buy_goods_rel gbgr");
+        sql.append("goods AS sg ,goods_unit AS sgu ,group_buy_goods_rel gbgr");
         sql.append("WHERE");
         sql.append("sg.unit_id = sgu.id AND sg.id = gbgr.goods_id AND gbgr.group_buy_id = ?",group_buy_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
@@ -42,9 +42,9 @@ public class GoodsDao extends DaoBase<Goods> {
         sql.append("SELECT");
         sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit");
         sql.append("FROM");
-        sql.append("shop_goods AS sg ,shop_goods_unit AS sgu ,shop_goods_rel sgr");
+        sql.append("goods AS sg ,goods_unit AS sgu ,shop_goods_rel sgr");
         sql.append("WHERE");
-        sql.append("sg.unit_id = sgu.id AND sg.id = sgr.shop_id AND cgr.shop_id=?",shop_id);
+        sql.append("sg.unit_id = sgu.id AND sg.id = sgr.goods_id AND sgr.shop_id=?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
