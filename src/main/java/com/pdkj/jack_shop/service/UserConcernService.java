@@ -12,6 +12,7 @@ import com.pdkj.jack_shop.model.UserConcern;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,11 @@ import java.util.Map;
  */
 @Service
 public class UserConcernService extends BaseService<UserConcern>{
-    public List<Map<String,Object>> getUserConcernList(Long shop_id) {
+    public Map<String,Object> getUserConcernList(Long shop_id) {
+        Map<String,Object> data = new HashMap<>();
         List<Map<String,Object>>list = userConcernDao.getUserConcernList(shop_id);
-        list.add(userConcernDao.getUserConcernCount(shop_id));
-       return list;
+        data.put("concernList",list);
+        data.put("count",userConcernDao.getUserConcernCount(shop_id));
+       return data;
     }
 }
