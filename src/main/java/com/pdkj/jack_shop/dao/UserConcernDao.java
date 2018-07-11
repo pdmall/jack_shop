@@ -38,7 +38,7 @@ public class UserConcernDao extends DaoBase<UserConcern> {
     public Map<String, Object> getUserConcernCount(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("count(*)");
+        sql.append("count(*) count");
         sql.append("FROM");
         sql.append("user_concern AS uc , `user` AS u");
         sql.append("WHERE");
