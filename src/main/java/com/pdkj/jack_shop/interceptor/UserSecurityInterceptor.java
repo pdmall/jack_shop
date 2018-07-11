@@ -73,28 +73,36 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         User user = null;
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         //验证签名
-        if (!contains(pageList, url)) {
-            boolean pass = validateSign(request);
-            if (pass) {
-                String token = request.getParameter("token");
-                user = userService.getUserByToken(token);
-                if (null != user) {
-                    if (user.getState() == 1) {
-                        request.setAttribute("user", user);
+        if(true) { //测试用
+            String token = request.getParameter("token");
+            System.out.println(token);
+            user = userService.getUserByToken(token);
+            request.setAttribute("user", user);
+        }else {
+
+            if (!contains(pageList, url)) {
+                boolean pass = validateSign(request);
+                if (pass) {
+                    String token = request.getParameter("token");
+                    user = userService.getUserByToken(token);
+                    if (null != user) {
+                        if (user.getState() == 1) {
+                            request.setAttribute("user", user);
+                        } else {
+                            response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("用户被冻结")));
+                            return false;
+                        }
                     } else {
-                        response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("用户被冻结")));
+                        response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("无效token")));
                         return false;
                     }
-                }else{
-                    response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("无效token")));
+                } else {
+                    logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}", request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
+                    Result result = new Result();
+                    result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
+                    responseResult(response, result);
                     return false;
                 }
-            } else {
-                logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}", request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
-                Result result = new Result();
-                result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
-                responseResult(response, result);
-                return false;
             }
         }
         return true;
