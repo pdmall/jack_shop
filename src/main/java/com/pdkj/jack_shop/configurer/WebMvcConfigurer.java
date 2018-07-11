@@ -159,7 +159,8 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        super.addInterceptors(new UserSecurityInterceptor());
+        registry.addInterceptor(new UserSecurityInterceptor());
+        //super.addInterceptors(new UserSecurityInterceptor());
     }
 
     //拦截器配置
