@@ -30,7 +30,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     //添加一个套餐
     public Long addGroupBuy(IsPassGroupBuy isPassGroupBuy) {
         isPassGroupBuy.setId(Tools.generatorId());
-        SqlInfo sqlInfo = SQLTools.getInsertSQL(isPassGroupBuy, "group_buy");
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(isPassGroupBuy, "is_pass_group_buy");
         jdbcTemplate.update(sqlInfo.getSql(), sqlInfo.getValues());
         return isPassGroupBuy.getId();
     }
@@ -42,7 +42,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
             MySql sql = new MySql();
             sql.append("INSERT INTO `group_buy_goods_rel` (`id`, `group_buy_id`, `goods_id`) VALUES ");
             for (String GroupBuy_id : GroupBuy_ids) {
-                sql.append("(?, ?, ?)", Tools.generatorId(), group_buy_id, Long.parseLong(GroupBuy_id));
+                sql.append("(?, ?, ?),", Tools.generatorId(), group_buy_id, Long.parseLong(GroupBuy_id));
             }
             sql.delLast();
             jdbcTemplate.update(sql.toString(), sql.getValues());

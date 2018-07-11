@@ -2,6 +2,7 @@ package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.model.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class GroupBuyService extends BaseService<IsPassGroupBuy> {
 
     // 添加套餐卷
+    @Transactional
     public Long addGroupBuy(IsPassGroupBuy groupBuy,String goods_ids) {
         Long group_buy_id = groupBuyDao.addGroupBuy(groupBuy);
         groupBuyDao.addGroupBuyGoods(group_buy_id,goods_ids);
