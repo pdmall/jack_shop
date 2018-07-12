@@ -221,7 +221,8 @@ public class ShopDao extends DaoBase<Shop> {
     }
 
     public void updateEmployee(UserShopRel userShopRel) {
-        SQLTools.getUpdateById(userShopRel,"user_shop_rel",userShopRel.getId());
+        SqlInfo sqlInfo = SQLTools.getUpdateById(userShopRel,"user_shop_rel",userShopRel.getId());
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 
     public void addEmployee(UserShopRel userShopRel) {
