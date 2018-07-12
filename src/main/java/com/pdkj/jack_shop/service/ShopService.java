@@ -95,7 +95,7 @@ public class ShopService extends BaseService<Shop> {
         shopDao.addEmployee(userShopRel);
     }
 
-    public void delEmployeeRole(Long id) {
-        shopDao.delEmployeeRole(id);
+    public void delEmployee(Long id) {
+        shopDao.delEmployee(id);
     }
 }
