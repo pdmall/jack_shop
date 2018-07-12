@@ -207,7 +207,7 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("FROM");
         sql.append("user_shop_rel AS usr,employee_role er , `user` AS u");
         sql.append("WHERE");
-        sql.append("usr.user_id = u.id AND usr.shop_id = ?",shop_id);
+        sql.append("usr.user_id = u.id AND usr.role_id = er.id  AND usr.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     //获得商铺的店员角色
@@ -230,7 +230,7 @@ public class ShopDao extends DaoBase<Shop> {
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 
-    public void delEmployeeRole(Long id) {
+    public void delEmployee(Long id) {
         String sql = "delete from user_shop_rel where id = ?";
         jdbcTemplate.update(sql,id);
     }

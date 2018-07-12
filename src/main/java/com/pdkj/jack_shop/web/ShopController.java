@@ -216,9 +216,9 @@ public class ShopController extends BaseController {
     }
 
     //添加商铺店员的角色
-    @GetMapping("delEmployeeRole")
-    public Result delEmployeeRole(Long id) throws CustomException {
-        shopService.delEmployeeRole(id);
+    @PostMapping("delEmployee")
+    public Result delEmployee(Long id) throws CustomException {
+        shopService.delEmployee(id);
         return ResultGenerator.genSuccessResult();
     }
 
