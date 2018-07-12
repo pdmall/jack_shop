@@ -6,6 +6,8 @@ import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Goods;
 import com.pdkj.jack_shop.model.IsPassShop;
 import com.pdkj.jack_shop.model.Shop;
+import com.pdkj.jack_shop.model.UserShopRel;
+import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,5 +84,14 @@ public class ShopService extends BaseService<Shop> {
 
     public  List<Map<String, Object>> getEmployeeRole() {
         return shopDao.getEmployeeRole();
+    }
+
+    public void updateEmployeeRole(UserShopRel userShopRel) {
+        shopDao.updateEmployeeRole(userShopRel);
+    }
+
+    public void addEmployeeRole(UserShopRel userShopRel) {
+        userShopRel.setId(Tools.generatorId());
+        shopDao.addEmployeeRole(userShopRel);
     }
 }

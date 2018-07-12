@@ -3,34 +3,30 @@ package com.pdkj.jack_shop.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "user_shop_rel")
 public class UserShopRel {
-    @Id
+
     private Long id;
 
     private Long shop_id;
 
     private Long user_id;
 
+    private String user_name;
+    //是否是店长 0 不是 1 是
+    private Integer master;
     /**
-     * 用户店铺角色
+     *用户店铺角色
      */
-    private Integer user_role;
+    private Integer role_id;
 
     private Date created;
 
     private Date updated;
 
-    /**
-     * @return id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -51,38 +47,42 @@ public class UserShopRel {
         this.user_id = user_id;
     }
 
-    public Integer getUser_role() {
-        return user_role;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUser_role(Integer user_role) {
-        this.user_role = user_role;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    /**
-     * @return created
-     */
+    public Integer getMaster() {
+        return master;
+    }
+
+    public void setMaster(Integer master) {
+        this.master = master;
+    }
+
+    public Integer getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(Integer role_id) {
+        this.role_id = role_id;
+    }
+
     public Date getCreated() {
         return created;
     }
 
-    /**
-     * @param created
-     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
-    /**
-     * @return updated
-     */
     public Date getUpdated() {
         return updated;
     }
 
-    /**
-     * @param updated
-     */
     public void setUpdated(Date updated) {
         this.updated = updated;
     }

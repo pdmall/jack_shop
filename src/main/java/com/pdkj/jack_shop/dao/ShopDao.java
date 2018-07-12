@@ -11,6 +11,7 @@ package com.pdkj.jack_shop.dao;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.IsPassShop;
 import com.pdkj.jack_shop.model.Shop;
+import com.pdkj.jack_shop.model.UserShopRel;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -217,5 +218,14 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("FROM");
         sql.append("employee_role ");
         return jdbcTemplate.queryForList(sql.toString());
+    }
+
+    public void updateEmployeeRole(UserShopRel userShopRel) {
+        SQLTools.getUpdateById(userShopRel,"user_shop_rel",userShopRel.getId());
+    }
+
+    public void addEmployeeRole(UserShopRel userShopRel) {
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(userShopRel,"user_shop_rel");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 }
