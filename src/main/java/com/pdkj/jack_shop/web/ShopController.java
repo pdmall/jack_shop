@@ -191,4 +191,9 @@ public class ShopController extends BaseController {
     public Result getEmployee(Long shop_id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getEmployee(shop_id));
     }
+    //获得商铺角色
+    @GetMapping("getEmployeeRole")
+    public Result getEmployeeRole() throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.getEmployeeRole());
+    }
 }

@@ -79,4 +79,8 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> getEmployee(Long shop_id) {
         return shopDao.getEmployee(shop_id);
     }
+
+    public  List<Map<String, Object>> getEmployeeRole() {
+        return shopDao.getEmployeeRole();
+    }
 }

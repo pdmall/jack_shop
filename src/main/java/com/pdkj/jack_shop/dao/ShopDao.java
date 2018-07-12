@@ -202,11 +202,20 @@ public class ShopDao extends DaoBase<Shop> {
     public List<Map<String,Object>> getEmployee(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("u.icon,usr.id,usr.role_name,usr.user_name,u.phone");
+        sql.append("u.icon,usr.id,usr.role_id,er.name role_name,usr.user_name,u.phone");
         sql.append("FROM");
-        sql.append("user_shop_rel AS usr , `user` AS u");
+        sql.append("user_shop_rel AS usr,employee_role er , `user` AS u");
         sql.append("WHERE");
         sql.append("usr.user_id = u.id AND usr.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
+    //获得商铺的店员角色
+    public List<Map<String,Object>> getEmployeeRole() {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("*");
+        sql.append("FROM");
+        sql.append("employee_role ");
+        return jdbcTemplate.queryForList(sql.toString());
     }
 }
