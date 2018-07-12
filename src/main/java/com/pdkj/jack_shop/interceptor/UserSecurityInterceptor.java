@@ -76,7 +76,7 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         if(true) { //测试用
             String token = request.getParameter("token");
             System.out.println(token);
-            user = userService.getUserByToken(token);
+            //user = userService.getUserByToken(token);
             request.setAttribute("user", user);
         }else {
 

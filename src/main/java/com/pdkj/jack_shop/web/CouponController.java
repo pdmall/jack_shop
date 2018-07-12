@@ -38,7 +38,7 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("getCouponByUserId")
-    public Result getCouponByUserId(String token,Integer coupon_state) throws CustomException {
+    public Result getCouponByUserId(Integer coupon_state) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),coupon_state));
     }
 
