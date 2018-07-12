@@ -30,10 +30,11 @@ public class AliYunSMS {
     static final String accessKeyId = "LTAItNo00VAu6ohm";
     static final String accessKeySecret = "ZRq5gV1r1aCgcILRpRvNhC7lIXcG0N";
     static final String sing = "派对科技";
-    static final String templateCode = "SMS_135825038";
+    public static final String reginAndLogin = "SMS_135825038";
+    public static final String addEmployee = "SMS_139228298";
 
 
-    public static SendSmsResponse sendSms(String phone,String vrCode) throws ClientException {
+    public static SendSmsResponse sendSms(String phone,String vrCode,String template) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -51,7 +52,7 @@ public class AliYunSMS {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName(sing);
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode(templateCode);
+        request.setTemplateCode(template);
 
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         JSONObject obj = new JSONObject();
@@ -113,7 +114,7 @@ public class AliYunSMS {
     public static void main(String[] args) throws ClientException, InterruptedException {
 
         //发短信
-        SendSmsResponse response = sendSms("15828066838","2121");
+        SendSmsResponse response = sendSms("15828066838","2121",reginAndLogin);
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());

@@ -40,9 +40,9 @@ public class UserService extends BaseService<User> {
     }
 
 
-    public String getVerCode(String phone) throws CustomException, ClientException {
+    public String getVerCode(String phone,String sms) throws CustomException, ClientException {
             String verCodeNum = getVerCodeNum(6);
-            SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum);
+            SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum,sms);
             if(!sendSmsResponse.getCode().equalsIgnoreCase("ok")){
                 if(sendSmsResponse.getMessage().contains("天")){
                     throw new CustomException("太快了，一天之后再试");

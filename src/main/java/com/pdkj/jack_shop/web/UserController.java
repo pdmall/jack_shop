@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.web;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
@@ -21,10 +22,12 @@ public class UserController extends BaseController {
 
     @GetMapping("getVerCode")
     public Result getVerCode(String phone) throws CustomException, ClientException {
-        String message = userService.getVerCode(phone);
-        return ResultGenerator.genSuccessResult(message);
+        return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.reginAndLogin));
     }
-
+    @GetMapping("getAddEmployee")
+    public Result getAddEmployee(String phone) throws CustomException, ClientException {
+        return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.addEmployee));
+    }
     @PostMapping("register")
     public Result register(User user, String verCode) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.register(user, verCode));
