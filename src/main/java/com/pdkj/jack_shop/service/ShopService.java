@@ -94,4 +94,8 @@ public class ShopService extends BaseService<Shop> {
         userShopRel.setId(Tools.generatorId());
         shopDao.addEmployeeRole(userShopRel);
     }
+
+    public void delEmployeeRole(Long id) {
+        shopDao.delEmployeeRole(id);
+    }
 }

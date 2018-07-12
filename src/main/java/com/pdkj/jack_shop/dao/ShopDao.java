@@ -228,4 +228,9 @@ public class ShopDao extends DaoBase<Shop> {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(userShopRel,"user_shop_rel");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
+
+    public void delEmployeeRole(Long id) {
+        String sql = "delete from user_shop_rel where id = ?";
+        jdbcTemplate.update(sql,id);
+    }
 }
