@@ -33,11 +33,11 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("SELECT ");
         sql.append("c.id,c.type,c.original_price,c.buy_price,c.appointment,c.date_start,c.buy_person_limit, ");
         sql.append("c.date_end,c.time_start,c.time_end,c.shop_id,c.unavailable_date,c.goods_range_id, ");
-        sql.append("c.stock_count,c.once_count,cgr.range_name,count(uo.coupon_id) sale_volume ");
+        sql.append("c.stock_count,c.once_count,cgr.range_name,count(uo.coupon_id) sale_volume ,s.home_img");
         sql.append("FROM ");
-        sql.append("coupon AS c ,coupon_goods_range AS cgr ,user_order uo");
+        sql.append("coupon AS c ,coupon_goods_range AS cgr ,user_order uo , shop s");
         sql.append("WHERE ");
-        sql.append(" c.goods_range_id = cgr.id AND uo.shop_id = c.shop_id AND ");
+        sql.append(" c.goods_range_id = cgr.id and c.shop_id = s.id AND uo.shop_id = c.shop_id AND ");
         sql.append("coupon_state = ? AND c.shop_id = ? ",coupon_state,shopId);
         sql.append("GROUP BY uo.coupon_id");
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
