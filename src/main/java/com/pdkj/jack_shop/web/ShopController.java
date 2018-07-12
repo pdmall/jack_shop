@@ -215,4 +215,11 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult();
     }
 
+    //添加商铺店员的角色
+    @GetMapping("delEmployeeRole")
+    public Result delEmployeeRole(Long id) throws CustomException {
+        shopService.delEmployeeRole(id);
+        return ResultGenerator.genSuccessResult();
+    }
+
 }
