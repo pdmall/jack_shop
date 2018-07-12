@@ -19,5 +19,9 @@ public class GroupBuyController extends BaseController {
     public Result addGroupBuy(IsPassGroupBuy groupBuy , String goods_ids) throws CustomException {
         return ResultGenerator.genSuccessResult(groupBuyService.addGroupBuy(groupBuy,goods_ids));
     }
-
+    //审核套餐接口
+    @GetMapping("getLog")
+    public Result getLog(Long id) throws CustomException {
+        return ResultGenerator.genSuccessResult(groupBuyService.getLog(id));
+    }
 }

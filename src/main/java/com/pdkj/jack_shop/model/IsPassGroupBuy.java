@@ -19,7 +19,15 @@ public class IsPassGroupBuy {
     private Integer once_count;
     private String unavailable_date;
     private String diners_number;
+    private Integer is_release;
 
+    public Integer getIs_release() {
+        return is_release;
+    }
+
+    public void setIs_release(Integer is_release) {
+        this.is_release = is_release;
+    }
 
     public Long getId() {
         return id;
