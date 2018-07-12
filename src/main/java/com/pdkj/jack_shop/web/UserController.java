@@ -24,8 +24,8 @@ public class UserController extends BaseController {
     public Result getVerCode(String phone) throws CustomException, ClientException {
         return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.reginAndLogin));
     }
-    @GetMapping("getAddEmployee")
-    public Result getAddEmployee(String phone) throws CustomException, ClientException {
+    @GetMapping("getAddEmployeeVerCode")
+    public Result getAddEmployeeVerCode(String phone) throws CustomException, ClientException {
         return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.addEmployee));
     }
     @PostMapping("register")
