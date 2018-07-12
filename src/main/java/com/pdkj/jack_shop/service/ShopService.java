@@ -86,13 +86,13 @@ public class ShopService extends BaseService<Shop> {
         return shopDao.getEmployeeRole();
     }
 
-    public void updateEmployeeRole(UserShopRel userShopRel) {
-        shopDao.updateEmployeeRole(userShopRel);
+    public void updateEmployee(UserShopRel userShopRel) {
+        shopDao.updateEmployee(userShopRel);
     }
 
-    public void addEmployeeRole(UserShopRel userShopRel) {
+    public void addEmployee(UserShopRel userShopRel) {
         userShopRel.setId(Tools.generatorId());
-        shopDao.addEmployeeRole(userShopRel);
+        shopDao.addEmployee(userShopRel);
     }
 
     public void delEmployeeRole(Long id) {

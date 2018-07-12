@@ -220,11 +220,12 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString());
     }
 
-    public void updateEmployeeRole(UserShopRel userShopRel) {
-        SQLTools.getUpdateById(userShopRel,"user_shop_rel",userShopRel.getId());
+    public void updateEmployee(UserShopRel userShopRel) {
+        SqlInfo sqlInfo = SQLTools.getUpdateById(userShopRel,"user_shop_rel",userShopRel.getId());
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 
-    public void addEmployeeRole(UserShopRel userShopRel) {
+    public void addEmployee(UserShopRel userShopRel) {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(userShopRel,"user_shop_rel");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }

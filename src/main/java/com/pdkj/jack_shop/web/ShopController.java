@@ -199,19 +199,19 @@ public class ShopController extends BaseController {
     }
 
     //修改商铺店员的角色
-    @GetMapping("updateEmployeeRole")
-    public Result updateEmployeeRole(UserShopRel userShopRel) throws CustomException {
-        shopService.updateEmployeeRole(userShopRel);
+    @PostMapping("updateEmployee")
+    public Result updateEmployee(UserShopRel userShopRel) throws CustomException {
+        shopService.updateEmployee(userShopRel);
         return ResultGenerator.genSuccessResult();
     }
 
     //添加商铺店员的角色
-    @GetMapping("addEmployeeRole")
-    public Result addEmployeeRole(UserShopRel userShopRel,User user,String verCode) throws CustomException {
+    @PostMapping("addEmployee")
+    public Result addEmployee(UserShopRel userShopRel,User user,String verCode) throws CustomException {
         User u = userService.register(user, verCode);
         userShopRel.setUser_id(u.getId());
         userShopRel.setMaster(0);
-        shopService.addEmployeeRole(userShopRel);
+        shopService.addEmployee(userShopRel);
         return ResultGenerator.genSuccessResult();
     }
 
