@@ -222,4 +222,20 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult();
     }
 
+    //添加商铺店员的角色
+    @PostMapping("getUserPhoto")
+    public Result getUserPhoto(Long user_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(albumService.getUserPhoto(user_id));
+    }
+    //添加商铺店员的角色
+    @PostMapping("getShopPhoto")
+    public Result getShopPhoto(Long shop_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(albumService.getShopPhoto(shop_id));
+    }
+    //添加商铺店员的角色
+    @PostMapping("getGoodsPhoto")
+    public Result getGoodsPhoto(Long user_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(albumService.getGoodsPhoto(user_id));
+    }
+
 }

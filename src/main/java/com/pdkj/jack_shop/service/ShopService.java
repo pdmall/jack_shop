@@ -81,21 +81,22 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String, Object>> getEmployee(Long shop_id) {
         return shopDao.getEmployee(shop_id);
     }
-
+    //获得店员
     public  List<Map<String, Object>> getEmployeeRole() {
         return shopDao.getEmployeeRole();
     }
-
+    //修改店员
     public void updateEmployee(UserShopRel userShopRel) {
         shopDao.updateEmployee(userShopRel);
     }
-
+    //添加店员
     public void addEmployee(UserShopRel userShopRel) {
         userShopRel.setId(Tools.generatorId());
         shopDao.addEmployee(userShopRel);
     }
-
+    //删除店员
     public void delEmployee(Long id) {
         shopDao.delEmployee(id);
     }
+
 }
