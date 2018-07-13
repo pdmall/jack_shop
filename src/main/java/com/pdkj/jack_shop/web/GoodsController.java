@@ -26,19 +26,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("goods")
 public class GoodsController extends BaseController{
 
+    //查询团购卷中的全部商品
     @GetMapping("getGroupBuyGoods")
     public Result getGroupBuyGoods(Long coupon_id) throws CustomException {
         return ResultGenerator.genSuccessResult(goodsService.getGroupBuyGoods(coupon_id));
     }
-
+    //查询单个商铺的所有商品
     @GetMapping("getShopGoods")
     public Result getShopGoods(Long shop_id) throws CustomException {
         return ResultGenerator.genSuccessResult(goodsService.getShopGoods(shop_id));
     }
-
+    //添加一个商品
     @GetMapping("addGoods")
     public Result addGoods(Goods goods) throws CustomException {
         return ResultGenerator.genSuccessResult(goodsService.addGoods(goods));
     }
+    //获得所有商品的单位
+    @GetMapping("getGoodsUnit")
+    public Result getGoodsUnit() throws CustomException {
+        return ResultGenerator.genSuccessResult(goodsService.getGoodsUnit());
+    }
+
+    //获得商铺中商品的分类
+    @GetMapping("getGoodsType")
+    public Result getGoodsType(Long shop_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(goodsService.getGoodsType(shop_id));
+    }
+
 
 }

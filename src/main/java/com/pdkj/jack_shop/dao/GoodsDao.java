@@ -55,4 +55,21 @@ public class GoodsDao extends DaoBase<Goods> {
         return goods.getId();
     }
 
+    public List<Map<String, Object>> getGoodsUnit(){
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("id,name");
+        sql.append("FROM");
+        sql.append("goods_unit");
+        return jdbcTemplate.queryForList(sql.toString());
+    }
+
+    public List<Map<String,Object>> getGoodsType(Long shop_id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("id,name");
+        sql.append("FROM");
+        sql.append("goods_type where shop_id=?",shop_id);
+        return jdbcTemplate.queryForList(sql.toString());
+    }
 }

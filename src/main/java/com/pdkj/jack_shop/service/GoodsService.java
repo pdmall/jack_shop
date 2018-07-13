@@ -30,5 +30,11 @@ public class GoodsService extends BaseService<Goods> {
         photoDao.addPhoto(photo);
         return goodsDao.addGoods(goods);
     }
+    public List<Map<String, Object>> getGoodsUnit() {
+        return goodsDao.getGoodsUnit();
+    }
 
+    public List<Map<String, Object>> getGoodsType(Long shop_id) {
+        return goodsDao.getGoodsType(shop_id);
+    }
 }
