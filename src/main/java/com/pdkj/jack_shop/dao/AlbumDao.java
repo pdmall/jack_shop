@@ -37,8 +37,8 @@ public class AlbumDao extends  DaoBase<Album>{
     }
     public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
         MySql mySql = new MySql();
-        mySql.append("select a.id,shop_id,user_id,img_url,created from album a , goods g ");
-        mySql.append(" where g.shop_id = a.shop_id and user_id = ? or shop_id = ?",user_id,shop_id);
+        mySql.append("select a.id,a.shop_id,user_id,a.img_url,a.created from album a , goods g ");
+        mySql.append(" where g.shop_id = a.shop_id and user_id = ? or a.shop_id = ?",user_id,shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
     public Long addPhoto(Album album){
