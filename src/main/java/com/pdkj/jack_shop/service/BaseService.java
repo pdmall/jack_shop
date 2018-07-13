@@ -54,6 +54,8 @@ public class BaseService<T> {
     UserConcernDao userConcernDao;
     @Resource
     PhotoDao photoDao;
+    @Resource
+    AnalysisDao analysisDao;
 
     public Object getCache(String key) {
         Object value = null;
