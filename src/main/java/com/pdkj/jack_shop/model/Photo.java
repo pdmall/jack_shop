@@ -16,7 +16,7 @@ import java.util.Date;
  * @Description 类描述
  * @date 2018/7/13
  */
-public class Album {
+public class Photo {
     private Long id;
     private Long shop_id;
     private Long user_id;

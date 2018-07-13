@@ -8,7 +8,7 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
-import com.pdkj.jack_shop.model.Album;
+import com.pdkj.jack_shop.model.Photo;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
@@ -24,7 +24,7 @@ import java.util.Map;
  * @date 2018/7/13
  */
 @Repository
-public class AlbumDao extends  DaoBase<Album>{
+public class PhotoDao extends  DaoBase<Photo>{
     public List<Map<String,Object>> getUserPhoto(Long user_id){
         MySql mySql = new MySql();
         mySql.append("select id,shop_id,user_id,img_url,created from album where user_id = ?",user_id);
@@ -41,10 +41,10 @@ public class AlbumDao extends  DaoBase<Album>{
         mySql.append(" where g.shop_id = a.shop_id and user_id = ? or a.shop_id = ?",user_id,shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
-    public Long addPhoto(Album album){
-        SqlInfo sqlInfo = SQLTools.getInsertSQL(album);
+    public Long addPhoto(Photo photo){
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(photo);
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
-        return album.getId();
+        return photo.getId();
     }
 
 }

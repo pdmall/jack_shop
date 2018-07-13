@@ -7,9 +7,6 @@ import com.pdkj.jack_shop.model.*;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by CodeGenerator on 2018/06/26.
  */
@@ -222,25 +219,25 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult();
     }
 
-    //添加商铺店员的角色
+    //查看用户上传的图片
     @GetMapping("getUserPhoto")
     public Result getUserPhoto() throws CustomException {
-        return ResultGenerator.genSuccessResult(albumService.getUserPhoto(getUser().getId()));
+        return ResultGenerator.genSuccessResult(photoService.getUserPhoto(getUser().getId()));
     }
-    //添加商铺店员的角色
+    //查看本店图片
     @GetMapping("getShopPhoto")
     public Result getShopPhoto(Long shop_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(albumService.getShopPhoto(shop_id));
+        return ResultGenerator.genSuccessResult(photoService.getShopPhoto(shop_id));
     }
-    //添加商铺店员的角色
+    //查看商品图片
     @GetMapping("getGoodsPhoto")
     public Result getGoodsPhoto(Long shop_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(albumService.getGoodsPhoto(getUser().getId(),shop_id));
+        return ResultGenerator.genSuccessResult(photoService.getGoodsPhoto(getUser().getId(),shop_id));
     }
-    //添加商铺店员的角色
-    @GetMapping("getGoodsPhoto")
-    public Result getGoodsPhoto(Album album) throws CustomException {
-        albumService.addPhoto(album);
+    //添加照片
+    @GetMapping("addPhoto")
+    public Result addPhoto(Photo photo) throws CustomException {
+        photoService.addPhoto(photo);
         return ResultGenerator.genSuccessResult();
     }
 

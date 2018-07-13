@@ -8,7 +8,7 @@ package com.pdkj.jack_shop.service;
  * @version V1.0
  */
 
-import com.pdkj.jack_shop.model.Album;
+import com.pdkj.jack_shop.model.Photo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,17 +21,17 @@ import java.util.Map;
  * @date 2018/7/13
  */
 @Service
-public class AlbumService extends BaseService<Album> {
+public class PhotoService extends BaseService<Photo> {
     public List<Map<String,Object>> getUserPhoto(Long user_id){
-        return albumDao.getUserPhoto(user_id);
+        return photoDao.getUserPhoto(user_id);
     }
     public List<Map<String,Object>> getShopPhoto(Long shop_id){
-        return albumDao.getShopPhoto(shop_id);
+        return photoDao.getShopPhoto(shop_id);
     }
     public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
-        return albumDao.getGoodsPhoto(user_id,shop_id);
+        return photoDao.getGoodsPhoto(user_id,shop_id);
     }
-    public void addPhoto(Album album){
-        albumDao.addPhoto(album);
+    public void addPhoto(Photo photo){
+        photoDao.addPhoto(photo);
     }
 }

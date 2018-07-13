@@ -49,7 +49,7 @@ public class BaseController {
     @Resource
     UserConcernService userConcernService;
     @Resource
-    AlbumService albumService ;
+    PhotoService photoService;
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);
