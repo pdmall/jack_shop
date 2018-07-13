@@ -10,6 +10,8 @@ package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.model.Album;
 import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,6 +40,11 @@ public class AlbumDao extends  DaoBase<Album>{
         mySql.append("select id,shop_id,user_id,img_url,created from album a , goods g ");
         mySql.append(" where g.shop_id = a.shop_id and user_id = ?",user_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
+    }
+    public Long addPhoto(Album album){
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(album);
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+        return album.getId();
     }
 
 }

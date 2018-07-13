@@ -20,6 +20,7 @@ public class GoodsService extends BaseService<Goods> {
         return goodsDao.getShopGoods(shop_id);
     }
     public Long addGoods(Goods goods) {
+
         return goodsDao.addGoods(goods);
     }
 
