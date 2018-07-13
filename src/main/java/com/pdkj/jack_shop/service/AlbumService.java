@@ -31,4 +31,7 @@ public class AlbumService extends BaseService<Album> {
     public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
         return albumDao.getGoodsPhoto(user_id,shop_id);
     }
+    public void addPhoto(Album album){
+        albumDao.addPhoto(album);
+    }
 }
