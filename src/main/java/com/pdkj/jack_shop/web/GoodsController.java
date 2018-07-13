@@ -40,4 +40,5 @@ public class GoodsController extends BaseController{
     public Result addGoods(Goods goods) throws CustomException {
         return ResultGenerator.genSuccessResult(goodsService.addGoods(goods));
     }
+
 }

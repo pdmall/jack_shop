@@ -1,6 +1,8 @@
 package com.pdkj.jack_shop.service;
 
+import com.pdkj.jack_shop.model.Album;
 import com.pdkj.jack_shop.model.Goods;
+import com.pdkj.jack_shop.util.Tools;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +22,12 @@ public class GoodsService extends BaseService<Goods> {
         return goodsDao.getShopGoods(shop_id);
     }
     public Long addGoods(Goods goods) {
-
+        Album album = new Album();
+        album.setId(Tools.generatorId());
+        album.setImg_url(goods.getImg_url());
+        album.setShop_id(goods.getShop_id());
+        album.setUser_id(Long.parseLong(shopDao.getShop(goods.getShop_id()).get("user_id").toString()));
+        albumDao.addPhoto(album);
         return goodsDao.addGoods(goods);
     }
 

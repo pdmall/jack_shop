@@ -21,6 +21,24 @@ public class Goods {
     private Double price;
     private String img_url;
     private String describe;
+    private Long shop_id;
+    private Integer type_id;
+
+    public Long getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public Integer getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(Integer type_id) {
+        this.type_id = type_id;
+    }
 
     public Long getId() {
         return id;
