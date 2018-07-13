@@ -1,5 +1,6 @@
 package com.pdkj.jack_shop.service;
 
+import com.pdkj.jack_shop.model.GoodsType;
 import com.pdkj.jack_shop.model.Photo;
 import com.pdkj.jack_shop.model.Goods;
 import com.pdkj.jack_shop.util.Tools;
@@ -36,5 +37,8 @@ public class GoodsService extends BaseService<Goods> {
 
     public List<Map<String, Object>> getGoodsType(Long shop_id) {
         return goodsDao.getGoodsType(shop_id);
+    }
+    public Integer addGoodsType(GoodsType goodsType){
+        return goodsDao.addGoodsType(goodsType);
     }
 }

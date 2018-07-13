@@ -12,6 +12,7 @@ import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Goods;
+import com.pdkj.jack_shop.model.GoodsType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,11 @@ public class GoodsController extends BaseController{
     @GetMapping("getGoodsType")
     public Result getGoodsType(Long shop_id) throws CustomException {
         return ResultGenerator.genSuccessResult(goodsService.getGoodsType(shop_id));
+    }
+    //添加商铺中商品的分类
+    @GetMapping("addGoodsType")
+    public Result addGoodsType(GoodsType goodsType) throws CustomException {
+        return ResultGenerator.genSuccessResult(goodsService.addGoodsType(goodsType)>0?"新增成功":"新增失败");
     }
 
 

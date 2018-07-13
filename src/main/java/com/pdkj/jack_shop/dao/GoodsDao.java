@@ -9,6 +9,7 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.Goods;
+import com.pdkj.jack_shop.model.GoodsType;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
@@ -71,5 +72,9 @@ public class GoodsDao extends DaoBase<Goods> {
         sql.append("FROM");
         sql.append("goods_type where shop_id=?",shop_id);
         return jdbcTemplate.queryForList(sql.toString());
+    }
+    public Integer addGoodsType(GoodsType goodsType){
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(goodsType,"goods_type");
+        return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 }
