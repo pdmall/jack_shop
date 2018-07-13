@@ -38,8 +38,10 @@ public class GoodsService extends BaseService<Goods> {
     public List<Map<String, Object>> getGoodsType(Long shop_id) {
         return goodsDao.getGoodsType(shop_id);
     }
+
     public Integer addGoodsType(GoodsType goodsType){
         goodsType.setId(Tools.generatorId());
         return goodsDao.addGoodsType(goodsType);
     }
+
 }
