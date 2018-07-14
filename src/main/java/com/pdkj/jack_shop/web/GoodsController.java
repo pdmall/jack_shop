@@ -56,7 +56,7 @@ public class GoodsController extends BaseController{
     //添加商铺中商品的分类
     @GetMapping("addGoodsType")
     public Result addGoodsType(GoodsType goodsType) throws CustomException {
-        return ResultGenerator.genSuccessResult(goodsService.addGoodsType(goodsType)>0?"新增成功":"新增失败");
+        return ResultGenerator.genSuccessResult(goodsService.addGoodsType(goodsType));
     }
 
 

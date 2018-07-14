@@ -39,7 +39,7 @@ public class GoodsService extends BaseService<Goods> {
         return goodsDao.getGoodsType(shop_id);
     }
 
-    public Integer addGoodsType(GoodsType goodsType){
+    public Long addGoodsType(GoodsType goodsType){
         goodsType.setId(Tools.generatorId());
         return goodsDao.addGoodsType(goodsType);
     }

@@ -6,120 +6,29 @@ import javax.persistence.*;
 
 @Table(name = "user_order")
 public class UserOrder {
-
-    @Id
     private Long id;
-
-    /**
-     * 支付平台编号
-     */
     private String pay_on;
-
-    /**
-     * 商品，优惠卷,id ...
-     */
-    private Long item_id;
-
-    /**
-     * 0，待支付
-1，待消费
-2，待评论
-3，完成
-
-     */
     private Integer state;
-
-    /**
-     * 1，微信支付
-     */
     private Integer pay_type;
-
     private Long user_id;
-
-    /**
-     * 下单时间
-     */
     private Date created;
+    private Date Pay_time;
+    private Long coupon_id;
+    private Double wallet_money;
+    private Double total_price;
+    private Double final_price;
+    private Long shop_id;
+    private Integer service_score;
+    private Integer enviro_score;
+    private Integer taste_score;
 
-    /**
-     * 购买时间
-     */
-    private Date buy_time;
-
-    /**
-     * 使用时间
-     */
-    private Date use_time;
-
-    /**
-     * 抵扣卷价格
-     */
-    private Long use_coupon_id;
-
-    /**
-     * jack 钱包余额
-     */
-    private BigDecimal wallet_money;
-
-    /**
-     * 总费用
-     */
-    private BigDecimal total_price;
-
-    /**
-     * 最后付款金额
-     */
-    private BigDecimal final_price;
-
-    /**
-     * @return id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
-
-
-    /**
-     * 获取0，待支付
-1，待消费
-2，待评论
-3，完成
-
-     *
-     * @return state - 0，待支付
-1，待消费
-2，待评论
-3，完成
-
-     */
-    public Integer getState() {
-        return state;
-    }
-
-    /**
-     * 设置0，待支付
-1，待消费
-2，待评论
-3，完成
-
-     *
-     * @param state 0，待支付
-1，待消费
-2，待评论
-3，完成
-
-     */
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
 
     public String getPay_on() {
         return pay_on;
@@ -129,12 +38,12 @@ public class UserOrder {
         this.pay_on = pay_on;
     }
 
-    public Long getItem_id() {
-        return item_id;
+    public Integer getState() {
+        return state;
     }
 
-    public void setItem_id(Long item_id) {
-        this.item_id = item_id;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Integer getPay_type() {
@@ -161,51 +70,75 @@ public class UserOrder {
         this.created = created;
     }
 
-    public Date getBuy_time() {
-        return buy_time;
+    public Date getPay_time() {
+        return Pay_time;
     }
 
-    public void setBuy_time(Date buy_time) {
-        this.buy_time = buy_time;
+    public void setPay_time(Date pay_time) {
+        Pay_time = pay_time;
     }
 
-    public Date getUse_time() {
-        return use_time;
+    public Long getCoupon_id() {
+        return coupon_id;
     }
 
-    public void setUse_time(Date use_time) {
-        this.use_time = use_time;
+    public void setCoupon_id(Long coupon_id) {
+        this.coupon_id = coupon_id;
     }
 
-    public Long getUse_coupon_id() {
-        return use_coupon_id;
-    }
-
-    public void setUse_coupon_id(Long use_coupon_id) {
-        this.use_coupon_id = use_coupon_id;
-    }
-
-    public BigDecimal getWallet_money() {
+    public Double getWallet_money() {
         return wallet_money;
     }
 
-    public void setWallet_money(BigDecimal wallet_money) {
+    public void setWallet_money(Double wallet_money) {
         this.wallet_money = wallet_money;
     }
 
-    public BigDecimal getTotal_price() {
+    public Double getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(BigDecimal total_price) {
+    public void setTotal_price(Double total_price) {
         this.total_price = total_price;
     }
 
-    public BigDecimal getFinal_price() {
+    public Double getFinal_price() {
         return final_price;
     }
 
-    public void setFinal_price(BigDecimal final_price) {
+    public void setFinal_price(Double final_price) {
         this.final_price = final_price;
+    }
+
+    public Long getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public Integer getService_score() {
+        return service_score;
+    }
+
+    public void setService_score(Integer service_score) {
+        this.service_score = service_score;
+    }
+
+    public Integer getEnviro_score() {
+        return enviro_score;
+    }
+
+    public void setEnviro_score(Integer enviro_score) {
+        this.enviro_score = enviro_score;
+    }
+
+    public Integer getTaste_score() {
+        return taste_score;
+    }
+
+    public void setTaste_score(Integer taste_score) {
+        this.taste_score = taste_score;
     }
 }

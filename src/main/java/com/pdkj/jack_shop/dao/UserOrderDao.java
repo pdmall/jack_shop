@@ -29,29 +29,40 @@ import java.util.Map;
  */
 @Repository
 public class UserOrderDao extends DaoBase<Banner> {
-
-    public Long addOrder(Long shop_id, Long user_id) {
-        String sql = "insert into user_Order(id,user_id,shop_id) values (?,?,?)";
-        Long id = Tools.generatorId();
-        jdbcTemplate.update(sql,id , user_id, shop_id);
-        return id;
+    //添加订单
+    public Long addOrder(UserOrder userOrder) {
+        userOrder.setId(Tools.generatorId());
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(userOrder,"userOrder");
+         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+        return userOrder.getId();
     }
-
+    //修改订单
     public Long updateOrder(UserOrder userOrder){
         SqlInfo insertSQL =SQLTools.getUpdateById(userOrder,"user_order",userOrder.getId());
         jdbcTemplate.update(insertSQL.getSql(),insertSQL.getValues());
         return userOrder.getId();
     }
-
+    //查看订单列表
     public List<Map<String, Object>> getShopOrder(Long shop_id,Pager page){
         MySql sql = new MySql();
-        sql.append("select id,pay_on,item_id,state,pay_type,user_id,created,buy_time,");
-        sql.append("use_time,use_coupon_id,wallet_money,total_price,final_price,shop_id ");
-        sql.append(" FROM user_order ");
-        sql.append(" where shop_id = ?",shop_id);
+        sql.append("SELECT");
+        sql.append("	uo.id,");
+        sql.append("	COUNT(uo.id),");
+        sql.append("	uo.total_price ,");
+        sql.append("	os.`name`  ");
+        sql.append("FROM");
+        sql.append("user_order AS uo ,");
+        sql.append("user_order_details AS uod ,");
+        sql.append("order_state AS os ");
+        sql.append("WHERE ");
+        sql.append("	uo.order_state_id = os.id AND");
+        sql.append("	uo.id = uod.user_order_id AND");
+        sql.append("	uo.user_id = 6");
+        sql.append("GROUP BY uo.id");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+
     public List<Map<String, Object>> getUserOrder(Long user_id,Pager page){
         MySql sql = new MySql();
         sql.append("select id,pay_on,item_id,state,pay_type,user_id,created,buy_time,");
@@ -75,4 +86,5 @@ public class UserOrderDao extends DaoBase<Banner> {
         String sql = "update user_order set state = 1 where id = ? and state = 0";
         jdbcTemplate.update(sql,orderId);
     }
+
 }

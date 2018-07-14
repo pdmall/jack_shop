@@ -73,8 +73,9 @@ public class GoodsDao extends DaoBase<Goods> {
         sql.append("goods_type where shop_id=?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
-    public Integer addGoodsType(GoodsType goodsType){
+    public Long addGoodsType(GoodsType goodsType){
         SqlInfo sqlInfo = SQLTools.getInsertSQL(goodsType,"goods_type");
-        return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+        return goodsType.getId();
     }
 }
