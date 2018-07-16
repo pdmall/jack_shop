@@ -22,8 +22,8 @@ import java.util.Map;
 public class UserOrderController extends BaseController {
 
     @GetMapping("addOrder")
-    public Result addOrder(@RequestParam(value = "shop_id") Long shop_id,@RequestParam(value = "user_id") Long user_id) throws CustomException {
-        Long id  =  userOrderService.addOrder(shop_id,user_id);
+    public Result addOrder(UserOrder userOrder) throws CustomException {
+        Long id  =  userOrderService.addOrder(userOrder);
         return ResultGenerator.genSuccessResult(id);
     }
 

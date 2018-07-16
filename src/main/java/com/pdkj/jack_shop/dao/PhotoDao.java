@@ -27,17 +27,17 @@ import java.util.Map;
 public class PhotoDao extends  DaoBase<Photo>{
     public List<Map<String,Object>> getUserPhoto(Long user_id){
         MySql mySql = new MySql();
-        mySql.append("select id,shop_id,user_id,img_url,created from album where user_id = ?",user_id);
+        mySql.append("select id,shop_id,user_id,img_url,created from photo where user_id = ?",user_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
     public List<Map<String,Object>> getShopPhoto(Long shop_id){
         MySql mySql = new MySql();
-        mySql.append("select id,shop_id,user_id,img_url,created from album where shop_id = ?" , shop_id);
+        mySql.append("select id,shop_id,user_id,img_url,created from photo where shop_id = ?" , shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
     public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
         MySql mySql = new MySql();
-        mySql.append("select a.id,a.shop_id,user_id,a.img_url,a.created from album a , goods g ");
+        mySql.append("select a.id,a.shop_id,user_id,a.img_url,a.created from photo a , goods g ");
         mySql.append(" where g.shop_id = a.shop_id and user_id = ? or a.shop_id = ?",user_id,shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }

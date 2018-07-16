@@ -11,8 +11,8 @@ import java.util.Map;
 @Service
 public class UserOrderService extends BaseService<UserOrder> {
 
-    public Long addOrder(Long shop_id, Long user_id) {
-        return userOrderDao.addOrder(shop_id, user_id);
+    public Long addOrder(UserOrder userOrder) {
+        return userOrderDao.addOrder(userOrder);
     }
 
     public Long updateOrder(UserOrder userOrder) {

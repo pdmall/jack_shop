@@ -28,6 +28,7 @@ import java.util.Map;
  */
 @Repository
 public class CouponDao extends DaoBase<ShopType> {
+
     public List<Map<String, Object>> getCouponByShopId(Long shopId,Integer coupon_state) {
         MySql sql = new MySql();
         sql.append("SELECT ");
@@ -42,6 +43,7 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("GROUP BY uo.coupon_id");
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     public Map<String, Object> getCouponById(Long id) {
         MySql sql = new MySql();
         sql.append("SELECT ");

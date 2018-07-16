@@ -235,10 +235,12 @@ public class ShopController extends BaseController {
         return ResultGenerator.genSuccessResult(photoService.getGoodsPhoto(getUser().getId(),shop_id));
     }
     //添加照片
-    @GetMapping("addPhoto")
+    @PostMapping("addPhoto")
     public Result addPhoto(Photo photo) throws CustomException {
+        photo.setUser_id(getUser().getId());
         photoService.addPhoto(photo);
-        return ResultGenerator.genSuccessResult();
+        System.out.println(photo);
+        return ResultGenerator.genSuccessResult(photo);
     }
 
 
