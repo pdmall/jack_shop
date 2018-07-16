@@ -40,7 +40,7 @@ public class GoodsController extends BaseController{
     //添加一个商品
     @GetMapping("addGoods")
     public Result addGoods(Goods goods) throws CustomException {
-        return ResultGenerator.genSuccessResult(goodsService.addGoods(goods));
+        return ResultGenerator.genSuccessResult(goodsService.addGoods(goods,getUser().getId()));
     }
     //获得所有商品的单位
     @GetMapping("getGoodsUnit")

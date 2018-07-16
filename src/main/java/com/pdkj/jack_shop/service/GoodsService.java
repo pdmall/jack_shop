@@ -22,12 +22,12 @@ public class GoodsService extends BaseService<Goods> {
     public List<Map<String, Object>> getShopGoods(Long shop_id) {
         return goodsDao.getShopGoods(shop_id);
     }
-    public Long addGoods(Goods goods) {
+    public Long addGoods(Goods goods,Long user_id) {
         Photo photo = new Photo();
         photo.setId(Tools.generatorId());
         photo.setImg_url(goods.getImg_url());
         photo.setShop_id(goods.getShop_id());
-        photo.setUser_id(Long.parseLong(shopDao.getShop(goods.getShop_id()).get("user_id").toString()));
+        photo.setUser_id(user_id);
         photoDao.addPhoto(photo);
         return goodsDao.addGoods(goods);
     }
