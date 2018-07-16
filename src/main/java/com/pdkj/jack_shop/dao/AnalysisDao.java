@@ -32,7 +32,7 @@ public class AnalysisDao extends DaoBase {
         mySql.append("	user_order");
         mySql.append("WHERE");
         mySql.append("	shop_id = ?",shop_id);
-        mySql.append("AND state > 1");
+        mySql.append("AND order_state_id > 1");
         mySql.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time)",day);
         return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
@@ -76,7 +76,7 @@ public class AnalysisDao extends DaoBase {
         mySql.append("FROM");
         mySql.append("	user_order");
         mySql.append("WHERE");
-        mySql.append("	shop_id = ? AND state = 3",shop_id);
+        mySql.append("	shop_id = ? AND order_state_id = 3",shop_id);
         mySql.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time);",day);
         Map<String,Object> map = jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
         MySql mySql1 = new MySql();
@@ -87,7 +87,7 @@ public class AnalysisDao extends DaoBase {
         mySql1.append("	user_order uo");
         mySql1.append("WHERE");
         mySql1.append("	( uo.service_score + uo.enviro_score + uo.taste_score ) / 3 >= 6  ");
-        mySql1.append("	AND shop_id = ? AND state = 3 ",shop_id);
+        mySql1.append("	AND shop_id = ? AND order_state_id = 3 ",shop_id);
         mySql1.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time);",day);
         map.putAll(jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues()));
 
@@ -99,7 +99,7 @@ public class AnalysisDao extends DaoBase {
         mySql2.append("	user_order");
         mySql2.append("WHERE");
         mySql2.append("	shop_id = ?",shop_id);
-        mySql2.append("AND state = 3");
+        mySql2.append("AND order_state_id = 3");
         mySql2.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time);",day);
         map.putAll(jdbcTemplate.queryForMap(mySql2.toString(),mySql.getValues()));
         return map;
@@ -125,7 +125,7 @@ public class AnalysisDao extends DaoBase {
         mySql2.append("	user_order");
         mySql2.append("WHERE");
         mySql2.append("	shop_id = ?",shop_id);
-        mySql2.append("AND state = 3");
+        mySql2.append("AND order_state_id = 3");
         mySql2.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time)",day);
         map.putAll(jdbcTemplate.queryForMap(mySql2.toString(),mySql2.getValues()));
         return map;
