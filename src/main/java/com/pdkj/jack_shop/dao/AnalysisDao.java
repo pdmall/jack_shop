@@ -72,7 +72,7 @@ public class AnalysisDao extends DaoBase {
         MySql mySql = new MySql();
         //所有评论数
         mySql.append("SELECT");
-        mySql.append("	COUNT(id) frequency");
+        mySql.append("	COUNT(id) count_comment");
         mySql.append("FROM");
         mySql.append("	user_order");
         mySql.append("WHERE");
@@ -82,7 +82,7 @@ public class AnalysisDao extends DaoBase {
         MySql mySql1 = new MySql();
         //好评数
         mySql1.append("SELECT");
-        mySql1.append("	COUNT(*)");
+        mySql1.append("	COUNT(*) good_comment");
         mySql1.append("FROM");
         mySql1.append("	user_order uo");
         mySql1.append("WHERE");
@@ -94,7 +94,7 @@ public class AnalysisDao extends DaoBase {
         MySql mySql2 = new MySql();
         //新增评论
         mySql2.append("SELECT");
-        mySql2.append("	COUNT(id) frequency");
+        mySql2.append("	COUNT(id) new_comment");
         mySql2.append("FROM");
         mySql2.append("	user_order");
         mySql2.append("WHERE");
