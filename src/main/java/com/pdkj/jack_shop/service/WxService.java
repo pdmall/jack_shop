@@ -51,11 +51,10 @@ public class WxService extends BaseService {
     public String getToken() throws Exception {
         List<NameValuePair> params = new ArrayList<>();
         Map<String,String> map = new HashMap<String,String>();
-        map.put ("appid", XCXInfo.APPID);
-        map.put ("secret", XCXInfo.APPSECRET);
+        map.put("appid", XCXInfo.APPID);
+        map.put("secret", XCXInfo.APPSECRET);
         map.put("grant_type", XCXInfo.CLIENT_CREDENTIAL);
         String content = NetUtils.httpGet( XCXInfo.URL_ACCESS_TOKEN,map);
-
         // 如果请求成功
         if (content == null) throw new Exception("获取Token失败");
         JSONObject jsonObject = (JSONObject) JSON.parse(content);

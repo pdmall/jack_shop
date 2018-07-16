@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("shopType")
 public class ShopTypeController extends BaseController {
-
+    //获得全部商品类型
     @GetMapping("getAllShopType")
     public Result getAllShopType() throws CustomException {
         List<Map<String, Object>> list =  shopTypeService.getAllShopType();

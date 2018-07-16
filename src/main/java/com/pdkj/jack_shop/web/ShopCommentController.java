@@ -16,12 +16,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("shopComment")
 public class ShopCommentController extends BaseController {
-
+    //获得商铺全部评论
     @GetMapping("getCommentList")
     public Result getCommentList(Long shopId) throws CustomException {
         return ResultGenerator.genSuccessResult(shopCommentService.getCommentList(shopId));
     }
-
+    //获得评论回复
     @GetMapping("getCommentReply")
     public Result getCommentReply(Long order_id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopCommentService.getCommentReply(order_id));

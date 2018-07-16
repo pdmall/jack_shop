@@ -24,6 +24,7 @@ import java.util.Map;
  */
 @Service
 public class UserConcernService extends BaseService<UserConcern>{
+    //获得用户关注列表
     public Map<String,Object> getUserConcernList(Long shop_id) {
         Map<String,Object> data = new HashMap<>();
         List<Map<String,Object>>list = userConcernDao.getUserConcernList(shop_id);

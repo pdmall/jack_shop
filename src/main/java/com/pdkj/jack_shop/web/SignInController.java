@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("signIn")
 public class SignInController extends BaseController {
-
+    //获得签名
     @GetMapping("getSignInByUserId")
     public Result getSignInByUserId() throws CustomException {
         List<Map<String, Object>> list =  signInService.getSignInByUserId();

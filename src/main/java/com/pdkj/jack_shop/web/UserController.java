@@ -19,15 +19,17 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController {
-
+    //获得注册验证码
     @GetMapping("getVerCode")
     public Result getVerCode(String phone) throws CustomException, ClientException {
         return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.reginAndLogin));
     }
+    //获得成为店员的验证码
     @GetMapping("getAddEmployeeVerCode")
     public Result getAddEmployeeVerCode(String phone) throws CustomException, ClientException {
         return ResultGenerator.genSuccessResult(userService.getVerCode(phone,AliYunSMS.addEmployee));
     }
+    //登录或者注册接口
     @PostMapping("register")
     public Result register(User user, String verCode) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.register(user, verCode));
@@ -37,15 +39,14 @@ public class UserController extends BaseController {
     public Result getUser(@RequestParam Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getUser(id));
     }*/
-
+    //获得用户信息
     @GetMapping("getUserInfo")
-    public Result getUserInfo(String token) throws CustomException {
+    public Result getUserInfo() throws CustomException {
         return ResultGenerator.genSuccessResult(getUser());
     }
 
     @GetMapping("getLevel2ByLevel3")
     public Result getLevel2ByLevel3(String token) throws CustomException {
-
         return ResultGenerator.genSuccessResult(userService.getLevel2ByLevel3(token));
     }
 
@@ -53,13 +54,13 @@ public class UserController extends BaseController {
     public Result getLevel1ByLevel3(String token) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
     }
-
-    @GetMapping("delImg")
+    //删除图片
+    @PostMapping("delImg")
     public Result delImg(String img_url) throws CustomException {
         userService.delImg(img_url);
         return ResultGenerator.genSuccessResult();
     }
-
+    //在商铺端获的我的所有商铺
     @GetMapping("getMyShopList")
     public Result getMyShopList() throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getMyShopList(getUser().getId()));

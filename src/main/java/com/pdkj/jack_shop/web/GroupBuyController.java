@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("groupBuy")
 public class GroupBuyController extends BaseController {
-
+    //添加优惠券
     @GetMapping("addGroupBuy")
     public Result addGroupBuy(IsPassGroupBuy groupBuy , String goods_ids) throws CustomException {
         return ResultGenerator.genSuccessResult(groupBuyService.addGroupBuy(groupBuy,goods_ids));

@@ -3,13 +3,11 @@ package com.pdkj.jack_shop.service;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
-import com.pdkj.jack_shop.model.Goods;
-import com.pdkj.jack_shop.model.IsPassShop;
-import com.pdkj.jack_shop.model.Shop;
-import com.pdkj.jack_shop.model.UserShopRel;
+import com.pdkj.jack_shop.model.*;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -31,12 +29,18 @@ public class ShopService extends BaseService<Shop> {
         return shop;
     }
 
-
-    public Long addShop(IsPassShop shop){
-        return shopDao.addShop(shop);
+    @Transactional
+    public Long addShop(IsPassShop shop,Label label, ShopType shopType){
+        Long shopId = shopDao.addShop(shop);
+        label.setShop_id(shopId);
+        labelDao.addLabel(label);
+        shopTypeDao.addShopTypeRel(new ShopTypeRel(shopId,shopType.getId()) );
+        return shopId;
     }
     public Map<String, Object> getShop(Long id){
-        return shopDao.getShop(id);
+        Map<String,Object> stringObjectMap = shopDao.getShop(id);
+        stringObjectMap.put("groupBuys",groupBuyDao.getGroupBuyByShopId(id,1));
+        return stringObjectMap;
     }
     public Map<String, Object> findAddressById(Long id){
         return shopDao.findAddressById(id);

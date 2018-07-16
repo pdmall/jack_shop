@@ -104,9 +104,7 @@ public class AnalysisDao extends DaoBase {
         map.putAll(jdbcTemplate.queryForMap(mySql2.toString(),mySql.getValues()));
         return map;
     }
-
     //顾客分析
-
     public Map<String,Object> customer(Long shop_id ,Integer day){
         //新顾客
         String sql = "SELECT count(user_id) new_customer FROM user_order where shop_id = ? AND user_id NOT in(SELECT user_id FROM user_order WHERE shop_id = ? AND NOT(DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(Pay_time))) AND (DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(Pay_time))";
@@ -117,13 +115,12 @@ public class AnalysisDao extends DaoBase {
         return map;
     }
     //营业统计
-
     public Map<String,Object> business(Long shop_id ,Integer day){
         Map<String,Object> map = trade(shop_id,day);
         MySql mySql2 = new MySql();
         //新增评论
         mySql2.append("SELECT");
-        mySql2.append("	COUNT(id) frequency");
+        mySql2.append("	COUNT(id) new_comment");
         mySql2.append("FROM");
         mySql2.append("	user_order");
         mySql2.append("WHERE");

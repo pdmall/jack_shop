@@ -47,12 +47,7 @@ public class ShopController extends BaseController {
      */
     @GetMapping("addShop")
     public Result addShop(IsPassShop shop, Label label, ShopType shopType) throws CustomException {
-        Long shopId = shopService.addShop(shop);
-        label.setShop_id(shopId);
-        labelService.addLabel(label);
-        shopTypeService.addShopTypeRel(new ShopTypeRel(shopId,shopType.getId()) );
-        shopId=null;
-        return ResultGenerator.genSuccessResult();
+        return ResultGenerator.genSuccessResult(shopService.addShop(shop,label, shopType));
     }
 
     /**
@@ -69,7 +64,6 @@ public class ShopController extends BaseController {
 
     /**
      * 根据商铺ID查询商铺位置
-     *
      * @param id
      * @return
      * @throws CustomException

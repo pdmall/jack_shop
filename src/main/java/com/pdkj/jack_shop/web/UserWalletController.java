@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("userWallet")
 public class UserWalletController extends BaseController {
+    //获得用户的钱包
     @GetMapping("getWallet")
     public Result getWallet() throws CustomException {
         return ResultGenerator.genSuccessResult(userWalletService.getWallet(getUser().getId()));

@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("banner")
 public class bannerController extends BaseController {
-
+    //获得首页广告栏信息
     @GetMapping("getHomeBanner")
     public Result getHomeBanner() throws CustomException {
         List<Map<String, Object>> list =  bannerService.getHomeBanner();
