@@ -28,8 +28,8 @@ public class PhotoService extends BaseService<Photo> {
     public List<Map<String,Object>> getShopPhoto(Long shop_id){
         return photoDao.getShopPhoto(shop_id);
     }
-    public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
-        return photoDao.getGoodsPhoto(user_id,shop_id);
+    public List<Map<String,Object>> getGoodsPhoto(Long shop_id){
+        return photoDao.getGoodsPhoto(shop_id);
     }
     public void addPhoto(Photo photo){
         photoDao.addPhoto(photo);

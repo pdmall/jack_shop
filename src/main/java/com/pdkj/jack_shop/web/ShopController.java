@@ -232,7 +232,7 @@ public class ShopController extends BaseController {
     //查看商品图片
     @GetMapping("getGoodsPhoto")
     public Result getGoodsPhoto(Long shop_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(photoService.getGoodsPhoto(getUser().getId(),shop_id));
+        return ResultGenerator.genSuccessResult(photoService.getGoodsPhoto(shop_id));
     }
     //添加照片
     @PostMapping("addPhoto")

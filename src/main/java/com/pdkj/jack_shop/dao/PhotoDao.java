@@ -35,10 +35,10 @@ public class PhotoDao extends  DaoBase<Photo>{
         mySql.append("select id,shop_id,user_id,img_url,created from photo where shop_id = ?" , shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
-    public List<Map<String,Object>> getGoodsPhoto(Long user_id,Long shop_id){
+    public List<Map<String,Object>> getGoodsPhoto(Long shop_id){
         MySql mySql = new MySql();
-        mySql.append("select a.id,a.shop_id,user_id,a.img_url,a.created from photo a , goods g ");
-        mySql.append(" where g.shop_id = a.shop_id and user_id = ? or a.shop_id = ?",user_id,shop_id);
+        mySql.append("select g.img_url,g.name from  goods g ");
+        mySql.append(" where a.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
     public Long addPhoto(Photo photo){
