@@ -22,7 +22,7 @@ public class Goods {
     private String img_url;
     private String describe;
     private Long shop_id;
-    private Integer type_id;
+    private Long type_id;
 
     public Long getShop_id() {
         return shop_id;
@@ -32,11 +32,11 @@ public class Goods {
         this.shop_id = shop_id;
     }
 
-    public Integer getType_id() {
+    public Long getType_id() {
         return type_id;
     }
 
-    public void setType_id(Integer type_id) {
+    public void setType_id(Long type_id) {
         this.type_id = type_id;
     }
 
