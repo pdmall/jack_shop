@@ -39,9 +39,9 @@ public class AnalysisController extends BaseController {
     public Result groupBuy(Long shop_id,Integer day) throws CustomException {
         return ResultGenerator.genSuccessResult(analysisService.groupBuy(shop_id,day));
     }
-    @GetMapping("evaluation")
-    public Result evaluation(Long shop_id,Integer day) throws CustomException {
-        return ResultGenerator.genSuccessResult(analysisService.evaluation(shop_id,day));
+    @GetMapping("comment")
+    public Result comment(Long shop_id,Integer day) throws CustomException {
+        return ResultGenerator.genSuccessResult(analysisService.comment(shop_id,day));
     }
     @GetMapping("customer")
     public Result customer(Long shop_id,Integer day) throws CustomException {

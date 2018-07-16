@@ -88,7 +88,11 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("group by item_id ");
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    public List<Map<String,Object>> getIsPassGroupBuyList(Integer state) {
+        MySql sql = new MySql();
+        sql.append("SELECT * from is_pass_group_buy order where state = ? by created DESC",state);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
     public List<Map<String,Object>> getLog(Long id){
         MySql sql = new MySql();
         sql.append("select * from group_buy_pass_log where shop_id= ?",id);

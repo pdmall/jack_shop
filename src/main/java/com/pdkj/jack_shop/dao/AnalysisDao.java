@@ -25,9 +25,9 @@ public class AnalysisDao extends DaoBase {
     public Map<String,Object> trade(Long shop_id , Integer day){
         MySql mySql = new MySql();
         mySql.append("SELECT");
-        mySql.append("	COUNT(id) frequency,");
-        mySql.append("	SUM(final_price) expenditure,");
-        mySql.append("	SUM(final_price) / COUNT(id) avg");
+        mySql.append("	COUNT(id) count,");
+        mySql.append("	SUM(final_price) total,");
+        mySql.append("	SUM(final_price)/COUNT(id) avg");
         mySql.append(" FROM");
         mySql.append("	user_order");
         mySql.append("WHERE");
@@ -40,7 +40,7 @@ public class AnalysisDao extends DaoBase {
     public Map<String,Object> groupBuy(Long shop_id ,Integer day){
         MySql mySql = new MySql();
         mySql.append("SELECT");
-        mySql.append("	COUNT(*) frequency");
+        mySql.append("	COUNT(*) use");
         mySql.append(" FROM");
         mySql.append("	user_order uo,");
         mySql.append("	user_order_details uod");
@@ -53,8 +53,8 @@ public class AnalysisDao extends DaoBase {
 
         MySql mySql2 = new MySql();
         mySql2.append("SELECT");
-        mySql2.append("count(DISTINCT(uo.id)) person,");
-        mySql2.append("SUM(uod.price) sum_price");
+        mySql2.append("count(DISTINCT(uo.id)) buy,");
+        mySql2.append("SUM(uod.price) total ");
         mySql2.append("FROM");
         mySql2.append("user_order uo,");
         mySql2.append("user_order_details uod");
@@ -68,11 +68,11 @@ public class AnalysisDao extends DaoBase {
         return map;
     }
     //评价分析
-    public Map<String,Object> evaluation(Long shop_id ,Integer day){
+    public Map<String,Object> comment(Long shop_id ,Integer day){
         MySql mySql = new MySql();
         //所有评论数
         mySql.append("SELECT");
-        mySql.append("	COUNT(id) count_comment");
+        mySql.append("	COUNT(id) total");
         mySql.append("FROM");
         mySql.append("	user_order");
         mySql.append("WHERE");
@@ -82,7 +82,7 @@ public class AnalysisDao extends DaoBase {
         MySql mySql1 = new MySql();
         //好评数
         mySql1.append("SELECT");
-        mySql1.append("	COUNT(*) good_comment");
+        mySql1.append("	COUNT(*) nice");
         mySql1.append("FROM");
         mySql1.append("	user_order uo");
         mySql1.append("WHERE");
@@ -107,10 +107,10 @@ public class AnalysisDao extends DaoBase {
     //顾客分析
     public Map<String,Object> customer(Long shop_id ,Integer day){
         //新顾客
-        String sql = "SELECT count(user_id) new_customer FROM user_order where shop_id = ? AND user_id NOT in(SELECT user_id FROM user_order WHERE shop_id = ? AND NOT(DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(Pay_time))) AND (DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(Pay_time))";
+        String sql = "SELECT count(user_id) new FROM user_order where shop_id = ? AND user_id NOT in(SELECT user_id FROM user_order WHERE shop_id = ? AND NOT(DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(Pay_time))) AND (DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(Pay_time))";
         Map<String,Object> map = jdbcTemplate.queryForMap(sql,shop_id,shop_id,day);
         //老顾客
-        String sql2 = "SELECT count(user_id)old_customer FROM user_order where shop_id = ? AND user_id in(SELECT user_id FROM user_order WHERE shop_id = ? AND NOT(DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(Pay_time))) AND (DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(Pay_time))";
+        String sql2 = "SELECT count(user_id) old FROM user_order where shop_id = ? AND user_id in(SELECT user_id FROM user_order WHERE shop_id = ? AND NOT(DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(Pay_time))) AND (DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(Pay_time))";
         map.putAll(jdbcTemplate.queryForMap(sql2,shop_id,shop_id,day));
         return map;
     }

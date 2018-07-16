@@ -15,6 +15,7 @@ import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.Goods;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,11 +44,11 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("getCouponByShopId")
-    public Result getCouponByShopId(Long shopId,int coupon_state) throws CustomException {
+    public Result getCouponByShopId(Long shopId,Integer coupon_state) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shopId,coupon_state));
     }
 
-    @GetMapping("addCoupon")
+    @PostMapping("addCoupon")
     public Result addCoupon(Coupon coupon) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
     }

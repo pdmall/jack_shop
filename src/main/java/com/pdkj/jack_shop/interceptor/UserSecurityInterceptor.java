@@ -93,7 +93,7 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
                             return false;
                         }
                     } else {
-                        response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("无效token")));
+                        response.getWriter().print(JSON.toJSON(ResultGenerator.genFailResult("无效token",ResultCode.UNAUTHORIZED)));
                         return false;
                     }
                 } else {

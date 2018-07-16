@@ -27,8 +27,8 @@ public class AnalysisService extends BaseService{
     public Map<String,Object> customer(Long shop_id,Integer day){
         return analysisDao.customer(shop_id,day);
     }
-    public Map<String,Object> evaluation(Long shop_id,Integer day){
-        return analysisDao.evaluation(shop_id,day);
+    public Map<String,Object> comment(Long shop_id,Integer day){
+        return analysisDao.comment(shop_id,day);
     }
     public Map<String,Object> groupBuy(Long shop_id,Integer day){
         return analysisDao.groupBuy(shop_id,day);

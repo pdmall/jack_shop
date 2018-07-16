@@ -25,4 +25,10 @@ public class ResultGenerator {
                 .setMessage(message);
     }
 
+    public static Result genFailResult(String message,ResultCode code) {
+        return new Result()
+                .setCode(code)
+                .setMessage(message);
+    }
+
 }

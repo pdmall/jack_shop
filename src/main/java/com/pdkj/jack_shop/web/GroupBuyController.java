@@ -24,4 +24,15 @@ public class GroupBuyController extends BaseController {
     public Result getLog(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(groupBuyService.getLog(id));
     }
+    //获得商铺的审核通过的套餐
+    @GetMapping("getGroupBuyByShopId")
+    public Result getGroupBuyByShopId(Long shopId , Integer state) throws CustomException {
+        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByShopId(shopId,state));
+    }
+    //查询全部需要审核的商铺或者审核未通过的商铺
+    @GetMapping("getIsPassGroupBuyList")
+    public Result getIsPassGroupBuyList(Integer state) {
+        return ResultGenerator.genSuccessResult(groupBuyService.getIsPassGroupBuyList(state));
+    }
+
 }
