@@ -37,18 +37,6 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         pageList.add("index");
         pageList.add("register");
         pageList.add("getVerCode");
-        pageList.add("checkVersion");
-        pageList.add("getArea");
-        pageList.add("searchKey");
-        pageList.add("listener");
-        pageList.add("getProducts");
-        pageList.add("getProductSaleNum");
-        pageList.add("getCategories");
-        pageList.add("getNotice");
-        pageList.add("getStorageList");
-        pageList.add("getSaler");
-        pageList.add("addWXAddress");
-        pageList.add("notifyInfo");
     }
 
 
@@ -72,15 +60,15 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
 
         User user = null;
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        //验证签名
-        if(true) { //测试用
-            String token = request.getParameter("token");
-            System.out.println(token);
-            user = userService.getUserByToken(token);
-            request.setAttribute("user", user);
-        }else {
+        if (!contains(pageList, url)) {
+            //验证签名
+            if (true) { //测试用
+                String token = request.getParameter("token");
+                System.out.println(token);
+                user = userService.getUserByToken(token);
+                request.setAttribute("user", user);
+            } else {
 
-            if (!contains(pageList, url)) {
                 boolean pass = validateSign(request);
                 if (pass) {
                     String token = request.getParameter("token");
@@ -107,7 +95,6 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         }
         return true;
     }
-
 
 
     /**
