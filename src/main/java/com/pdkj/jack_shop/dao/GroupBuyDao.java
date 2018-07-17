@@ -80,17 +80,21 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count");
+        sql.append("unavailable_date,once_count,s.shop_name");
         sql.append("FROM ");
-        sql.append("  group_buy gb ");
+        sql.append("  group_buy gb ,shop s");
         sql.append(" WHERE ");
-        sql.append("shop_id = ? and gb.state = ?",shop_id,coupon_state);
+        sql.append("s.id = gb.shop_id and shop_id = ? and gb.state = ?",shop_id,coupon_state);
         sql.append("group by item_id ");
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     public List<Map<String,Object>> getIsPassGroupBuyList(Long shop_id) {
         MySql sql = new MySql();
-        sql.append("SELECT * from is_pass_group_buy where  shop_id = ? order by created DESC",shop_id);
+        sql.append("SELECT ");
+        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
+        sql.append("unavailable_date,once_count,s.shop_name");
+        sql.append("FROM ");
+        sql.append("is_pass_group_buy ,shop s where s.id = gb.shop_id and shop_id = ? order by created DESC",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     public List<Map<String,Object>> getLog(Long id){
