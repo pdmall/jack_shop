@@ -96,7 +96,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("gb.time_start,gb.time_end,gb.group_buy_img,gb.created,gb.shop_id,gb.state,gb.buy_person_limit,");
         sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id,s.shop_name");
         sql.append("FROM ");
-        sql.append("is_pass_group_buy gb ,shop s where s.id = gb.shop_id and shop_id = ? order by created DESC", shop_id);
+        sql.append("is_pass_group_buy gb ,shop s where s.id = gb.shop_id and shop_id = ? order by gb.created DESC", shop_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
