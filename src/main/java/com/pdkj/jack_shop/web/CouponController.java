@@ -44,8 +44,8 @@ public class CouponController extends BaseController {
     }
 
     @GetMapping("getCouponByShopId")
-    public Result getCouponByShopId(Long shopId,Integer coupon_state) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shopId,coupon_state));
+    public Result getCouponByShopId(Long shop_id,Integer coupon_state) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shop_id,coupon_state));
     }
 
     @PostMapping("addCoupon")

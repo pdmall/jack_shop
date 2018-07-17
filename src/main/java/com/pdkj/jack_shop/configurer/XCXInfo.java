@@ -3,8 +3,11 @@ package com.pdkj.jack_shop.configurer;
 public class XCXInfo {
 
 
-    public static final String APPID = "wx903822fb7d2f3961";
-    public static final String APPSECRET = "022ae660f86828b6e61f40d24d2215eb";
+//    public static final String APPID = "wx903822fb7d2f3961";
+public static final String APPID = "wx9d82360ba0304046";
+
+//    public static final String APPSECRET = "022ae660f86828b6e61f40d24d2215eb";
+    public static final String APPSECRET = "cef00252dbb5c92677f456be9bbb26ff";
     //微信支付使用
 
     public static String CLIENT_CREDENTIAL = "client_credential";

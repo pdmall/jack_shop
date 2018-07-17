@@ -17,8 +17,8 @@ import java.util.Map;
 @Service
 public class CouponService extends BaseService<ShopType> {
 
-    public List<Map<String, Object>> getCouponByShopId(Long shopId , Integer coupon_state) {
-        List<Map<String, Object>> list = couponDao.getCouponByShopId(shopId,coupon_state);
+    public List<Map<String, Object>> getCouponByShopId(Long shop_id , Integer coupon_state) {
+        List<Map<String, Object>> list = couponDao.getCouponByShopId(shop_id,coupon_state);
         return list;
     }
 

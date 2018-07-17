@@ -28,19 +28,16 @@ import java.util.Map;
  */
 @Repository
 public class CouponDao extends DaoBase<ShopType> {
-
-    public List<Map<String, Object>> getCouponByShopId(Long shopId,Integer coupon_state) {
+    
+    public List<Map<String, Object>> getCouponByShopId(Long shop_id,Integer coupon_state) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("c.id,c.type,c.original_price,c.buy_price,c.appointment,c.date_start,c.buy_person_limit, ");
-        sql.append("c.date_end,c.time_start,c.time_end,c.shop_id,c.unavailable_date,c.goods_range_id, ");
-        sql.append("c.stock_count,c.once_count,cgr.range_name,count(uo.coupon_id) sale_volume ,s.home_img");
+        sql.append("s.shop_name,s.home_img,c.id,c.original_price,c.buy_price");
         sql.append("FROM ");
-        sql.append("coupon AS c ,coupon_goods_range AS cgr ,user_order uo , shop s");
+        sql.append("coupon AS c, shop s");
         sql.append("WHERE ");
-        sql.append(" c.goods_range_id = cgr.id and c.shop_id = s.id AND uo.shop_id = c.shop_id AND ");
-        sql.append("coupon_state = ? AND c.shop_id = ? ",coupon_state,shopId);
-        sql.append("GROUP BY uo.coupon_id");
+        sql.append("  c.shop_id = s.id AND ");
+        sql.append("coupon_state = ? AND c.shop_id = ? ",coupon_state,shop_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
@@ -57,17 +54,16 @@ public class CouponDao extends DaoBase<ShopType> {
 
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
-
-    public List<Map<String, Object>> getCouponByUserId(Long UserId,Integer coupon_state) {
+    //用户端显示商铺代金卷
+    public List<Map<String, Object>> getCouponBy(Long UserId,Integer coupon_state) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("c.id,c.type,c.original_price,c.buy_price,c.appointment,c.date_start,c.buy_person_limit, ");
-        sql.append("c.date_end,c.time_start,c.time_end,c.shop_id,c.unavailable_date,c.goods_range_id, ");
-        sql.append("c.stock_count,c.once_count,cgr.range_name ");
+        sql.append("s.shop_name,s.home_img,c.id,c.original_price,c.buy_price,c.unavailable_date, ");
+        sql.append("cgr.range_name,c.appointment,c.once_count");
         sql.append("FROM ");
         sql.append("coupon AS c ,coupon_goods_range AS cgr ,user_coupon_rel ucr");
         sql.append("WHERE ");
-        sql.append(" ucr.coupon_id = c.id AND c.goods_range_id = cgr.id AND ");
+        sql.append(" ucr.coupon_id = c.id AND c.goods_range_id = cgr.id AND");
         sql.append("coupon_state = ? AND ucr.user_id = ? ",coupon_state,UserId);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
