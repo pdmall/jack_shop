@@ -82,7 +82,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
         sql.append("unavailable_date,once_count ,count(item_id) sale_volume ");
         sql.append("FROM ");
-        sql.append(" group_buy gb,user_order_details uod");
+        sql.append("  group_buy gb LEFT JOIN user_order_details uod ON gb.id = uod.item_id");
         sql.append(" WHERE ");
         sql.append("gb.id = uod.item_id and shop_id = ? and  uod.type = 1 and gb.state = ?",shop_id,coupon_state);
         sql.append("group by item_id ");
