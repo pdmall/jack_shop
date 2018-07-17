@@ -90,10 +90,10 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     public List<Map<String,Object>> getIsPassGroupBuyList(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
+        sql.append("title,i.id,buy_price,original_price,diners_number,appointment,");
         sql.append("unavailable_date,once_count,s.shop_name");
         sql.append("FROM ");
-        sql.append("is_pass_group_buy ,shop s where s.id = gb.shop_id and shop_id = ? order by created DESC",shop_id);
+        sql.append("is_pass_group_buy i ,shop s where s.id = i.shop_id and shop_id = ? order by i.created DESC",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     public List<Map<String,Object>> getLog(Long id){
