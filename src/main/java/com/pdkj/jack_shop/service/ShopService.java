@@ -24,7 +24,7 @@ public class ShopService extends BaseService<Shop> {
     public List<Map<String,Object>> getShopList(Pager page) {
         List<Map<String, Object>> shop = shopDao.getShopList(page);
         for (Map<String,Object> map : shop){
-            map.put("coupons",couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()),1));
+            map.put("coupons",couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()),1,page));
         }
         return shop;
     }

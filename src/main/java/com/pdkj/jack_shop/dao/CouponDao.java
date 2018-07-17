@@ -13,6 +13,7 @@ import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.ShopType;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.Pager;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
@@ -28,16 +29,33 @@ import java.util.Map;
  */
 @Repository
 public class CouponDao extends DaoBase<ShopType> {
-    
-    public List<Map<String, Object>> getCouponByShopId(Long shop_id,Integer coupon_state) {
+    public List<Map<String, Object>> getCouponByShopId(Long shop_id, Integer coupon_state, Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("s.shop_name,s.home_img,c.id,c.original_price,c.buy_price");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
+        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img");
         sql.append("FROM ");
-        sql.append("coupon AS c, shop s");
+        sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ");
         sql.append("WHERE ");
-        sql.append("  c.shop_id = s.id AND ");
-        sql.append("coupon_state = ? AND c.shop_id = ? ",coupon_state,shop_id);
+        sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND");
+        sql.append("coupon_state = ? AND c.shop_id = ? ", coupon_state, shop_id);
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public List<Map<String, Object>> getCouponByUserId(Long user_id, Integer is_use,Pager pager) {
+        MySql sql = new MySql();
+        sql.append("SELECT ");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
+        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img");
+        sql.append("FROM ");
+        sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ,user_coupon_rel ucr");
+        sql.append("WHERE ");
+        sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND ucr.coupon_id = c.id AND");
+        sql.append("is_use = ? AND ucr.user_id = ? ", is_use, user_id);
+        sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
@@ -50,22 +68,19 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("FROM ");
         sql.append("coupon AS c ,coupon_goods_range AS cgr ");
         sql.append("WHERE ");
-        sql.append("coupon_state = 1 AND c.goods_range_id = cgr.id AND c.id = ? ",id);
-
+        sql.append("coupon_state = 1 AND c.goods_range_id = cgr.id AND c.id = ? ", id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
-    //用户端显示商铺代金卷
-    public List<Map<String, Object>> getCouponBy(Long UserId,Integer coupon_state) {
+
+    public Map<String, Object> getSales(Long coupon_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("s.shop_name,s.home_img,c.id,c.original_price,c.buy_price,c.unavailable_date, ");
-        sql.append("cgr.range_name,c.appointment,c.once_count");
+        sql.append("count(*) ");
         sql.append("FROM ");
-        sql.append("coupon AS c ,coupon_goods_range AS cgr ,user_coupon_rel ucr");
+        sql.append("user_order_details");
         sql.append("WHERE ");
-        sql.append(" ucr.coupon_id = c.id AND c.goods_range_id = cgr.id AND");
-        sql.append("coupon_state = ? AND ucr.user_id = ? ",coupon_state,UserId);
-        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+        sql.append("type = 2 AND item_id = ? ", coupon_id);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
     /**
@@ -76,11 +91,12 @@ public class CouponDao extends DaoBase<ShopType> {
      * @date 2018-07-07
      * @throw YnCorpSysException
      */
-    public Long addCoupon(Coupon coupon){
+    public Long addCoupon(Coupon coupon) {
         coupon.setId(Tools.generatorId());
-        SqlInfo insertSQL = SQLTools.getInsertSQL(coupon,"coupon");
+        SqlInfo insertSQL = SQLTools.getInsertSQL(coupon, "coupon");
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return coupon.getId();
     }
+
 
 }

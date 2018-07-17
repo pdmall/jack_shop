@@ -4,6 +4,7 @@ import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.Goods;
 import com.pdkj.jack_shop.model.ShopType;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +18,11 @@ import java.util.Map;
 @Service
 public class CouponService extends BaseService<ShopType> {
 
-    public List<Map<String, Object>> getCouponByShopId(Long shop_id , Integer coupon_state) {
-        List<Map<String, Object>> list = couponDao.getCouponByShopId(shop_id,coupon_state);
+    public List<Map<String, Object>> getCouponByShopId(Long shop_id , Integer coupon_state ,Pager pager) {
+        List<Map<String, Object>> list = couponDao.getCouponByShopId(shop_id,coupon_state,pager);
+        for (Map<String,Object> map:list) {
+            map.putAll(couponDao.getSales(Long.parseLong(map.get("id").toString())));
+        }
         return list;
     }
 
@@ -27,8 +31,8 @@ public class CouponService extends BaseService<ShopType> {
         return map;
     }
 
-    public List<Map<String, Object>> getCouponByUserId(Long userId, Integer coupon_state) {
-        List<Map<String, Object>> list = couponDao.getCouponByUserId(userId,coupon_state);
+    public List<Map<String, Object>> getCouponByUserId(Long user_id, Integer is_use,Pager pager) {
+        List<Map<String, Object>> list = couponDao.getCouponByUserId(user_id,is_use,pager);
         return list;
     }
     public Long addCoupon(Coupon coupon) {

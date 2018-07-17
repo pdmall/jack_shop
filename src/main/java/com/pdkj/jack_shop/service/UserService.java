@@ -33,7 +33,7 @@ import java.util.Random;
 @Service
 public class UserService extends BaseService<User> {
 
-    @Cacheable(value = "token", key = "#p0")
+    /*@Cacheable(value = "token", key = "#p0")*/
     public User getUserByToken(String token) {
         User user = userDao.getUserByToken(token);
         return user;

@@ -14,6 +14,7 @@ import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.Goods;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,22 +33,22 @@ import java.util.Map;
 @RequestMapping("coupon")
 public class CouponController extends BaseController {
 
-
+    //获得代金卷详情
     @GetMapping("getCouponById")
     public Result getCouponById(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.getCouponById(id));
     }
-
-    @GetMapping("getCouponByUserId")
-    public Result getCouponByUserId(Integer coupon_state) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),coupon_state));
-    }
-
+    //获得商铺中的代金卷
     @GetMapping("getCouponByShopId")
-    public Result getCouponByShopId(Long shop_id,Integer coupon_state) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shop_id,coupon_state));
+    public Result getUsersCouponByShopId(Long shop_id,Integer coupon_state,Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getCouponByShopId(shop_id,coupon_state,pager));
     }
-
+    //获得用户购买的代金卷
+    @GetMapping("getCouponByUserId")
+    public Result getUsersCouponByUserId(Integer coupon_state,Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),coupon_state,pager));
+    }
+    //添加一个代金卷
     @PostMapping("addCoupon")
     public Result addCoupon(Coupon coupon) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
