@@ -71,7 +71,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("FROM ");
         sql.append(" group_buy gb , user_group_buy_rel ugbr");
         sql.append(" WHERE ");
-        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?",userId,coupon_state,is_use);
+        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and  gb.state = ? and is_use = ?",userId,coupon_state,is_use);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
