@@ -75,7 +75,7 @@ public class CouponDao extends DaoBase<ShopType> {
     public Map<String, Object> getSales(Long coupon_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("count(*) ");
+        sql.append("count(*) sales");
         sql.append("FROM ");
         sql.append("user_order_details");
         sql.append("WHERE ");
