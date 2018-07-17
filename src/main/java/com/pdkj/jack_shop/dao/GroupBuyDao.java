@@ -90,7 +90,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     }
     public List<Map<String,Object>> getIsPassGroupBuyList(Long shop_id) {
         MySql sql = new MySql();
-        sql.append("SELECT * from is_pass_group_buy order where  shop_id = ? order by created DESC",shop_id);
+        sql.append("SELECT * from is_pass_group_buy where  shop_id = ? order by created DESC",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     public List<Map<String,Object>> getLog(Long id){
