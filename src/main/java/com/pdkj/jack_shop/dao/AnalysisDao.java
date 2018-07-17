@@ -89,7 +89,7 @@ public class AnalysisDao extends DaoBase {
         mySql1.append("	( uo.service_score + uo.enviro_score + uo.taste_score ) / 3 >= 6  ");
         mySql1.append("	AND shop_id = ? AND order_state_id = 3 ",shop_id);
         mySql1.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time);",day);
-        map.putAll(jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues()));
+        map.putAll(jdbcTemplate.queryForMap(mySql1.toString(),mySql1.getValues()));
 
         MySql mySql2 = new MySql();
         //新增评论
@@ -101,7 +101,7 @@ public class AnalysisDao extends DaoBase {
         mySql2.append("	shop_id = ?",shop_id);
         mySql2.append("AND order_state_id = 3");
         mySql2.append("AND DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date(pay_time);",day);
-        map.putAll(jdbcTemplate.queryForMap(mySql2.toString(),mySql.getValues()));
+        map.putAll(jdbcTemplate.queryForMap(mySql2.toString(),mySql2.getValues()));
         return map;
     }
     //顾客分析
