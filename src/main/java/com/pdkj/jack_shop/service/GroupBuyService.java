@@ -23,8 +23,8 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
         return group_buy_id;
     }
 
-    public List<Map<String, Object>> getGroupBuyByShopId(Long shopId , Integer coupon_state) {
-        return groupBuyDao.getGroupBuyByShopId(shopId,coupon_state);
+    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id , Integer coupon_state) {
+        return groupBuyDao.getGroupBuyByShopId(shop_id,coupon_state);
     }
 
     public Map<String, Object> getGroupBuyById(Long id) {

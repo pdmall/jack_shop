@@ -76,7 +76,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     }
 
     //查询商铺发布的套餐
-    public List<Map<String, Object>> getGroupBuyByShopId(Long shopId, Integer coupon_state) {
+    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id, Integer coupon_state) {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
@@ -84,13 +84,13 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("FROM ");
         sql.append(" group_buy gb,user_order_details uod");
         sql.append(" WHERE ");
-        sql.append("gb.id = uod.item_id and shop_id = ? and  uod.type = 0 and state = ?",shopId,coupon_state);
+        sql.append("gb.id = uod.item_id and shop_id = ? and  uod.type = 0 and state = ?",shop_id,coupon_state);
         sql.append("group by item_id ");
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     public List<Map<String,Object>> getIsPassGroupBuyList(Long shop_id) {
         MySql sql = new MySql();
-        sql.append("SELECT * from is_pass_group_buy order where shop_id = ? order by created DESC",shop_id);
+        sql.append("SELECT * from is_pass_group_buy order where  shop_id = ? order by created DESC",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     public List<Map<String,Object>> getLog(Long id){

@@ -26,14 +26,14 @@ public class GroupBuyController extends BaseController {
     }
     //获得商铺的审核通过的套餐
     @GetMapping("getGroupBuyByShopId")
-    public Result getGroupBuyByShopId(Long shopId , Integer state) throws CustomException {
-        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByShopId(shopId,state));
+    public Result getGroupBuyByShopId(Long shop_id , Integer state) throws CustomException {
+        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByShopId(shop_id,state));
     }
     //查询全部需要审核的商铺或者审核未通过的商铺
     @GetMapping("getIsPassGroupBuyList")
     public Result getIsPassGroupBuyList(Long shop_id) {
         return ResultGenerator.genSuccessResult(groupBuyService.getIsPassGroupBuyList(shop_id));
     }
-    
+
 
 }
