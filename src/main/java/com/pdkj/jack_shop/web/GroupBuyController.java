@@ -31,8 +31,8 @@ public class GroupBuyController extends BaseController {
     }
     //查询全部需要审核的商铺或者审核未通过的商铺
     @GetMapping("getIsPassGroupBuyList")
-    public Result getIsPassGroupBuyList(Integer state) {
-        return ResultGenerator.genSuccessResult(groupBuyService.getIsPassGroupBuyList(state));
+    public Result getIsPassGroupBuyList(Integer state,Long shop_id) {
+        return ResultGenerator.genSuccessResult(groupBuyService.getIsPassGroupBuyList(state,shop_id));
     }
 
 }

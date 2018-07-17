@@ -37,8 +37,8 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
     public List<Map<String,Object>> getLog(Long id){
         return groupBuyDao.getLog(id);
     }
-    public List<Map<String, Object>> getIsPassGroupBuyList(Integer state) {
-        return groupBuyDao.getIsPassGroupBuyList(state);
+    public List<Map<String, Object>> getIsPassGroupBuyList(Integer state ,Long shop_id) {
+        return groupBuyDao.getIsPassGroupBuyList(state,shop_id);
     }
 
 
