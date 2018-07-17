@@ -32,6 +32,7 @@ public class AliYunSMS {
     static final String sing = "派对科技";
     public static final String reginAndLogin = "SMS_135825038";
     public static final String addEmployee = "SMS_139228298";
+    public static final String vrCode = "SMS_139228298";
 
 
     public static SendSmsResponse sendSms(String phone,String vrCode,String template) throws ClientException {
@@ -111,7 +112,7 @@ public class AliYunSMS {
         return querySendDetailsResponse;
     }
 
-    public static void main(String[] args) throws ClientException, InterruptedException {
+    /*public static void main(String[] args) throws ClientException, InterruptedException {
 
         //发短信
         SendSmsResponse response = sendSms("15828066838","2121",reginAndLogin);
@@ -146,7 +147,7 @@ public class AliYunSMS {
             System.out.println("RequestId=" + querySendDetailsResponse.getRequestId());
         }
 
-    }
+    }*/
 
 
 

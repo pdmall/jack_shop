@@ -40,7 +40,7 @@ public class AnalysisDao extends DaoBase {
     public Map<String,Object> groupBuy(Long shop_id ,Integer day){
         MySql mySql = new MySql();
         mySql.append("SELECT");
-        mySql.append("	COUNT(*) use");
+        mySql.append("	COUNT(*) `use`");
         mySql.append(" FROM");
         mySql.append("	user_order uo,");
         mySql.append("	user_order_details uod");
