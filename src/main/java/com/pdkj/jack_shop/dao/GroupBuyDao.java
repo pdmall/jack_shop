@@ -58,12 +58,12 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("FROM ");
         sql.append(" group_buy gb , user_group_buy_rel ugbr");
         sql.append(" WHERE ");
-        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?",id);
+        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?", id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
     //查询用户购买的套餐
-    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state,Integer is_use) {
+    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state, Integer is_use) {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
@@ -71,7 +71,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("FROM ");
         sql.append(" group_buy gb , user_group_buy_rel ugbr");
         sql.append(" WHERE ");
-        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and  gb.state = ? and is_use = ?",userId,coupon_state,is_use);
+        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and  gb.state = ? and is_use = ?", userId, coupon_state, is_use);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
@@ -79,26 +79,30 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id, Integer coupon_state) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count,s.shop_name");
+        sql.append("gb.title,gb.original_price,gb.buy_price,gb.appointment,gb.date_start,gb.date_end,");
+        sql.append("gb.time_start,gb.time_end,gb.group_buy_img,gb.created,gb.shop_id,gb.state,gb.buy_person_limit,");
+        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id");
         sql.append("FROM ");
         sql.append("  group_buy gb ,shop s");
         sql.append(" WHERE ");
-        sql.append("s.id = gb.shop_id and shop_id = ? and gb.state = ?",shop_id,coupon_state);
+        sql.append("s.id = gb.shop_id and shop_id = ? and gb.state = ?", shop_id, coupon_state);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    public List<Map<String,Object>> getIsPassGroupBuyList(Long shop_id) {
+
+    public List<Map<String, Object>> getIsPassGroupBuyList(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count,s.shop_name");
+        sql.append("gb.title,gb.original_price,gb.buy_price,gb.appointment,gb.date_start,gb.date_end,");
+        sql.append("gb.time_start,gb.time_end,gb.group_buy_img,gb.created,gb.shop_id,gb.state,gb.buy_person_limit,");
+        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id");
         sql.append("FROM ");
-        sql.append("is_pass_group_buy ,shop s where s.id = gb.shop_id and shop_id = ? order by created DESC",shop_id);
-        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+        sql.append("is_pass_group_buy gb ,shop s where s.id = gb.shop_id and shop_id = ? order by created DESC", shop_id);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-    public List<Map<String,Object>> getLog(Long id){
+
+    public List<Map<String, Object>> getLog(Long id) {
         MySql sql = new MySql();
-        sql.append("select * from group_buy_pass_log where shop_id= ?",id);
-        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+        sql.append("select * from group_buy_pass_log where shop_id= ?", id);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 }
