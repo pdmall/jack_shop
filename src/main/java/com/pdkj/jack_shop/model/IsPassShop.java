@@ -48,16 +48,6 @@ public class IsPassShop {
 
     private String food_safety_permit_img;
 
-    private int is_limit;
-
-    public int getIs_limit() {
-        return is_limit;
-    }
-
-    public void setIs_limit(int is_limit) {
-        this.is_limit = is_limit;
-    }
-
 
     public String getFood_safety_permit_img() {
         return food_safety_permit_img;
