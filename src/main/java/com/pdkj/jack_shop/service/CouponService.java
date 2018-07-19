@@ -27,13 +27,11 @@ public class CouponService extends BaseService<ShopType> {
     }
 
     public Map<String, Object> getCouponById(Long id) {
-        Map<String, Object> map = couponDao.getCouponById(id);
-        return map;
+        return couponDao.getCouponById(id);
     }
 
     public List<Map<String, Object>> getCouponByUserId(Long user_id, Integer is_use,Pager pager) {
-        List<Map<String, Object>> list = couponDao.getCouponByUserId(user_id,is_use,pager);
-        return list;
+        return couponDao.getCouponByUserId(user_id,is_use,pager);
     }
     public Long addCoupon(Coupon coupon) {
         return couponDao.addCoupon(coupon);

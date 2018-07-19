@@ -12,6 +12,7 @@ import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.IsPassGroupBuy;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.Pager;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
@@ -76,7 +77,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     }
 
     //查询商铺发布的套餐
-    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id, Integer coupon_state) {
+    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id, Integer coupon_state, Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("gb.title,gb.original_price,gb.buy_price,gb.appointment,gb.date_start,gb.date_end,");
@@ -86,6 +87,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("  group_buy gb ,shop s");
         sql.append(" WHERE ");
         sql.append("s.id = gb.shop_id and shop_id = ? and gb.state = ?", shop_id, coupon_state);
+        sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 

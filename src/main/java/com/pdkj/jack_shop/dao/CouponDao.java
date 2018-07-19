@@ -62,13 +62,13 @@ public class CouponDao extends DaoBase<ShopType> {
     public Map<String, Object> getCouponById(Long id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("c.id,c.type,c.original_price,c.buy_price,c.appointment,c.date_start, ");
-        sql.append("c.date_end,c.time_start,c.time_end,c.shop_id,c.unavailable_date,c.goods_range_id, ");
-        sql.append("c.buy_person_limit,c.stock_count,c.once_count,cgr.range_name ");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
+        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img,s.shop_address,s.shop_phone,s.street");
         sql.append("FROM ");
-        sql.append("coupon AS c ,coupon_goods_range AS cgr ");
+        sql.append("coupon AS c ,coupon_goods_range AS cgr ,shop s");
         sql.append("WHERE ");
-        sql.append("coupon_state = 1 AND c.goods_range_id = cgr.id AND c.id = ? ", id);
+        sql.append("c.shop_id = s.id AND c.goods_range_id = cgr.id AND c.id = ? ", id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 

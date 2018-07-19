@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.model.IsPassGroupBuy;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,8 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
         return group_buy_id;
     }
 
-    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id , Integer coupon_state) {
-        return groupBuyDao.getGroupBuyByShopId(shop_id,coupon_state);
+    public List<Map<String, Object>> getGroupBuyByShopId(Long shop_id , Integer coupon_state, Pager pager) {
+        return groupBuyDao.getGroupBuyByShopId(shop_id,coupon_state,pager);
     }
 
     public Map<String, Object> getGroupBuyById(Long id) {

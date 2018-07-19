@@ -4,6 +4,7 @@ import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.IsPassGroupBuy;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +27,8 @@ public class GroupBuyController extends BaseController {
     }
     //获得商铺的审核通过的套餐
     @GetMapping("getGroupBuyByShopId")
-    public Result getGroupBuyByShopId(Long shop_id , Integer state) throws CustomException {
-        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByShopId(shop_id,state));
+    public Result getGroupBuyByShopId(Long shop_id , Integer state,Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByShopId(shop_id,state,pager));
     }
     //查询全部需要审核的商铺或者审核未通过的商铺
     @GetMapping("getIsPassGroupBuyList")

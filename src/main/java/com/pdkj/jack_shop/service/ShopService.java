@@ -39,7 +39,8 @@ public class ShopService extends BaseService<Shop> {
     }
     public Map<String, Object> getShop(Long id){
         Map<String,Object> stringObjectMap = shopDao.getShop(id);
-        stringObjectMap.put("groupBuys",groupBuyDao.getGroupBuyByShopId(id,1));
+        stringObjectMap.put("groupBuys",groupBuyDao.getGroupBuyByShopId(id,1,new Pager()));
+        stringObjectMap.put("coupons",couponDao.getCouponByShopId(id,1, new Pager()));
         return stringObjectMap;
     }
     public Map<String, Object> findAddressById(Long id){

@@ -58,7 +58,7 @@ public class ShopController extends BaseController {
      * @throws CustomException
      */
     @GetMapping("getShop")
-    public Result getShop(@RequestParam(value = "id") Long id) throws CustomException {
+    public Result getShop(Long id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getShop(id));
     }
 

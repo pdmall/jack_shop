@@ -17,8 +17,7 @@ import java.util.Map;
 public class ShopTypeService extends BaseService<ShopType> {
 
     public List<Map<String, Object>> getAllShopType() {
-        List<Map<String, Object>> shop = shopTypeDao.getAllShopType();
-        return shop;
+        return shopTypeDao.getAllShopType();
     }
 
     public Long addShopTypeRel(ShopTypeRel shopTypeRel) {
