@@ -248,4 +248,9 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("s.id = usr.shop_id AND ss.id = s.shop_state and  usr.user_id = ? and usr.master = 1",user_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+
+    public void addUserShopRel(UserShopRel userShopRel) {
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(userShopRel,"user_shop_rel");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+    }
 }
