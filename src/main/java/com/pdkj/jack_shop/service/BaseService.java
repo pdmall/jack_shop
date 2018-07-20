@@ -56,6 +56,8 @@ public class BaseService<T> {
     PhotoDao photoDao;
     @Resource
     AnalysisDao analysisDao;
+    @Resource
+    QRCodeDao qrCodeDao;
 
     public Object getCache(String key) {
         Object value = null;

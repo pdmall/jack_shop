@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.DeleteObjectsResult;
+import com.aliyun.oss.model.PutObjectResult;
 import com.pdkj.jack_shop.core.CustomException;
 
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import java.util.List;
 public class AliYunOSS {
 
     private static String endpoint = "oss-cn-beijing.aliyuncs.com";
+
     private static String accessKeyId = "LTAIDWdxnQoZi0hN";
     private static String accessKeySecret = "wrZon4HUxqrfxBhQ1AdTUX8gmtT5M4";
 
@@ -26,11 +28,11 @@ public class AliYunOSS {
     private static String subFileKey(String fileUrl){
         return fileUrl.substring(fileUrl.indexOf("aliyuncs.com")+13,fileUrl.length());
     }
-    public static void addFile(InputStream inputStream,String phone){
+    public static String addFile(InputStream inputStream,String phone){
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-
+        String imgAddress ="code/" + phone + ".jpg";
         try {
-            client.putObject(bucketName, phone+".jpg", inputStream);
+            client.putObject(bucketName, imgAddress, inputStream);
         } catch (OSSException oe) {
             throw new CustomException("Error Code:       " + oe.getErrorCode()+"Error Message: " + oe.getErrorMessage());
         } catch (ClientException ce) {
@@ -38,6 +40,8 @@ public class AliYunOSS {
         } finally {
             client.shutdown();
         }
+        imgAddress = "https://pdkj.oss-cn-beijing.aliyuncs.com/"+ imgAddress;
+        return imgAddress;
     }
     public static void deleteFile(String fileUrl){
         String key = subFileKey(fileUrl);
