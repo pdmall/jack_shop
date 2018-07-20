@@ -17,6 +17,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.HTTP;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.File;
@@ -34,6 +35,7 @@ import static com.pdkj.jack_shop.configurer.AliYunOSS.addFile;
  * @Description 类描述
  * @date 2018/7/20
  */
+@Repository
 public class QRCodeDao {
 
     String APPID = "wx9d82360ba0304046";

@@ -31,7 +31,7 @@ public class UserController extends BaseController {
     }
     //登录或者注册接口
     @PostMapping("register")
-    public Result register(User user, String verCode) throws CustomException {
+    public Result register(User user, String verCode) throws Exception {
         return ResultGenerator.genSuccessResult(userService.register(user, verCode));
     }
 

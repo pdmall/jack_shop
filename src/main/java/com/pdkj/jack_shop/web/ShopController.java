@@ -198,7 +198,7 @@ public class ShopController extends BaseController {
 
     //添加商铺店员的角色
     @PostMapping("addEmployee")
-    public Result addEmployee(UserShopRel userShopRel,User user,String verCode) throws CustomException {
+    public Result addEmployee(UserShopRel userShopRel,User user,String verCode) throws Exception {
         User u = userService.register(user, verCode);
         userShopRel.setUser_id(u.getId());
         userShopRel.setMaster(0);
