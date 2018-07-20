@@ -234,4 +234,18 @@ public class ShopDao extends DaoBase<Shop> {
         String sql = "delete from user_shop_rel where id = ?";
         jdbcTemplate.update(sql,id);
     }
+
+    public List<Map<String,Object>> getMyIsPassShop(Long user_id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("s.shop_name,s.shop_address,s.id,s.county,ss.name state_name ,s.province,s.city,");
+        sql.append("s.street,s.shop_phone,s.buss_open,s.buss_close,s.created,s.updated,s.longitude,");
+        sql.append("s.latitude,s.average_cons,s.introduce,s.license_img,s.service_score,s.enviro_score,");
+        sql.append("s.taste_score,s.home_img,s.detail_imgs,s.food_safety_permit_img,usr.shop_id,usr.user_id");
+        sql.append("FROM");
+        sql.append("is_pass_shop AS s ,user_shop_rel AS usr , shop_state ss");
+        sql.append("WHERE");
+        sql.append("s.id = usr.shop_id AND ss.id = s.shop_state and  usr.user_id = ? and usr.master = 1",user_id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
 }

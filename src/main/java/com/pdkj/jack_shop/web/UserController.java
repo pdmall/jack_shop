@@ -65,8 +65,17 @@ public class UserController extends BaseController {
     public Result getMyShopList() throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getMyShopList(getUser().getId()));
     }
+    //修改用户信息
+    @GetMapping("updateUserInfo")
+    public Result updateUserInfo(User user) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.updateUserInfo(user,getUser().getId()));
+    }
 
-
+    //卷包
+    @GetMapping("getVoucherBag")
+    public Result getVoucherBag() throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getVoucherBag(getUser().getId()));
+    }
 
 
 }

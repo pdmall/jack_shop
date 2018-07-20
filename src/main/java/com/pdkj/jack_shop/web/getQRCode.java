@@ -18,7 +18,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.pdkj.jack_shop.configurer.AliYunOSS.addFile;
+
 @RestController
+@RequestMapping("QRCode")
 public class getQRCode {
 
 
@@ -27,14 +30,14 @@ public class getQRCode {
 
 
     @RequestMapping("/getCode")
-    public String getCodeM(HttpServletRequest request) throws Exception {
-
-        String imei ="867186032552993";
+    public String getCodeM() throws Exception {
+        //推荐码
+        String phone ="666";
         String page="pages/index/index";
         String token = getWxToken();   // 得到token
 
         Map<String, Object> params = new HashMap<>();
-        params.put("scene", imei);  //参数
+        params.put("scene", phone);  //参数
         params.put("page", page); //位置
         params.put("width", 220);
         params.put("is_hyaline", true);
@@ -55,8 +58,8 @@ public class getQRCode {
         //String s = EntityUtils.toString(response.getEntity(), "utf-8");
         //System.out.println(s);
         InputStream inputStream = response.getEntity().getContent();
-        String name = imei+".png";
-        saveToImgByInputStream(inputStream,"C:\\",name);  //保存图片
+        //String name = phone+".png";
+        addFile(inputStream,phone);  //保存图片
         return null;
     }
 

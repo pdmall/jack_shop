@@ -9,6 +9,9 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.UserWallet;
+import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +32,14 @@ public class UserWalletDao extends DaoBase<UserWallet> {
         return jdbcTemplate.queryForList(sql,user_id);
     }
 
+    public void save(Long user_id) {
+        UserWallet wallet = new UserWallet();
+        wallet.setId(Tools.generatorId());
+        wallet.setMoney(0.0);
+        wallet.setState(1);
+        wallet.setUser_id(user_id);
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(wallet,"user_wallet");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+
+    }
 }

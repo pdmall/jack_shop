@@ -66,9 +66,9 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.queryForMap(sql,id);
     }
 
-    public void update(User oldUser) {
+    public Integer update(User oldUser) {
         SqlInfo sql = SQLTools.getUpdateById(oldUser, "user", oldUser.getId());
-        jdbcTemplate.update(sql.toString(),sql.getValues());
+        return jdbcTemplate.update(sql.toString(),sql.getValues());
     }
 
     public List<Map<String,Object>> getLevel2ByLevel3(Long id) {

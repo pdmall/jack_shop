@@ -11,7 +11,7 @@ public class UserWallet {
 
     private Long user_id;
 
-    private BigDecimal money;
+    private Double money;
 
     /**
      * 1,正常
@@ -44,14 +44,14 @@ public class UserWallet {
     /**
      * @return money
      */
-    public BigDecimal getMoney() {
+    public Double getMoney() {
         return money;
     }
 
     /**
      * @param money
      */
-    public void setMoney(BigDecimal money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

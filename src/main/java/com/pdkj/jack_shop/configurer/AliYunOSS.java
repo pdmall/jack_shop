@@ -7,6 +7,7 @@ import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.DeleteObjectsResult;
 import com.pdkj.jack_shop.core.CustomException;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,19 @@ public class AliYunOSS {
     private static String subFileKey(String fileUrl){
         return fileUrl.substring(fileUrl.indexOf("aliyuncs.com")+13,fileUrl.length());
     }
+    public static void addFile(InputStream inputStream,String phone){
+        OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
 
+        try {
+            client.putObject(bucketName, phone+".jpg", inputStream);
+        } catch (OSSException oe) {
+            throw new CustomException("Error Code:       " + oe.getErrorCode()+"Error Message: " + oe.getErrorMessage());
+        } catch (ClientException ce) {
+            throw new CustomException("Error Message: " + ce.getMessage());
+        } finally {
+            client.shutdown();
+        }
+    }
     public static void deleteFile(String fileUrl){
         String key = subFileKey(fileUrl);
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
@@ -62,6 +75,7 @@ public class AliYunOSS {
             client.shutdown();
         }
     }
+
 
 
 }

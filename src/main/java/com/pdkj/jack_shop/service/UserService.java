@@ -8,6 +8,7 @@ import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +64,7 @@ public class UserService extends BaseService<User> {
             User oldUser = userDao.getUserByPhone(user.getPhone());
             if(oldUser==null){
                 user.setToken(Tools.uuid());
-                userDao.save(user);
+                userWalletDao.save(userDao.save(user));
                 user.setPassword(null);
                 return user;
             }else{
@@ -103,5 +104,17 @@ public class UserService extends BaseService<User> {
 
     public void delImg(String img_url){
         userDao.delImg(img_url);
+    }
+
+    public String updateUserInfo(User user, Long id) {
+        user.setId(id);
+        return userDao.update(user)>0?"修改成功":"修改失败";
+    }
+
+    public Map<String,Object> getVoucherBag(Long id) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("groupBuys",groupBuyDao.getGroupBuyByUserId(id,1,1));
+        map.put("coupons",couponDao.getCouponByUserId(id,1,new Pager()));
+        return map;
     }
 }
