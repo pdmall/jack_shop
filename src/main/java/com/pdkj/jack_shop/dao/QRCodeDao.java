@@ -11,6 +11,7 @@ package com.pdkj.jack_shop.dao;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pdkj.jack_shop.util.NetUtils;
+import com.pdkj.jack_shop.util.sql.MySql;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -36,7 +37,7 @@ import static com.pdkj.jack_shop.configurer.AliYunOSS.addFile;
  * @date 2018/7/20
  */
 @Repository
-public class QRCodeDao {
+public class QRCodeDao extends DaoBase {
 
     String APPID = "wx9d82360ba0304046";
     String SECRET = "cef00252dbb5c92677f456be9bbb26ff";
@@ -128,5 +129,11 @@ public class QRCodeDao {
             }
         }
         return stateInt;
+    }
+
+    public Map<String,Object> getQRCode(Long id) {
+        MySql sql = new MySql();
+        sql.append("SELECT qr_code FROM `user` where id = ?",id);
+        return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
     }
 }

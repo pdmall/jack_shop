@@ -118,4 +118,8 @@ public class UserService extends BaseService<User> {
         map.put("coupons",couponDao.getCouponByUserId(id,1,new Pager()));
         return map;
     }
+
+    public Map<String,Object>  getQRCode(Long id) {
+        return qrCodeDao.getQRCode(id);
+    }
 }
