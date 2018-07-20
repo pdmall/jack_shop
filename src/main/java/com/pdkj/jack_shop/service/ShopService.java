@@ -25,6 +25,7 @@ public class ShopService extends BaseService<Shop> {
         List<Map<String, Object>> shop = shopDao.getShopList(page);
         for (Map<String,Object> map : shop){
             map.put("coupons",couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()),1,page));
+            map.put("groupBuys",groupBuyDao.getGroupBuyByShopId(Long.valueOf(map.get("id").toString()),1,page));
         }
         return shop;
     }
