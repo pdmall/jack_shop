@@ -58,12 +58,13 @@ public class UserService extends BaseService<User> {
             return sendSmsResponse.getMessage();
     }
 
-    public User register(User user, String verCode) throws CustomException {
+    public User register(User user, String verCode) throws Exception {
         String oldCode = (String) getCache("verCode" + user.getPhone());
         if (oldCode.equals(verCode)) {
             User oldUser = userDao.getUserByPhone(user.getPhone());
             if(oldUser==null){
                 user.setToken(Tools.uuid());
+                user.setQr_code(qrCodeDao.addQRCode(user.getPhone()));
                 userWalletDao.save(userDao.save(user));
                 user.setPassword(null);
                 return user;
