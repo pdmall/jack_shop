@@ -47,13 +47,17 @@ public class BaseController {
     @Resource
     public GroupBuyService groupBuyService;
     @Resource
-    UserConcernService userConcernService;
+    public UserConcernService userConcernService;
     @Resource
-    PhotoService photoService;
+    public PhotoService photoService;
     @Resource
-    AnalysisService analysisService;
+    public AnalysisService analysisService;
     @Resource
-    ParameterService parameterService;
+    public ParameterService parameterService;
+    @Resource
+    public ShareOrginService shareOrginService;
+    @Resource
+    FlowMoneyService flowMoneyService;
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);

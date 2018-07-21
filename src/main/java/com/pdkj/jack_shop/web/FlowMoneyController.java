@@ -14,12 +14,14 @@ import java.util.Map;
  * Created by CodeGenerator on 2018/06/26.
  */
 @RestController
-@RequestMapping("parameter")
-public class ParameterController extends BaseController {
-    //获得显示奖励金额
-    @GetMapping("getParam")
-    public Result getParam() throws CustomException {
-        return ResultGenerator.genSuccessResult(parameterService.getParam());
+@RequestMapping("flowMoney")
+public class FlowMoneyController extends BaseController {
+    //获得首页广告栏信息
+    @GetMapping("getFlowMoney")
+    public Result getFlowMoney() throws CustomException {
+        return ResultGenerator.genSuccessResult(flowMoneyService.getFlowMoney(getUser().getId()));
     }
+
+
 
 }
