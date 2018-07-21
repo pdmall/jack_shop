@@ -26,4 +26,8 @@ public class ShareOrginService extends BaseService {
     public Map<String,Object> getMyLevel2Money(Long id) {
         return shareOrginDao.getMyLevel2Money(id);
     }
+    public Map<String,Object> getMyAll(Long id) {
+        return shareOrginDao.getMyAll(id);
+    }
+
 }

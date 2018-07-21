@@ -48,5 +48,9 @@ public class ShareOrginController extends BaseController {
         return ResultGenerator.genSuccessResult(shareOrginService.getMyLevel1Money(getUser().getId()));
     }
 
-
+    //获得我的一级奖励值
+    @GetMapping("getMyAll")
+    public Result getMyAll() throws CustomException {
+        return ResultGenerator.genSuccessResult(shareOrginService.getMyAll(getUser().getId()));
+    }
 }
