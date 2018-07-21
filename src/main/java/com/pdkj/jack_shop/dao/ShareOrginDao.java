@@ -28,7 +28,7 @@ public class ShareOrginDao extends DaoBase {
     public List<Map<String, Object>> getMyLevel1(Long id, Pager pager) {
         MySql mySql = new MySql();
         mySql.append("select nickname,so.created,p.`value` from share_orgin so , `user` u ,parameter p ");
-        mySql.append(" where `u`.id = so.level2 AND level3 = ? order by so.created desc", id);
+        mySql.append(" where so.parameter_id = p.id AND `u`.id = so.level2 AND level3 = ? order by so.created desc", id);
         mySql.limit(pager);
         return jdbcTemplate.queryForList(mySql.toString(), mySql.getValues());
     }
@@ -36,7 +36,7 @@ public class ShareOrginDao extends DaoBase {
     public List<Map<String, Object>> getMyLevel2(Long id, Pager pager) {
         MySql mySql = new MySql();
         mySql.append("select nickname,so.created,p.`value` from share_orgin so , `user` u ,parameter p ");
-        mySql.append(" where `u`.id = so.level1 AND level3 = ? order by so.created desc", id);
+        mySql.append(" where so.parameter_id = p.id AND `u`.id = so.level1 AND level3 = ? order by so.created desc", id);
         mySql.limit(pager);
         return jdbcTemplate.queryForList(mySql.toString(), mySql.getValues());
     }
