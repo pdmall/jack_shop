@@ -3,6 +3,7 @@ package com.pdkj.jack_shop.web;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,8 @@ import java.util.Map;
 public class FlowMoneyController extends BaseController {
     //获得首页广告栏信息
     @GetMapping("getFlowMoney")
-    public Result getFlowMoney() throws CustomException {
-        return ResultGenerator.genSuccessResult(flowMoneyService.getFlowMoney(getUser().getId()));
+    public Result getFlowMoney(Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(flowMoneyService.getFlowMoney(getUser().getId(),pager));
     }
 
 

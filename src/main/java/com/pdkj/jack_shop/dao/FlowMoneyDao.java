@@ -10,8 +10,8 @@ package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
+import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @Description 类描述
  * @date 2018/7/21
  */
-@Resource
+@Repository
 public class FlowMoneyDao extends DaoBase{
 
     public List<Map<String,Object>> getFlowMoney(Long id,Pager pager) {

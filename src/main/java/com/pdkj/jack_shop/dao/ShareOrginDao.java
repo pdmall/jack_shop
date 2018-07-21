@@ -43,17 +43,17 @@ public class ShareOrginDao extends DaoBase {
 
     public Map<String, Object> getMyLevel1Money(Long id) {
         MySql mySql = new MySql();
-        mySql.append("select sum(`value`) from share_orgin so , `user` u ,parameter p ");
+        mySql.append("select sum(`value`) sum from share_orgin so , `user` u ,parameter p ");
         mySql.append("where so.parameter_id = p.id AND `u`.id = so.level2 AND level3 = ? AND", id);
-        mySql.append("  date_format(created,'%Y-%m')=date_format(now(),'%Y-%m')");
+        mySql.append("  date_format(so.created,'%Y-%m')=date_format(now(),'%Y-%m')");
         return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
     }
 
     public Map<String, Object> getMyLevel2Money(Long id) {
         MySql mySql = new MySql();
-        mySql.append("select sum(`value`) from share_orgin so , `user` u ,parameter p ");
+        mySql.append("select sum(`value`) sum from share_orgin so , `user` u ,parameter p ");
         mySql.append("where so.parameter_id = p.id AND `u`.id = so.level1  AND level3 = ? ", id);
-        mySql.append("AND  date_format(created,'%Y-%m')=date_format(now(),'%Y-%m')");
+        mySql.append("AND  date_format(so.created,'%Y-%m')=date_format(now(),'%Y-%m')");
         return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
     }
 
