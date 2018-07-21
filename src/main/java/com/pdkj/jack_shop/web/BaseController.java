@@ -52,6 +52,8 @@ public class BaseController {
     PhotoService photoService;
     @Resource
     AnalysisService analysisService;
+    @Resource
+    ParameterService parameterService;
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);

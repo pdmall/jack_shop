@@ -58,7 +58,8 @@ public class BaseService<T> {
     AnalysisDao analysisDao;
     @Resource
     QRCodeDao qrCodeDao;
-
+    @Resource
+    ParameterDao parameterDao;
     public Object getCache(String key) {
         Object value = null;
         ValueOperations<String, Object> operations = redisTemplate.opsForValue();
