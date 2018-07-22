@@ -79,7 +79,7 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("FROM ");
         sql.append("user_order_details");
         sql.append("WHERE ");
-        sql.append("type = 2 AND item_id = ? ", coupon_id);
+        sql.append("type_of = 2 AND item_id = ? ", coupon_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
