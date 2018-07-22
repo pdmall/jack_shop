@@ -73,6 +73,8 @@ public class ShareOrginDao extends DaoBase {
         Map<String, Object> map1 =new HashMap<String, Object>();
         map1.put("count",Integer.parseInt(map2.get("count").toString()) + Integer.parseInt(map.get("count").toString()));
         map1.put("sum",(map2.get("sum")==null?0.0:Double.parseDouble(map2.get("sum").toString())) + (map.get("sum")==null?0.0:Double.parseDouble(map.get("sum").toString())));
+
         return map;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.pdkj.jack_shop.dao;
+package com.pdkj.jack_shop.model;
 /**
  * @Project: jack_shop
  * @Package com.pdkj.jack_shop.dao
