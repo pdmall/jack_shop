@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.model.UserOrder;
+import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ import java.util.Map;
 @Service
 public class UserOrderService extends BaseService<UserOrder> {
 
-    public Long addOrder(UserOrder userOrder) {
+    public Long addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails) {
+        userOrderDao.addOrderDetails(userOrderDetails);
         return userOrderDao.addOrder(userOrder);
     }
 

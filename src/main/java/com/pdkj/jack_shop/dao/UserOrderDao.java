@@ -9,6 +9,7 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.UserOrder;
+import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -35,6 +36,13 @@ public class UserOrderDao extends DaoBase<Banner> {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(userOrder,"userOrder");
          jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
         return userOrder.getId();
+    }
+    //添加订单详情
+    public Long addOrderDetails(UserOrderDetails userOrderDetails) {
+        userOrderDetails.setId(Tools.generatorId());
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(userOrderDetails,"user_order_details");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+        return userOrderDetails.getId();
     }
     //修改订单
     public Long updateOrder(UserOrder userOrder){
