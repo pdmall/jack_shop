@@ -33,7 +33,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     //添加订单
     public Long addOrder(UserOrder userOrder) {
         userOrder.setId(Tools.generatorId());
-        SqlInfo sqlInfo = SQLTools.getInsertSQL(userOrder,"userOrder");
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(userOrder,"user_order");
          jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
         return userOrder.getId();
     }
