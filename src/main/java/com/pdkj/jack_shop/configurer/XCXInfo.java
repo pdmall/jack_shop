@@ -23,7 +23,7 @@ public class XCXInfo {
     public static final String PAY_KEY = "pdkj2d8a71606ad80744b3c981c3384b";
     //支付成功后的服务器回调url
     //public static final String PAY_NOTIFY_URL = "https://www.lichuanshipin.ltd/lichuan/wx/pay/notifyInfo";
-    public static final String PAY_NOTIFY_URL = "http://47.96.97.84/lichuan/wx/pay/notifyInfo";
+    public static final String PAY_NOTIFY_URL = "http://120.27.223.110/jack_shop/pay/notifyInfo";
     //签名方式，固定值
     public static final String PAY_SIGNTYPE = "MD5";
     //交易类型，小程序支付的固定值为JSAPI
