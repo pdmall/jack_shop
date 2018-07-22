@@ -36,6 +36,7 @@ public class PayController extends BaseController {
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             if("SUCCESS".equals(mapData.get("return_code"))){
                 String orderId = mapData.get("attach");
+                System.out.println();
                 System.out.println("heihei");
             }
 
