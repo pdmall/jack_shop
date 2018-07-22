@@ -26,8 +26,9 @@ public class WXController extends BaseController {
     }
 
     @PostMapping("payment")
-    public Result payment(String order_id,String ip) throws Exception {
-        Map<String, String> data = wxPayService.getPaymentInfo(getUser(), order_id, ip);
+    public Result payment(String order_id,String ip,String wxCode) throws Exception {
+        String openId = wxService.getOpenId(wxCode);
+        Map<String, String> data = wxPayService.getPaymentInfo(openId, order_id, ip);
         return ResultGenerator.genSuccessResult(data);
     }
 

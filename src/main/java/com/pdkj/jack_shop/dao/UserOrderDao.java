@@ -82,7 +82,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     }
 
     public String getOrderPrice(String order_id) {
-        String sql = "select final_price from user_order where id =  ? and state = 0";
+        String sql = "select final_price from user_order where id =  ? and order_state_id = 1";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, order_id);
         if(maps.size()>0){
             return maps.get(0).get("final_price").toString();

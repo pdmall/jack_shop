@@ -18,15 +18,15 @@ public class WxPayService extends BaseService {
 
     /**
      * 微信支付
-     * @param user
+     * @param open_id
      * @param order_id 订单id
      * @param ip  ip地址
      * @return
      * @throws Exception
      */
-    public Map<String,String> getPaymentInfo(User user, String order_id, String ip) throws Exception {
+    public Map<String,String> getPaymentInfo(String open_id, String order_id, String ip) throws Exception {
         String payPrice = userOrderDao.getOrderPrice(order_id);
-        return getPaymentInfo(user.getOpen_id(),order_id,payPrice,"订单付款",ip);
+        return getPaymentInfo(open_id,order_id,payPrice,"订单付款",ip);
     }
 
     /**
