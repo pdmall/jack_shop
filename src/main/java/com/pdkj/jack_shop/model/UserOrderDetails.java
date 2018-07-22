@@ -24,14 +24,15 @@ public class UserOrderDetails {
     private Integer state;
     private Date use_time;
     private Double price;
-    private Double quantiy;
+    private Double quantity;
 
-    public Double getQuantiy() {
-        return quantiy;
+
+    public Double getQuantity() {
+        return quantity;
     }
 
-    public void setQuantiy(Double quantiy) {
-        this.quantiy = quantiy;
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
     public Long getId() {

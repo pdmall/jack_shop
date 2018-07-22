@@ -24,7 +24,7 @@ public class UserOrderController extends BaseController {
 
     @GetMapping("addOrder")
     public Result addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails) throws CustomException {
-        return ResultGenerator.genSuccessResult(userOrderService.addOrder(userOrder,userOrderDetails));
+        return ResultGenerator.genSuccessResult(userOrderService.addOrder(userOrder,userOrderDetails,getUser().getId()));
     }
 
     @GetMapping("updateOrder")
