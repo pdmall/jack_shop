@@ -13,8 +13,10 @@ import java.util.Map;
 public class UserOrderService extends BaseService<UserOrder> {
 
     public Long addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails) {
+        Long id = userOrderDao.addOrder(userOrder);
+        userOrderDetails.setUser_order_id(id);
         userOrderDao.addOrderDetails(userOrderDetails);
-        return userOrderDao.addOrder(userOrder);
+        return id;
     }
 
     public Long updateOrder(UserOrder userOrder) {
