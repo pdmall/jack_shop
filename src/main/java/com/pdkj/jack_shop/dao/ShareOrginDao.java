@@ -13,6 +13,7 @@ import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,9 +70,9 @@ public class ShareOrginDao extends DaoBase {
         mySql2.append("select count(*) count,sum(`value`) sum from share_orgin so , `user` u ,parameter p ");
         mySql2.append("where so.parameter_id = p.id AND `u`.id = so.level2  AND level3 = ? ", id);
         Map<String, Object> map2 = jdbcTemplate.queryForMap(mySql2.toString(), mySql2.getValues());
-        map.clear();
-        map.put("count",Integer.getInteger(map2.get("count").toString()) + Integer.getInteger(map.get("count").toString()));
-        map.put("sum",Double.parseDouble(map2.get("sum").toString()) + Double.parseDouble(map.get("sum").toString()));
+        Map<String, Object> map1 =new HashMap<String, Object>();
+        map1.put("count",Integer.parseInt(map2.get("count").toString()) + Integer.parseInt(map.get("count").toString()));
+        map1.put("sum",(map2.get("sum")==null?0.0:Double.parseDouble(map2.get("sum").toString())) + (map.get("sum")==null?0.0:Double.parseDouble(map.get("sum").toString())));
         return map;
     }
 }
