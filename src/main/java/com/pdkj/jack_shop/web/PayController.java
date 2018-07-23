@@ -15,6 +15,7 @@ import com.pdkj.jack_shop.util.PayUtil;
 import org.apache.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Map;
  * @Description 类描述
  * @date 2018/7/22
  */
-@Controller
+@RestController
 @RequestMapping("pay")
 public class PayController extends BaseController {
     @RequestMapping("notifyInfo")
