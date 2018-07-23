@@ -77,12 +77,12 @@ public class UserOrderDao extends DaoBase<Banner> {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("uo.created,uo.final_price,uod.price,uod.quantity,uo.Pay_time,");
-        sql.append("s.shop_name,s.shop_address,s.home_img,uo.order_state_id");
+        sql.append("s.shop_name,s.shop_address,s.home_img,s.shop_phone,os.`name`");
         sql.append("FROM");
-        sql.append("user_order AS uo ,user_order_details AS uod ,shop AS s");
+        sql.append("user_order AS uo ,user_order_details AS uod ,shop AS s ,order_state AS os");
         sql.append("WHERE");
-        sql.append("uo.id = uod.user_order_id AND s.id = uo.shop_id AND");
-        sql.append("uo.user_id  = ? ",user_id);
+        sql.append("uo.id = uod.user_order_id AND s.id = uo.shop_id AND uo.order_state_id = os.id AND");
+        sql.append("uo.user_id  = ?  ",user_id);
         if(order_state_id != 0){
             sql.append("AND uo.order_state_id  = ? ",order_state_id);
         }
