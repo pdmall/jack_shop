@@ -32,7 +32,7 @@ import java.util.Map;
 @RequestMapping("pay")
 public class PayController extends BaseController {
     @RequestMapping("notifyInfo")
-    public Result notifyInfo(HttpServletRequest request) {
+    public String notifyInfo(HttpServletRequest request) {
         String returnStr = null;
         //获取付款类型
         try {
@@ -42,7 +42,7 @@ public class PayController extends BaseController {
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
-                Date date = new Date(Long.parseLong(time_end));
+                Date date = new Date(Long.parseLong(time_end)/1000);
                 userOrderService.paySuccess(order_id,date,trade_type);
                 returnStr = "<xml>" +
                         "  <return_code><![CDATA[SUCCESS]]></return_code>" +
@@ -52,6 +52,6 @@ public class PayController extends BaseController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return ResultGenerator.genSuccessResult(returnStr);
+        return returnStr;
     }
 }
