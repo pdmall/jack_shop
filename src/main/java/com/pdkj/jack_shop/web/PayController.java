@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -32,7 +34,7 @@ import java.util.Map;
 @RequestMapping("pay")
 public class PayController extends BaseController {
     @RequestMapping("notifyInfo")
-    public String notifyInfo(HttpServletRequest request) {
+    public void notifyInfo(HttpServletRequest request, HttpServletResponse response) {
         String returnStr = null;
         //获取付款类型
         try {
@@ -42,16 +44,16 @@ public class PayController extends BaseController {
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
-                Date date = new Date(Long.parseLong(time_end)/1000);
-                userOrderService.paySuccess(order_id,date,trade_type);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+                userOrderService.paySuccess(order_id,sdf.parse(time_end),trade_type);
                 returnStr = "<xml>" +
                         "  <return_code><![CDATA[SUCCESS]]></return_code>" +
                         "  <return_msg><![CDATA[OK]]></return_msg>" +
                         "</xml>";
+                response.getWriter().write(returnStr);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return returnStr;
     }
 }
