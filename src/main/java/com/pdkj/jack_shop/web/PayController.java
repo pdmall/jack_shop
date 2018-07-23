@@ -40,15 +40,15 @@ public class PayController extends BaseController {
         try {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
-            if("SUCCESS".equals(mapData.get("return_code"))){
+            if ("SUCCESS".equals(mapData.get("return_code"))) {
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-                userOrderService.paySuccess(order_id,sdf.parse(time_end),trade_type);
+                userOrderService.paySuccess(order_id, sdf.parse(time_end), trade_type);
                 response.setContentType("text/xml;charset=utf-8");
                 returnStr = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
-                response.getWriter().write(returnStr);
+                response.getWriter().print(returnStr);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
