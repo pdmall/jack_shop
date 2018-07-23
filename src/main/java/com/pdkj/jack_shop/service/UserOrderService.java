@@ -33,7 +33,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getShopOrder(shop_id, page);
     }
 
-    public void paySuccess(String orderId, Date pay_time, String trade_type) {
+    public void paySuccess(String orderId, Date pay_time, Integer trade_type) {
         userOrderDao.paySuccess(orderId, pay_time, trade_type);
     }
 }

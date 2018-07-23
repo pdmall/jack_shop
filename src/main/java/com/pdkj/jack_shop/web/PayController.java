@@ -39,7 +39,7 @@ public class PayController extends BaseController {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             if("SUCCESS".equals(mapData.get("return_code"))){
-                String trade_type = mapData.get("trade_type");  // 交易类型
+                Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
                 Date date = new Date(Long.parseLong(time_end));
