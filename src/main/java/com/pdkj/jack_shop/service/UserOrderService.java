@@ -5,6 +5,7 @@ import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getShopOrder(shop_id, page);
     }
 
-    public void paySuccess(String orderId,String pay_time,String trade_type) {
+    public void paySuccess(String orderId, Date pay_time, String trade_type) {
         userOrderDao.paySuccess(orderId, pay_time, trade_type);
     }
 }

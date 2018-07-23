@@ -42,9 +42,8 @@ public class PayController extends BaseController {
                 String trade_type = mapData.get("trade_type");  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
-                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这个是你要转成后的时间的格式
-                String sd = sdf.format(new Date(time_end));
-                userOrderService.paySuccess(order_id,sd,trade_type);
+                Date date = new Date(Long.parseLong(time_end));
+                userOrderService.paySuccess(order_id,date,trade_type);
                 returnStr = "<xml>" +
                         "  <return_code><![CDATA[SUCCESS]]></return_code>" +
                         "  <return_msg><![CDATA[OK]]></return_msg>" +

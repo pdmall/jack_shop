@@ -18,6 +18,7 @@ import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         return null;
     }
 
-    public void paySuccess(String orderId, String pay_time, String trade_type) {
+    public void paySuccess(String orderId, Date pay_time, String trade_type) {
         MySql sql = new MySql();
         sql.append("update user_order set order_state_id = 2 ,pay_time = ? ,trade_type = ?  where id = ? and order_state_id = 1", orderId, pay_time, trade_type);
         jdbcTemplate.update(sql.toString(), sql.getValues());
