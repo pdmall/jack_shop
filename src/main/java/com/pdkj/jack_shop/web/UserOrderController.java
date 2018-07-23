@@ -60,8 +60,8 @@ public class UserOrderController extends BaseController {
      */
 
     @GetMapping("getUserOrder")
-    public Result getUserOrder(Pager pager){
-        return ResultGenerator.genSuccessResult(userOrderService.getUserOrder(getUser().getId(),pager));
+    public Result getUserOrder(Integer order_state_id,Pager pager){
+        return ResultGenerator.genSuccessResult(userOrderService.getUserOrder(getUser().getId(),order_state_id,pager));
     }
 
     /**
