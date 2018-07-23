@@ -90,9 +90,10 @@ public class UserOrderDao extends DaoBase<Banner> {
         return null;
     }
 
-    public void paySuccess(String orderId) {
-        String sql = "update user_order set state = 1 where id = ? and state = 0";
-        jdbcTemplate.update(sql,orderId);
+    public void paySuccess(String orderId,String pay_time,String trade_type) {
+        MySql sql = new MySql();
+        sql.append("update user_order set order_state_id = 2 ,pay_time = ? ,trade_type = ?  where id = ? and order_state_id = 1",orderId,pay_time,trade_type);
+        jdbcTemplate.update(sql.toString(),sql.getValues());
     }
 
 }

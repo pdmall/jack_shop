@@ -38,7 +38,7 @@ public class WXController extends BaseController {
     }
 
 
-    @RequestMapping("notifyInfo")
+/*    @RequestMapping("notifyInfo")
     public Result notifyInfo(HttpServletRequest request) throws Exception {
         String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
         Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
@@ -51,6 +51,6 @@ public class WXController extends BaseController {
                 "  <return_msg><![CDATA[OK]]></return_msg>" +
                 "</xml>";
         return ResultGenerator.genSuccessResult(returnStr);
-    }
+    }*/
 
 }

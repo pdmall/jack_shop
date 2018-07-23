@@ -22,19 +22,57 @@ import java.util.Map;
 @RequestMapping("userOrder")
 public class UserOrderController extends BaseController {
 
+    /**
+     * @Title: 添加订单
+     * @Description: 方法描述
+     * @author lvchong
+     * @params * @param null
+     * @date 2018-07-23
+     * @throw YnCorpSysException
+     */
+
     @GetMapping("addOrder")
     public Result addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails) throws CustomException {
         return ResultGenerator.genSuccessResult(userOrderService.addOrder(userOrder,userOrderDetails,getUser().getId()));
     }
 
+    /**
+     * @Title: 修改订单
+     * @Description: 修改订单信息
+     * @author lvchong
+     * @params * @param null
+     * @date 2018-07-23
+     * @throw YnCorpSysException
+     */
+
     @GetMapping("updateOrder")
     public Result updateOrder(UserOrder userOrder) throws CustomException {
         return ResultGenerator.genSuccessResult(userOrderService.updateOrder(userOrder));
     }
+
+    /**
+     * @Title: 获得用户订单信息
+     * @Description: 方法描述
+     * @author lvchong
+     * @params * @param null
+     * @date 2018-07-23
+     * @throw YnCorpSysException
+     */
+
     @GetMapping("getUserOrder")
-    public Result getUserOrder(Long user_id , Pager pager){
-        return ResultGenerator.genSuccessResult(userOrderService.getUserOrder(user_id,pager));
+    public Result getUserOrder(Pager pager){
+        return ResultGenerator.genSuccessResult(userOrderService.getUserOrder(getUser().getId(),pager));
     }
+
+    /**
+     * @Title: 获得商铺订单
+     * @Description: 方法描述
+     * @author lvchong
+     * @params * @param null
+     * @date 2018-07-23
+     * @throw YnCorpSysException
+     */
+
     @GetMapping("getShopOrder")
     public Result getShopOrder(Long shop_id , Pager pager){
         return ResultGenerator.genSuccessResult(userOrderService.getShopOrder(shop_id,pager));
