@@ -46,10 +46,7 @@ public class PayController extends BaseController {
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderService.paySuccess(order_id,sdf.parse(time_end),trade_type);
-                returnStr = "<xml>" +
-                        "  <return_code><![CDATA[SUCCESS]]></return_code>" +
-                        "  <return_msg><![CDATA[OK]]></return_msg>" +
-                        "</xml>";
+                returnStr = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
                 response.getWriter().write(returnStr);
             }
         } catch (Exception e) {
