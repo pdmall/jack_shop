@@ -47,8 +47,7 @@ public class PayController extends BaseController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderService.paySuccess(order_id, sdf.parse(time_end), trade_type);
                 response.setContentType("text/xml;charset=utf-8");
-                returnStr = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
-                response.getWriter().print(returnStr);
+                response.getWriter().write("success");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
