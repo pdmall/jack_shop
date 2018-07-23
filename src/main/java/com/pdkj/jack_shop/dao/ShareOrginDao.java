@@ -29,7 +29,7 @@ public class ShareOrginDao extends DaoBase {
     public List<Map<String, Object>> getMyLevel1(Long id, Pager pager) {
         MySql mySql = new MySql();
         mySql.append("select nickname,so.created,p.`value` from share_orgin so , `user` u ,parameter p ");
-        mySql.append(" where so.parameter_id = p.id AND `u`.id = so.level2 AND level3 = ? ");
+        mySql.append(" where so.parameter_id = p.id AND `u`.id = so.level1 AND level2 = ? ");
         mySql.append(" AND date_format(so.created,'%Y-%m')=date_format(now(),'%Y-%m')");
         mySql.append("order by so.created desc", id);
         mySql.limit(pager);
@@ -73,7 +73,6 @@ public class ShareOrginDao extends DaoBase {
         Map<String, Object> map1 =new HashMap<String, Object>();
         map1.put("count",Integer.parseInt(map2.get("count").toString()) + Integer.parseInt(map.get("count").toString()));
         map1.put("sum",(map2.get("sum")==null?0.0:Double.parseDouble(map2.get("sum").toString())) + (map.get("sum")==null?0.0:Double.parseDouble(map.get("sum").toString())));
-
         return map;
     }
 
