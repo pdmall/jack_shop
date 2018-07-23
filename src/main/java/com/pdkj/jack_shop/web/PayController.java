@@ -8,20 +8,14 @@ package com.pdkj.jack_shop.web;
  * @version V1.0
  */
 
-import com.pdkj.jack_shop.core.Result;
-import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.util.NetUtils;
 import com.pdkj.jack_shop.util.PayUtil;
-import org.apache.http.HttpRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 /**
