@@ -71,11 +71,7 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.updateUserInfo(user,getUser().getId()));
     }
 
-    //卷包
-    @GetMapping("getVoucherBag")
-    public Result getVoucherBag() throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getVoucherBag(getUser().getId()));
-    }
+
 
     //卷包
     @GetMapping("getQRCode")

@@ -112,12 +112,6 @@ public class UserService extends BaseService<User> {
         return userDao.update(user)>0?"修改成功":"修改失败";
     }
 
-    public Map<String,Object> getVoucherBag(Long id) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("groupBuys",groupBuyDao.getGroupBuyByUserId(id,1,1));
-        map.put("coupons",couponDao.getCouponByUserId(id,1,new Pager()));
-        return map;
-    }
 
     public Map<String,Object>  getQRCode(Long id) {
         return qrCodeDao.getQRCode(id);
