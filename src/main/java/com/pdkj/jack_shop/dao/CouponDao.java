@@ -44,18 +44,18 @@ public class CouponDao extends DaoBase<ShopType> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    public List<Map<String, Object>> getCouponByUserId(Long user_id, Integer is_use,Pager pager) {
+    public List<Map<String, Object>> getCouponByUserId(Long user_id,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
         sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
-        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img");
+        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img,coupon_state,is_use");
         sql.append("FROM ");
         sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ,user_coupon_rel ucr");
         sql.append("WHERE ");
         sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND ucr.coupon_id = c.id AND");
-        sql.append("is_use = ? AND ucr.user_id = ? AND c.coupon_state = 1", is_use, user_id);
-        sql.append("order by c.created desc");
+        sql.append(" ucr.user_id = ? ",  user_id);
+        sql.append("order by c.coupon_state ,is_use desc, ucr.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }

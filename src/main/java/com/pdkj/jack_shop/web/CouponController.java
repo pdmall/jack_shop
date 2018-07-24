@@ -32,7 +32,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("coupon")
 public class CouponController extends BaseController {
-
     //获得代金卷详情
     @GetMapping("getCouponById")
     public Result getCouponById(Long id) throws CustomException {
@@ -45,8 +44,8 @@ public class CouponController extends BaseController {
     }
     //获得用户购买的代金卷
     @GetMapping("getCouponByUserId")
-    public Result getUsersCouponByUserId(Integer coupon_state,Pager pager) throws CustomException {
-        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),coupon_state,pager));
+    public Result getUsersCouponByUserId(Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(couponService.getCouponByUserId(getUser().getId(),pager));
     }
     //添加一个代金卷
     @PostMapping("addCoupon")

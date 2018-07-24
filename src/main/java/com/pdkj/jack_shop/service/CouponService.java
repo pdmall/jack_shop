@@ -30,8 +30,8 @@ public class CouponService extends BaseService<ShopType> {
         return couponDao.getCouponById(id);
     }
 
-    public List<Map<String, Object>> getCouponByUserId(Long user_id, Integer is_use,Pager pager) {
-        return couponDao.getCouponByUserId(user_id,is_use,pager);
+    public List<Map<String, Object>> getCouponByUserId(Long user_id,Pager pager) {
+        return couponDao.getCouponByUserId(user_id,pager);
     }
     public Long addCoupon(Coupon coupon) {
         return couponDao.addCoupon(coupon);
