@@ -22,6 +22,7 @@ public class FlowMoney {
     private Date created;
     private Long user_id;
     private Long user_order_id;
+    private Integer flow_state;
 
     public Long getId() {
         return id;
@@ -61,5 +62,13 @@ public class FlowMoney {
 
     public void setUser_order_id(Long user_order_id) {
         this.user_order_id = user_order_id;
+    }
+
+    public Integer getFlow_state() {
+        return flow_state;
+    }
+
+    public void setFlow_state(Integer flow_state) {
+        this.flow_state = flow_state;
     }
 }
