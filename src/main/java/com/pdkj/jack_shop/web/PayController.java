@@ -31,7 +31,7 @@ import java.util.Map;
 @RequestMapping("pay")
 public class PayController extends BaseController {
     @RequestMapping("notifyInfo")
-    public void notifyInfo(HttpServletRequest request,HttpServletResponse response) {
+    public void notifyInfo(HttpServletRequest request, HttpServletResponse response) {
         //获取付款类型
         try {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
@@ -50,6 +50,7 @@ public class PayController extends BaseController {
         }
 
     }
+
     /**
      * 发送请求响应微信支付平台
      *
@@ -71,14 +72,10 @@ public class PayController extends BaseController {
             printWriter.append(returnMessage);
             printWriter.append("]]></return_msg>\n");
             printWriter.append("</xml>");
-
             printWriter.flush();
             printWriter.close();
-
-
-
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 

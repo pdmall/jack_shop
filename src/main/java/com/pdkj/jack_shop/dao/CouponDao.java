@@ -55,6 +55,7 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("WHERE ");
         sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND ucr.coupon_id = c.id AND");
         sql.append("is_use = ? AND ucr.user_id = ? AND c.coupon_state = 1", is_use, user_id);
+        sql.append("order by c.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
