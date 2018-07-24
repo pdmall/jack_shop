@@ -15,6 +15,7 @@ import com.pdkj.jack_shop.model.UserGroupBuyRel;
 import com.pdkj.jack_shop.util.NetUtils;
 import com.pdkj.jack_shop.util.PayUtil;
 import com.pdkj.jack_shop.util.Tools;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @Description 类描述
  * @date 2018/7/24
  */
+@Service
 public class PayService extends BaseService {
     public void notifyInfo(HttpServletRequest request, HttpServletResponse response) {
         //获取付款类型
