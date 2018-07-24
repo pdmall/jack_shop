@@ -64,15 +64,17 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     }
 
     //查询用户购买的套餐
-    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Integer coupon_state, Integer is_use) {
+    public List<Map<String, Object>> getGroupBuyByUserId(Long userId,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count  ");
+        sql.append("unavailable_date,s.shop_name,s.home_img");
         sql.append("FROM ");
-        sql.append(" group_buy gb , user_group_buy_rel ugbr");
+        sql.append(" group_buy gb ,shop s, user_group_buy_rel ugbr");
         sql.append(" WHERE ");
-        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and  gb.state = ? and is_use = ?", userId, coupon_state, is_use);
+        sql.append("gb.shop_id = s.id AND gb.id = ugbr.group_buy_id and user_id = ? AND gb.state > 0  ", userId);
+        sql.append("order by gb.state ,is_use desc, ugbr.created desc");
+        sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 

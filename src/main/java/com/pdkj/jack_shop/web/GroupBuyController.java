@@ -35,6 +35,12 @@ public class GroupBuyController extends BaseController {
     public Result getIsPassGroupBuyList(Long shop_id) {
         return ResultGenerator.genSuccessResult(groupBuyService.getIsPassGroupBuyList(shop_id));
     }
+    //查询用户的团购卷
+    @GetMapping("getGroupBuyByUserId")
+    public Result getGroupBuyByUserId(Pager pager) {
+        return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByUserId(getUser().getId(),pager));
+    }
+
 
 
 }
