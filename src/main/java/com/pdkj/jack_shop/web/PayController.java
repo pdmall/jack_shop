@@ -43,6 +43,7 @@ public class PayController extends BaseController {
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderService.paySuccess(order_id, sdf.parse(time_end), trade_type);
+                Map<String ,Object> map = userOrderService.getOrder(order_id);
                 this.sendWeChat(response, "SUCCESS", "");
             }
         } catch (Exception e) {

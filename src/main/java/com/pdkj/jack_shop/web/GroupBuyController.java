@@ -41,6 +41,4 @@ public class GroupBuyController extends BaseController {
         return ResultGenerator.genSuccessResult(groupBuyService.getGroupBuyByUserId(getUser().getId(),pager));
     }
 
-
-
 }

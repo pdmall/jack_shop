@@ -64,7 +64,7 @@ public class ShareOrginDao extends DaoBase {
     public Map<String, Object> getMyAll(Long id) {
         MySql mySql1 = new MySql();
         mySql1.append("select count(*) count,sum(`value`) sum from share_orgin so , `user` u ,parameter p ");
-        mySql1.append("where so.parameter_id = p.id AND `u`.id = so.level1  AND level3 = ? ", id);
+        mySql1.append("where so.parameter_id = p.id AND `u`.id = so.level1  AND level2 = ? ", id);
         Map<String, Object> map = jdbcTemplate.queryForMap(mySql1.toString(), mySql1.getValues());
         MySql mySql2 = new MySql();
         mySql2.append("select count(*) count,sum(`value`) sum from share_orgin so , `user` u ,parameter p ");
@@ -75,5 +75,6 @@ public class ShareOrginDao extends DaoBase {
         map1.put("sum",(map2.get("sum")==null?0.0:Double.parseDouble(map2.get("sum").toString())) + (map.get("sum")==null?0.0:Double.parseDouble(map.get("sum").toString())));
         return map;
     }
+
 
 }
