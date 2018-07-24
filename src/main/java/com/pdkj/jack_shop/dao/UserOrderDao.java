@@ -87,6 +87,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         if(order_state_id != 0){
             sql.append("AND uo.order_state_id  = ? ",order_state_id);
         }
+        sql.append("order by uo.created desc");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
