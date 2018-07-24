@@ -30,7 +30,14 @@ public class FlowMoneyDao extends DaoBase{
 
     public List<Map<String,Object>> getFlowMoney(Long id,Pager pager) {
         MySql sql = new MySql();
-        sql.append("select * from ");
+        sql.append("SELECT");
+        sql.append("	fm.`value`,fm.created,uo.shop_id,fm.user_order_id,uo.id,");
+        sql.append("	s.shop_name,fm.flow_state_id,fs.`name`,fs.id");
+        sql.append("FROM");
+        sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs");
+        sql.append("WHERE");
+        sql.append("	fm.flow_state_id = fs.id AND fm.user_order_id = uo.id AND uo.shop_id = s.id AND");
+        sql.append("	fm.user_id = ?",id);
         sql.limit(pager);
         return null;
     }
