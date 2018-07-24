@@ -39,7 +39,7 @@ public class FlowMoneyDao extends DaoBase{
         sql.append("	fm.flow_state_id = fs.id AND fm.user_order_id = uo.id AND uo.shop_id = s.id AND");
         sql.append("	fm.user_id = ?",id);
         sql.limit(pager);
-        return null;
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     public void addFlowMoney(FlowMoney flowMoney){
         flowMoney.setId(Tools.generatorId());
