@@ -9,6 +9,7 @@ package com.pdkj.jack_shop.service;
  */
 
 import com.pdkj.jack_shop.dao.DaoBase;
+import com.pdkj.jack_shop.model.FlowMoney;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,8 @@ import java.util.Map;
 public class FlowMoneyService extends BaseService {
     public List<Map<String,Object>> getFlowMoney(Long id,Pager pager) {
         return flowMoneyDao.getFlowMoney(id,pager);
+    }
+    public void addFlowMoney(FlowMoney flowMoney){
+        flowMoneyDao.addFlowMoney(flowMoney);
     }
 }

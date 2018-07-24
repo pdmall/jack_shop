@@ -8,10 +8,12 @@ package com.pdkj.jack_shop.web;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.model.FlowMoney;
 import com.pdkj.jack_shop.model.UserCouponRel;
 import com.pdkj.jack_shop.model.UserGroupBuyRel;
 import com.pdkj.jack_shop.util.NetUtils;
 import com.pdkj.jack_shop.util.PayUtil;
+import com.pdkj.jack_shop.util.Tools;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +40,7 @@ public class PayController extends BaseController {
         try {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
-            System.out.println("transaction_id:" + mapData.get("transaction_id"));
+            System.out.println("transaction_id:" + mapData.get("transaction_id")+"----------------------------------");
             if ("SUCCESS".equals(mapData.get("return_code"))) {
                 this.sendWeChat(response, "SUCCESS", "");
                 Integer trade_type = 1;  // 交易类型
@@ -61,8 +63,13 @@ public class PayController extends BaseController {
                     userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
                     couponService.addUserCouponRel(userCouponRel);
                 }
+                FlowMoney flowMoney = new FlowMoney();
+                flowMoney.setId(Tools.generatorId());
+                flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
+                flowMoney.setUser_order_id(Long.parseLong(order_id));
+                flowMoneyService.addFlowMoney(flowMoney);
                 //流水记录 用户
-                
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -8,8 +8,12 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.model.FlowMoney;
+import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,5 +33,10 @@ public class FlowMoneyDao extends DaoBase{
         sql.append("select * from ");
         sql.limit(pager);
         return null;
+    }
+    public void addFlowMoney(FlowMoney flowMoney){
+        flowMoney.setId(Tools.generatorId());
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(flowMoney,"flow_money");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 }
