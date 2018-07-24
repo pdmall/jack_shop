@@ -43,8 +43,4 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
         return groupBuyDao.getIsPassGroupBuyList(shop_id);
     }
 
-
-    public void addUserGroupBuyRel(UserGroupBuyRel userGroupBuyRel) {
-        groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
-    }
 }

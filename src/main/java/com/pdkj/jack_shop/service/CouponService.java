@@ -33,8 +33,5 @@ public class CouponService extends BaseService<ShopType> {
     public Long addCoupon(Coupon coupon) {
         return couponDao.addCoupon(coupon);
     }
-    public void addUserCouponRel(UserCouponRel userCouponRel){
-        couponDao.addUserCouponRel(userCouponRel);
-    }
 
 }

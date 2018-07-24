@@ -48,13 +48,13 @@ public class PayService extends BaseService {
                 userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type);
                 Map<String ,Object> map = userOrderDao.getOrder(order_id);
                 //添加卷(团餐)到卷包
-                if("1".equals(map.get("type_of"))){
+                if(1==Integer.valueOf(map.get("type_of").toString())){
                     UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
                     userGroupBuyRel.setIs_use(1);
                     userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
                     userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
                     groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
-                }else if ("2".equals(map.get("type_of"))) {
+                }else if (2==Integer.valueOf(map.get("type_of").toString())) {
                     UserCouponRel userCouponRel = new UserCouponRel();
                     userCouponRel.setIs_use(1);
                     userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
