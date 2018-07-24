@@ -57,7 +57,10 @@ public class BaseController {
     @Resource
     public ShareOrginService shareOrginService;
     @Resource
-    FlowMoneyService flowMoneyService;
+    public FlowMoneyService flowMoneyService;
+    @Resource
+    public PayService payService;
+
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return (User) requestAttributes.getAttribute("user", 0);
