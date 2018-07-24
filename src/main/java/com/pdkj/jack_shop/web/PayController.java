@@ -8,6 +8,8 @@ package com.pdkj.jack_shop.web;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.model.UserCouponRel;
+import com.pdkj.jack_shop.model.UserGroupBuyRel;
 import com.pdkj.jack_shop.util.NetUtils;
 import com.pdkj.jack_shop.util.PayUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,13 +40,29 @@ public class PayController extends BaseController {
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             System.out.println("transaction_id:" + mapData.get("transaction_id"));
             if ("SUCCESS".equals(mapData.get("return_code"))) {
+                this.sendWeChat(response, "SUCCESS", "");
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderService.paySuccess(order_id, sdf.parse(time_end), trade_type);
                 Map<String ,Object> map = userOrderService.getOrder(order_id);
-                this.sendWeChat(response, "SUCCESS", "");
+                //添加卷到卷包
+                if("1".equals(map.get("type_of"))){
+                    UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
+                    userGroupBuyRel.setIs_use(1);
+                    userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
+                    userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                    groupBuyService.addUserGroupBuyRel(userGroupBuyRel);
+                }else if ("2".equals(map.get("type_of"))) {
+                    UserCouponRel userCouponRel = new UserCouponRel();
+                    userCouponRel.setIs_use(1);
+                    userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
+                    userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                    couponService.addUserCouponRel(userCouponRel);
+                }
+                //流水记录 用户
+                
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

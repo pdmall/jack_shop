@@ -1,9 +1,6 @@
 package com.pdkj.jack_shop.service;
 
-import com.pdkj.jack_shop.model.Coupon;
-import com.pdkj.jack_shop.model.GroupBuy;
-import com.pdkj.jack_shop.model.Goods;
-import com.pdkj.jack_shop.model.ShopType;
+import com.pdkj.jack_shop.model.*;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +33,8 @@ public class CouponService extends BaseService<ShopType> {
     public Long addCoupon(Coupon coupon) {
         return couponDao.addCoupon(coupon);
     }
-
+    public void addUserCouponRel(UserCouponRel userCouponRel){
+        couponDao.addUserCouponRel(userCouponRel);
+    }
 
 }

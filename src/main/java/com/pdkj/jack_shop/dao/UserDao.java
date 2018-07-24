@@ -96,4 +96,7 @@ public class UserDao extends DaoBase {
     public void delImg(String img_url){
         AliYunOSS.deleteFile(img_url);
     }
+
+
+
 }

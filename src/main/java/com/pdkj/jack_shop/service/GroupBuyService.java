@@ -1,6 +1,7 @@
 package com.pdkj.jack_shop.service;
 
 import com.pdkj.jack_shop.model.IsPassGroupBuy;
+import com.pdkj.jack_shop.model.UserGroupBuyRel;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,4 +44,7 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
     }
 
 
+    public void addUserGroupBuyRel(UserGroupBuyRel userGroupBuyRel) {
+        groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
+    }
 }

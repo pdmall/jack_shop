@@ -10,6 +10,7 @@ package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.IsPassGroupBuy;
+import com.pdkj.jack_shop.model.UserGroupBuyRel;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -108,5 +109,12 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("select * from group_buy_pass_log where shop_id= ?", id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public void addUserGroupBuyRel(UserGroupBuyRel userGroupBuyRel) {
+        userGroupBuyRel.setId(Tools.generatorId());
+        SqlInfo insertSQL = SQLTools.getInsertSQL(userGroupBuyRel, "user_group_buy_rel");
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+
     }
 }

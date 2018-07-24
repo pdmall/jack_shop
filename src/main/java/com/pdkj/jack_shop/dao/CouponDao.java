@@ -11,6 +11,7 @@ package com.pdkj.jack_shop.dao;
 import com.pdkj.jack_shop.model.Coupon;
 import com.pdkj.jack_shop.model.GroupBuy;
 import com.pdkj.jack_shop.model.ShopType;
+import com.pdkj.jack_shop.model.UserCouponRel;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -97,6 +98,12 @@ public class CouponDao extends DaoBase<ShopType> {
         SqlInfo insertSQL = SQLTools.getInsertSQL(coupon, "coupon");
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return coupon.getId();
+    }
+
+    public void addUserCouponRel(UserCouponRel userCouponRel){
+        userCouponRel.setId(Tools.generatorId());
+        SqlInfo insertSQL = SQLTools.getInsertSQL(userCouponRel, "user_coupon_rel");
+        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
     }
 
 
