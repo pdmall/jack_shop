@@ -67,7 +67,7 @@ public class PayService extends BaseService {
                 flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
                 flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
                 flowMoney.setUser_order_id(Long.parseLong(order_id));
-                flowMoney.setFlow_state_id(-1);
+                flowMoney.setFlow_state_id(1);
                 flowMoneyDao.addFlowMoney(flowMoney);
 
             }
