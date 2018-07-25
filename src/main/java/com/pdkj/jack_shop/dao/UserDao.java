@@ -24,7 +24,7 @@ public class UserDao extends DaoBase {
     public User getUserByToken(String token) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" * ");
         mySql.append(" from `user` ");
         mySql.append("where token=?",token);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
@@ -39,7 +39,7 @@ public class UserDao extends DaoBase {
         pass = Tools.encryptPass(username, pass);
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" *");
         mySql.append(" from `user` ");
         mySql.append("where username=? and password=?", username,pass);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
@@ -54,7 +54,7 @@ public class UserDao extends DaoBase {
     public User getUserByPhone(String phone) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" *");
         mySql.append(" from `user` ");
         mySql.append("where phone=?", phone);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
@@ -82,7 +82,6 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 
-
     public User getUserByOpenId(String openid) {
         MySql mySql = new MySql();
         mySql.append("select");
@@ -106,6 +105,5 @@ public class UserDao extends DaoBase {
     public void delImg(String img_url) {
         AliYunOSS.deleteFile(img_url);
     }
-
 
 }
