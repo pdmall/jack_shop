@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("flowMoney")
 public class FlowMoneyController extends BaseController {
-    //获得消费记录
+    //获得消费记录，收支总数
     @GetMapping("getFlowMoney")
     public Result getFlowMoney(Pager pager) throws CustomException {
         return ResultGenerator.genSuccessResult(flowMoneyService.getFlowMoney(getUser().getId(),pager));
