@@ -52,7 +52,6 @@ public class UserService extends BaseService<User> {
                 }else if(sendSmsResponse.getMessage().contains("分钟")){
                     throw new CustomException("太快了，一分钟之后再试");
                 }
-
             }
             setCache("verCode" + phone, verCodeNum, 300);
             return sendSmsResponse.getMessage();
@@ -108,5 +107,9 @@ public class UserService extends BaseService<User> {
 
     public Map<String,Object>  getQRCode(Long id) {
         return qrCodeDao.getQRCode(id);
+    }
+
+    public List< Map<String,Object>> getRole(){
+        return userDao.getRole();
     }
 }

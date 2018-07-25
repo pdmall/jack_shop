@@ -106,4 +106,12 @@ public class UserDao extends DaoBase {
         AliYunOSS.deleteFile(img_url);
     }
 
+    public List<Map<String, Object>> getRole(){
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("*");
+        mySql.append("from");
+        mySql.append("role");
+        return jdbcTemplate.queryForList(mySql.toString());
+    }
 }

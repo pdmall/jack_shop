@@ -136,6 +136,7 @@ public class WxService extends BaseService {
 
     public User getUserByOpenId(String openid) throws Exception {
         User user = userDao.getUserByOpenId(openid);
+        user.setPassword(null);
         if (user!=null&&StringUtils.isNotEmpty(user.getToken())) {
             String token = Tools.uuid();
             userDao.updateToken(user.getId(), token);

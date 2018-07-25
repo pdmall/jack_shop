@@ -61,9 +61,11 @@ public class UserController extends BaseController {
     public Result updateUserInfo(User user) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.updateUserInfo(user,getUser().getId()));
     }
-
-
-
+    //获得角色
+    @GetMapping("getRole")
+    public Result getRole() throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getRole());
+    }
     //卷包
     @GetMapping("getQRCode")
     public Result getQRCode() throws CustomException {
