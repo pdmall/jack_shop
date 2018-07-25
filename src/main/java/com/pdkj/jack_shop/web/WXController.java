@@ -36,6 +36,13 @@ public class WXController extends BaseController {
     public Result getToken() throws Exception {
         return ResultGenerator.genSuccessResult( wxService.getToken());
     }
+    @PostMapping("refund")
+    public Result refund(String order_id,String ip,String wxCode) throws Exception {
+        String openId = wxService.getOpenId(wxCode);
+        Map<String, String> data = wxPayService.refund(openId, order_id, ip);
+        return ResultGenerator.genSuccessResult(data);
+    }
+
 
 
 /*    @RequestMapping("notifyInfo")
