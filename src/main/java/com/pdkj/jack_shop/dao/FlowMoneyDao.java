@@ -40,6 +40,20 @@ public class FlowMoneyDao extends DaoBase{
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+
+    public List<Map<String,Object>> getFlowMoneyReckon(Long id,Pager pager) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("fs.flow_record_type, sum(`value`)");
+        sql.append("FROM");
+        sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs");
+        sql.append("WHERE");
+        sql.append("	fm.flow_state_id = fs.id AND fm.user_order_id = uo.id AND uo.shop_id = s.id AND");
+        sql.append("	fm.user_id = ?",id);
+        sql.append("group by fs.flow_record_type");
+        sql.limit(pager);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
     public void addFlowMoney(FlowMoney flowMoney){
         flowMoney.setId(Tools.generatorId());
         SqlInfo sqlInfo = SQLTools.getInsertSQL(flowMoney,"flow_money");

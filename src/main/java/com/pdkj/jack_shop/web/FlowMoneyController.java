@@ -23,6 +23,4 @@ public class FlowMoneyController extends BaseController {
         return ResultGenerator.genSuccessResult(flowMoneyService.getFlowMoney(getUser().getId(),pager));
     }
 
-
-
 }

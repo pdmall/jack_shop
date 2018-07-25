@@ -13,6 +13,7 @@ import com.pdkj.jack_shop.model.FlowMoney;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,11 @@ import java.util.Map;
  */
 @Service
 public class FlowMoneyService extends BaseService {
-    public List<Map<String,Object>> getFlowMoney(Long id,Pager pager) {
-        return flowMoneyDao.getFlowMoney(id,pager);
+    public Map<String,Object> getFlowMoney(Long id,Pager pager) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("flowsMoneys",flowMoneyDao.getFlowMoney(id,pager));
+        map.put("FlowMoneySum",flowMoneyDao.getFlowMoneyReckon(id,pager));
+        return map;
     }
     public void addFlowMoney(FlowMoney flowMoney){
         flowMoneyDao.addFlowMoney(flowMoney);
