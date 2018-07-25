@@ -63,6 +63,10 @@ public class User implements Serializable {
      * 二维码
      */
     private String qr_code;
+    /*
+    会员id
+     */
+    private Integer role_id;
 
     public String getQr_code() {
         return qr_code;

@@ -45,15 +45,6 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(getUser());
     }
 
-    @GetMapping("getLevel2ByLevel3")
-    public Result getLevel2ByLevel3(String token) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getLevel2ByLevel3(token));
-    }
-
-    @GetMapping("getLevel1ByLevel3")
-    public Result getLevel1ByLevel3(String token) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getLevel1ByLevel3(token));
-    }
     //删除图片
     @PostMapping("delImg")
     public Result delImg(String img_url) throws CustomException {

@@ -38,4 +38,9 @@ public class PayController extends BaseController {
     public void notifyInfo(HttpServletRequest request, HttpServletResponse response) {
         payService.notifyInfo(request, response);
     }
+    @RequestMapping("refundInfo")
+    public void refundInfo(HttpServletRequest request, HttpServletResponse response) {
+        payService.refundInfo(request, response);
+    }
+
 }

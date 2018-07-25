@@ -73,7 +73,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //获得用户订单
     public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id,Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
@@ -91,7 +91,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
+    //获得订单最终需要支付价格
     public String getOrderPrice(String order_id) {
         String sql = "select final_price from user_order where id =  ? and order_state_id = 1";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, order_id);
@@ -101,16 +101,28 @@ public class UserOrderDao extends DaoBase<Banner> {
         return null;
     }
 
+    //支付是修改订单状态
     public void paySuccess(String orderId, Date pay_time, Integer trade_type) {
         MySql sql = new MySql();
         sql.append("update user_order set order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1",  pay_time,trade_type, orderId);
         jdbcTemplate.update(sql.toString(), sql.getValues());
     }
-
+    //获得订单信息
     public Map<String, Object> getOrder(String orderId){
         MySql sql = new MySql();
-        sql.append("select user_id,type_of,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
+        sql.append("select uo.id,user_id,type_of,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
-
+    //修改订单状态根据pay_on
+    public void updateOrderRefund(String out_refund_no,Integer order_state_id) {
+        MySql sql = new MySql();
+        sql.append("update user_order set order_state_id = ? where pay_on = ?",order_state_id,out_refund_no);
+        jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+    }
+    //获得订单信息
+    public Map<String, Object> getOrderByPayOn(String out_refund_no){
+        MySql sql = new MySql();
+        sql.append("select uo.id,user_id,type_of,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.pay_on = ?",out_refund_no);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+    }
 }

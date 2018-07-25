@@ -94,14 +94,7 @@ public class UserService extends BaseService<User> {
     }
 
 
-    public List<Map<String,Object>> getLevel2ByLevel3(String token) {
 
-        return  userDao.getLevel2ByLevel3(getUserByToken(token).getId());
-    }
-
-    public List<Map<String,Object>> getLevel1ByLevel3(String token) {
-         return  userDao.getLevel1ByLevel3(getUserByToken(token).getId());
-    }
 
     public void delImg(String img_url){
         userDao.delImg(img_url);

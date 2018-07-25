@@ -38,7 +38,6 @@ public class PayService extends BaseService {
         try {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
-            System.out.println("transaction_id:" + mapData.get("transaction_id")+"----------------------------------");
             if ("SUCCESS".equals(mapData.get("return_code"))) {
                 this.sendWeChat(response, "SUCCESS", "");
                 Integer trade_type = 1;  // 交易类型
@@ -60,6 +59,8 @@ public class PayService extends BaseService {
                     userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
                     userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
                     couponDao.addUserCouponRel(userCouponRel);
+                }else if(4==Integer.valueOf(map.get("type_of").toString())){
+                    userDao.updateRole(Long.parseLong(map.get("user_id").toString()),Integer.parseInt(map.get("item_id").toString()));
                 }
                 //流水记录 用户
                 FlowMoney flowMoney = new FlowMoney();
@@ -69,12 +70,35 @@ public class PayService extends BaseService {
                 flowMoney.setUser_order_id(Long.parseLong(order_id));
                 flowMoney.setFlow_state_id(1);
                 flowMoneyDao.addFlowMoney(flowMoney);
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+    public void refundInfo(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
+            Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
+            if ("SUCCESS".equals(mapData.get("return_code"))) {
+                this.sendWeChat(response, "SUCCESS", "");
+                String out_refund_no =mapData.get("out_refund_no");
+                //修改订单状态
+                userOrderDao.updateOrderRefund(out_refund_no,4);
+                Map<String ,Object> map = userOrderDao.getOrderByPayOn(out_refund_no);
+                //流水记录 用户
+                FlowMoney flowMoney = new FlowMoney();
+                flowMoney.setId(Tools.generatorId());
+                flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
+                flowMoney.setUser_order_id(Long.parseLong(map.get("id").toString()));
+                flowMoney.setFlow_state_id(4);
+                flowMoneyDao.addFlowMoney(flowMoney);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     /**
      * 发送请求响应微信支付平台
      *

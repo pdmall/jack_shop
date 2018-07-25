@@ -3,6 +3,7 @@ package com.pdkj.jack_shop.dao;
 import com.pdkj.jack_shop.configurer.AliYunOSS;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,12 +21,14 @@ import java.util.Optional;
 
 @Repository
 public class UserDao extends DaoBase {
-
-
     public User getUserByToken(String token) {
-        String sql = "SELECT * from USER where token=?";
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" from `user` ");
+        mySql.append("where token=?",token);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
-        List<User> users = jdbcTemplate.query(sql, new Object[]{token}, rowMap);
+        List<User> users = jdbcTemplate.query(mySql.toString(), mySql.getValues(), rowMap);
         if (users.size() == 0) {
             return null;
         }
@@ -34,9 +37,13 @@ public class UserDao extends DaoBase {
 
     public User login(String username, String pass) throws Exception {
         pass = Tools.encryptPass(username, pass);
-        String sql = "SELECT * from USER where username=? and password=?";
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" from `user` ");
+        mySql.append("where username=? and password=?", username,pass);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
-        List<User> users = jdbcTemplate.query(sql, new Object[]{username, pass}, rowMap);
+        List<User> users = jdbcTemplate.query(mySql.toString(), mySql.getValues(), rowMap);
         if (users.size() == 0) {
             return null;
         }
@@ -45,9 +52,13 @@ public class UserDao extends DaoBase {
     }
 
     public User getUserByPhone(String phone) {
-        String sql = "SELECT * from USER where phone=?";
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" from `user` ");
+        mySql.append("where phone=?", phone);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
-        List<User> users = jdbcTemplate.query(sql, new Object[]{phone}, rowMap);
+        List<User> users = jdbcTemplate.query(mySql.toString(), mySql.getValues(), rowMap);
         if (users.size() == 0) {
             return null;
         }
@@ -61,30 +72,25 @@ public class UserDao extends DaoBase {
         return user.getId();
     }
 
-    public Map<String, Object> getUser(Long id){
-        String sql ="Select id,`name` from user where id = ?";
-        return jdbcTemplate.queryForMap(sql,id);
+    public Map<String, Object> getUser(Long id) {
+        String sql = "Select id,`name` from user where id = ?";
+        return jdbcTemplate.queryForMap(sql, id);
     }
 
     public Integer update(User oldUser) {
         SqlInfo sql = SQLTools.getUpdateById(oldUser, "user", oldUser.getId());
-        return jdbcTemplate.update(sql.toString(),sql.getValues());
+        return jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 
-    public List<Map<String,Object>> getLevel2ByLevel3(Long id) {
-        String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level2 where level3 = ? order by created desc";
-        return  jdbcTemplate.queryForList(sql,id);
-    }
-    public List<Map<String,Object>> getLevel1ByLevel3(Long id) {
-        String sql = "select nickname from share_orgin inner join `user` on `user`.id = share_orgin.level1 where level3 = ? order by created desc";
-        return  jdbcTemplate.queryForList(sql,id);
-    }
 
     public User getUserByOpenId(String openid) {
-        String sql = "select * from user where open_id = ?";
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" `name`,username,created,updated,phone,nickname,icon,role_id,ip,email,idcard,state,address_id");
+        mySql.append(" from `user` where open_id = ?", openid);
         RowMapper<User> rowMap = new BeanPropertyRowMapper(User.class);
-        User user = jdbcTemplate.queryForObject(sql, new Object[]{openid}, rowMap);
-        return  user;
+        User user = jdbcTemplate.queryForObject(mySql.toString(), mySql.getValues(), rowMap);
+        return user;
     }
 
     public int updateToken(Long id, String token) {
@@ -92,11 +98,14 @@ public class UserDao extends DaoBase {
         int effect = jdbcTemplate.update(sql, token, id);
         return effect;
     }
-
-    public void delImg(String img_url){
+    public int updateRole(Long id, Integer role_id) {
+        String sql = "update user set role_id = ? where id = ?";
+        int effect = jdbcTemplate.update(sql, role_id, id);
+        return effect;
+    }
+    public void delImg(String img_url) {
         AliYunOSS.deleteFile(img_url);
     }
-
 
 
 }

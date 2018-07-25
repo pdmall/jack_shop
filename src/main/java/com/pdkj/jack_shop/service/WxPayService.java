@@ -81,7 +81,40 @@ public class WxPayService extends BaseService {
         data.put("payState", "wx");
         return data;
     }
+    //退款
+    public  Map<String, String> refund(String openid,String pay_on, String payMoney,String refund_fee, String desc,String ip) throws Exception {
+        //微信付款 是 以 分为单位。所有要将元* 100
+        payMoney = new BigDecimal(payMoney).multiply(new BigDecimal(100)).setScale(0).toString();
+        refund_fee = new BigDecimal(refund_fee).multiply(new BigDecimal(100)).setScale(0).toString();
+        //test:
+        payMoney = "1";
+        String nonce_str = PayUtil.generateNonceStr();
+        Long aLong = Tools.generatorId();
+        //组装参数，用户生成统一下单接口的签名
+        Map<String, String> packageParams = new HashMap ();
+        packageParams.put("appid", XCXInfo.APPID);
+        packageParams.put("mch_id", XCXInfo.PAY_MCH_ID);
+        packageParams.put("nonce_str", nonce_str);
+        packageParams.put("body", desc);
+        packageParams.put("out_trade_no", aLong.toString());//退款订单号
+        packageParams.put("out_refund_no", pay_on);//退款的那个订单
+        packageParams.put("total_fee", payMoney);//支付金额，这边需要转成字符串类型，否则后面的签名会失败
+        packageParams.put("refund_fee", refund_fee);//退款金额
+        packageParams.put("spbill_create_ip", ip);
+        packageParams.put("notify_url", XCXInfo.REFUND_INFO_URL);//退款完成后调用的地址
+        String signedXml = PayUtil.generateSignedXml(packageParams, XCXInfo.PAY_KEY);
+        String resultData = PayUtil.httpRequest(XCXInfo.PAY_URL, "POST", signedXml);
 
-
+        Map map = PayUtil.doXMLParse(resultData);
+        String return_code = (String) map.get("return_code");//返回状态码
+        Map<String, String> data = new HashMap<>();//返回给小程序端需要的参数
+        if (return_code == "SUCCESS" ) {
+            data.put("out_refund_no", (String) map.get("out_refund_no"));
+            data.put("refund_fee", (String) map.get("refund_fee"));
+            data.put("total_fee", (String)map.get("total_fee"));
+            userOrderDao.updateOrderRefund((String)map.get("out_refund_no"),6);
+        }
+        return data;
+    }
 
 }
