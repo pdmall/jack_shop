@@ -52,7 +52,4 @@ public class CouponController extends BaseController {
     public Result addCoupon(Coupon coupon) throws CustomException {
         return ResultGenerator.genSuccessResult(couponService.addCoupon(coupon));
     }
-
-
-
 }
