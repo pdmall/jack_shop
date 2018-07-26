@@ -111,10 +111,16 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public String verifyCoupon(Long user_id, Long user_coupon_rel_id, Long time) {
+    public Object verifyCoupon(Long user_id, Integer type_of_id, Long item_id, Long time) {
         if (time > System.currentTimeMillis()) {
             if (userDao.verifyUser(user_id) > 0) {
-                return userDao.verifyCoupon(user_coupon_rel_id);
+                if (type_of_id == 1) {
+                    return userDao.verifyCoupon(item_id);
+                } else if (type_of_id == 2) {
+                    return userDao.verifyGroupBuy(item_id);
+                }else{
+                    return "这个卷是什么鬼";
+                }
             } else {
                 return "您没有审核资格哟";
             }

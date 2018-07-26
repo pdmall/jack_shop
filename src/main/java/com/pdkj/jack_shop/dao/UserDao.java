@@ -118,17 +118,22 @@ public class UserDao extends DaoBase {
     }
 
     //验证卷
-    public String verifyCoupon(Long user_coupon_rel_id) {
+    public Object verifyCoupon(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" original_price, ");
+        mySql.append(" original_price,to.name ");
         mySql.append("from");
-        mySql.append("user_coupon_rel ucr , coupon c ");
-        mySql.append("where c.id = ucr.coupon_id AND ucr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);
-         jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
-        return "有卷";
-    }
+        mySql.append("user_coupon_rel ucr , coupon c,type_of to ");
+        mySql.append("where c.id = ucr.coupon_id AND c.type_of_id = to.id AND ucr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);;
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
+        if(list.get(0)!=null){
+            return list.get(0);
+        }else{
+            return "没有这个卷了哟";
+        }
 
+    }
+    //验证用户是否有资格扫描卷
     public int verifyUser(Long user_id) {
         MySql mySql = new MySql();
         mySql.append("select");
@@ -136,5 +141,22 @@ public class UserDao extends DaoBase {
         mySql.append("from");
         mySql.append("user_shop_rel where user_id = ?", user_id);
         return (Integer) jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues()).get("count");
+    }
+
+    //验证团餐
+    public Object verifyGroupBuy(Long user_coupon_rel_id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" original_price,to.name ");
+        mySql.append("from");
+        mySql.append("group_buy gb , user_group_buy_rel ugbr,type_of to ");
+        mySql.append("where gb.id = ugbr.group_buy_id AND gb.type_of_id = to.id AND ugbr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);;
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
+        if(list.get(0)!=null){
+            return list.get(0);
+        }else{
+            return "没有这个卷了哟";
+        }
+
     }
 }
