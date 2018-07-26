@@ -20,7 +20,7 @@ public class UserOrderDetails {
     private Long id;
     private Long user_order_id;
     private Long item_id;
-    private Integer type_of;
+    private Integer type_of_id;
     private Integer state;
     private Date use_time;
     private Double price;
@@ -59,12 +59,12 @@ public class UserOrderDetails {
         this.item_id = item_id;
     }
 
-    public Integer getType_of() {
-        return type_of;
+    public Integer getType_of_id() {
+        return type_of_id;
     }
 
-    public void setType_of(Integer type_of) {
-        this.type_of = type_of;
+    public void setType_of_id(Integer type_of_id) {
+        this.type_of_id = type_of_id;
     }
 
     public Integer getState() {

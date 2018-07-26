@@ -26,7 +26,7 @@ public class UserDao extends DaoBase {
         mySql.append("select");
         mySql.append(" * ");
         mySql.append(" from `user` ");
-        mySql.append("where token=?",token);
+        mySql.append("where token=?", token);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
         List<User> users = jdbcTemplate.query(mySql.toString(), mySql.getValues(), rowMap);
         if (users.size() == 0) {
@@ -41,7 +41,7 @@ public class UserDao extends DaoBase {
         mySql.append("select");
         mySql.append(" *");
         mySql.append(" from `user` ");
-        mySql.append("where username=? and password=?", username,pass);
+        mySql.append("where username=? and password=?", username, pass);
         RowMapper<User> rowMap = new BeanPropertyRowMapper<User>(User.class);
         List<User> users = jdbcTemplate.query(mySql.toString(), mySql.getValues(), rowMap);
         if (users.size() == 0) {
@@ -97,16 +97,18 @@ public class UserDao extends DaoBase {
         int effect = jdbcTemplate.update(sql, token, id);
         return effect;
     }
+
     public int updateRole(Long id, Integer role_id) {
         String sql = "update user set role_id = ? where id = ?";
         int effect = jdbcTemplate.update(sql, role_id, id);
         return effect;
     }
+
     public void delImg(String img_url) {
         AliYunOSS.deleteFile(img_url);
     }
 
-    public List<Map<String, Object>> getRole(){
+    public List<Map<String, Object>> getRole() {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append("*");
@@ -115,12 +117,24 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.queryForList(mySql.toString());
     }
 
-    public List<Map<String,Object>> verifyCoupon(Long user_id,Long user_coupon_rel_id,Long time) {
+    //验证卷
+    public String verifyCoupon(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append("*");
+        mySql.append(" original_price, ");
         mySql.append("from");
-        mySql.append("role");
-        return null;
+        mySql.append("user_coupon_rel ucr , coupon c ");
+        mySql.append("where c.id = ucr.coupon_id AND ucr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);
+         jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
+        return "有卷";
+    }
+
+    public int verifyUser(Long user_id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("count(*) count");
+        mySql.append("from");
+        mySql.append("user_shop_rel where user_id = ?", user_id);
+        return (Integer) jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues()).get("count");
     }
 }

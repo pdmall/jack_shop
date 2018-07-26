@@ -78,7 +78,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("uo.created,uo.final_price,uod.price,uod.quantity,uo.Pay_time,uo.id,");
-        sql.append("s.shop_name,s.shop_address,s.home_img,s.shop_phone,uo.order_state_id,os.`name`,uod.type_of");
+        sql.append("s.shop_name,s.shop_address,s.home_img,s.shop_phone,uo.order_state_id,os.`name`,uod.type_of_id");
         sql.append("FROM");
         sql.append("user_order AS uo ,user_order_details AS uod ,shop AS s ,order_state AS os");
         sql.append("WHERE");
@@ -110,7 +110,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     //获得订单信息
     public Map<String, Object> getOrder(String orderId){
         MySql sql = new MySql();
-        sql.append("select uo.id,user_id,type_of,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
+        sql.append("select uo.id,user_id,type_of_id,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
     //获得订单信息
@@ -128,7 +128,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     //获得订单信息
     public Map<String, Object> getOrderByPayOn(String out_refund_no){
         MySql sql = new MySql();
-        sql.append("select uo.id,user_id,type_of,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.pay_on = ?",out_refund_no);
+        sql.append("select uo.id,user_id,type_of_id,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.pay_on = ?",out_refund_no);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 }

@@ -41,35 +41,35 @@ public class UserService extends BaseService<User> {
     }
 
 
-    public String getVerCode(String phone,String sms) throws CustomException, ClientException {
-            String verCodeNum = getVerCodeNum(4);
-            SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum,sms);
-            if(!sendSmsResponse.getCode().equalsIgnoreCase("ok")){
-                if(sendSmsResponse.getMessage().contains("天")){
-                    throw new CustomException("太快了，一天之后再试");
-                }else if(sendSmsResponse.getMessage().contains("小时")){
-                    throw new CustomException("太快了，一小时之后再试");
-                }else if(sendSmsResponse.getMessage().contains("分钟")){
-                    throw new CustomException("太快了，一分钟之后再试");
-                }
+    public String getVerCode(String phone, String sms) throws CustomException, ClientException {
+        String verCodeNum = getVerCodeNum(4);
+        SendSmsResponse sendSmsResponse = AliYunSMS.sendSms(phone, verCodeNum, sms);
+        if (!sendSmsResponse.getCode().equalsIgnoreCase("ok")) {
+            if (sendSmsResponse.getMessage().contains("天")) {
+                throw new CustomException("太快了，一天之后再试");
+            } else if (sendSmsResponse.getMessage().contains("小时")) {
+                throw new CustomException("太快了，一小时之后再试");
+            } else if (sendSmsResponse.getMessage().contains("分钟")) {
+                throw new CustomException("太快了，一分钟之后再试");
             }
-            setCache("verCode" + phone, verCodeNum, 300);
-            return sendSmsResponse.getMessage();
+        }
+        setCache("verCode" + phone, verCodeNum, 300);
+        return sendSmsResponse.getMessage();
     }
 
     public User register(User user, String verCode) throws Exception {
         String oldCode = (String) getCache("verCode" + user.getPhone());
         if (oldCode.equals(verCode)) {
             User oldUser = userDao.getUserByPhone(user.getPhone());
-            if(oldUser==null){
+            if (oldUser == null) {
                 user.setToken(Tools.uuid());
                 user.setQr_code(qrCodeDao.addQRCode(user.getPhone()));
                 userWalletDao.save(userDao.save(user));
                 user.setPassword(null);
                 return user;
-            }else{
+            } else {
                 oldUser.setToken(Tools.uuid());
-                userDao.updateToken(oldUser.getId(),oldUser.getToken());
+                userDao.updateToken(oldUser.getId(), oldUser.getToken());
                 oldUser.setPassword(null);
                 return oldUser;
             }
@@ -88,33 +88,39 @@ public class UserService extends BaseService<User> {
         return String.valueOf(verCode);
     }
 
-    public Map<String,Object> getUser( Long id){
-        return  userDao.getUser(id);
+    public Map<String, Object> getUser(Long id) {
+        return userDao.getUser(id);
     }
 
 
-
-
-    public void delImg(String img_url){
+    public void delImg(String img_url) {
         userDao.delImg(img_url);
     }
 
     public String updateUserInfo(User user, Long id) {
         user.setId(id);
-        return userDao.update(user)>0?"修改成功":"修改失败";
+        return userDao.update(user) > 0 ? "修改成功" : "修改失败";
     }
 
 
-    public Map<String,Object>  getQRCode(Long id) {
+    public Map<String, Object> getQRCode(Long id) {
         return qrCodeDao.getQRCode(id);
     }
 
-    public List< Map<String,Object>> getRole(){
+    public List<Map<String, Object>> getRole() {
         return userDao.getRole();
     }
 
-    public List<Map<String,Object>> verifyCoupon(Long user_id,Long user_coupon_rel_id,Long time) {
-        if(true){}
-        return userDao.verifyCoupon(user_id,user_coupon_rel_id,time);
+    public String verifyCoupon(Long user_id, Long user_coupon_rel_id, Long time) {
+        if (time > System.currentTimeMillis()) {
+            if (userDao.verifyUser(user_id) > 0) {
+                return userDao.verifyCoupon(user_coupon_rel_id);
+            } else {
+                return "您没有审核资格哟";
+            }
+        } else {
+            return "卷码过期咯";
+        }
+
     }
 }
