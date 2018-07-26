@@ -44,7 +44,7 @@ public class FlowMoneyDao extends DaoBase{
     public List<Map<String,Object>> getFlowMoneyReckon(Long id,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("fs.flow_record_type, sum(`value`)");
+        sql.append("fs.flow_record_type, sum(`value`) sum");
         sql.append("FROM");
         sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs");
         sql.append("WHERE");
