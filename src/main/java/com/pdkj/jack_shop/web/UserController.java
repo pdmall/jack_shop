@@ -66,9 +66,14 @@ public class UserController extends BaseController {
     public Result getRole() throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getRole());
     }
-    //卷包
+    //获得二维码
     @GetMapping("getQRCode")
     public Result getQRCode() throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getQRCode(getUser().getId()));
+    }
+    //验证卷的二维码
+    @GetMapping("verifyCoupon")
+    public Result verifyCoupon(Long coupon_id,Integer is) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),coupon_id));
     }
 }

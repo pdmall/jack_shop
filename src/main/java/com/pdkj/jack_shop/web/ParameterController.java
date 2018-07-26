@@ -22,4 +22,5 @@ public class ParameterController extends BaseController {
         return ResultGenerator.genSuccessResult(parameterService.getParam());
     }
 
+
 }

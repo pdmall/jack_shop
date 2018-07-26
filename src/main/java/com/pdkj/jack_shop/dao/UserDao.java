@@ -114,4 +114,13 @@ public class UserDao extends DaoBase {
         mySql.append("role");
         return jdbcTemplate.queryForList(mySql.toString());
     }
+
+    public List<Map<String,Object>> verifyCoupon(Long id,Long coupon_id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("*");
+        mySql.append("from");
+        mySql.append("role");
+        return null;
+    }
 }

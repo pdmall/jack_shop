@@ -112,4 +112,8 @@ public class UserService extends BaseService<User> {
     public List< Map<String,Object>> getRole(){
         return userDao.getRole();
     }
+
+    public List<Map<String,Object>> verifyCoupon(Long id, Long coupon_id) {
+        return userDao.verifyCoupon(id,coupon_id);
+    }
 }
