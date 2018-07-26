@@ -19,7 +19,15 @@ public class GroupBuy {
     private Integer once_count;
     private String unavailable_date;
     private String diners_number;
+    private Integer type_of_id;
 
+    public Integer getType_of_id() {
+        return type_of_id;
+    }
+
+    public void setType_of_id(Integer type_of_id) {
+        this.type_of_id = type_of_id;
+    }
 
     public Long getId() {
         return id;

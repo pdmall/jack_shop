@@ -29,11 +29,11 @@ import java.util.Map;
  * @date 2018/6/28
  */
 @Repository
-public class CouponDao extends DaoBase<ShopType> {
+public class CouponDao extends DaoBase {
     public List<Map<String, Object>> getCouponByShopId(Long shop_id, Integer coupon_state, Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,c.type_of_id,");
         sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
         sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img");
         sql.append("FROM ");
@@ -48,7 +48,7 @@ public class CouponDao extends DaoBase<ShopType> {
     public List<Map<String, Object>> getCouponByUserId(Long user_id,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,c.type_of_id,");
         sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
         sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img,coupon_state,is_use");
         sql.append("FROM ");
@@ -60,11 +60,10 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
-
     public Map<String, Object> getCouponById(Long id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,");
+        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,c.type_of_id,");
         sql.append(" c.time_start,c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,");
         sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img,s.shop_address,s.shop_phone,s.street");
         sql.append("FROM ");
@@ -81,7 +80,7 @@ public class CouponDao extends DaoBase<ShopType> {
         sql.append("FROM ");
         sql.append("user_order_details");
         sql.append("WHERE ");
-        sql.append("type_of = 2 AND item_id = ? ", coupon_id);
+        sql.append("type_of_id = 1 AND item_id = ? ", coupon_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 

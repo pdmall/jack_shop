@@ -31,7 +31,7 @@ public class GoodsDao extends DaoBase<Goods> {
     public List<Map<String, Object>> getGroupBuyGoods(Long group_buy_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit");
+        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit ,sg.type_of_id");
         sql.append("FROM");
         sql.append("goods AS sg ,goods_unit AS sgu ,group_buy_goods_rel gbgr");
         sql.append("WHERE");
@@ -41,7 +41,7 @@ public class GoodsDao extends DaoBase<Goods> {
     public List<Map<String, Object>> getShopGoods(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit,gt.id type_id,gt.name type_name");
+        sql.append("sg.id,sg.name,sg.price,sg.img_url,sg.describe,sgu.name unit,gt.id type_id,gt.name type_name,sg.type_of_id");
         sql.append("FROM");
         sql.append("goods AS sg ,goods_unit AS sgu ,goods_type gt ");
         sql.append("WHERE");

@@ -20,6 +20,15 @@ public class IsPassGroupBuy {
     private String unavailable_date;
     private String diners_number;
     private Integer is_release;
+    private Integer type_of_id;
+
+    public Integer getType_of_id() {
+        return type_of_id;
+    }
+
+    public void setType_of_id(Integer type_of_id) {
+        this.type_of_id = type_of_id;
+    }
 
     public Integer getIs_release() {
         return is_release;

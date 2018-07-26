@@ -115,7 +115,7 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.queryForList(mySql.toString());
     }
 
-    public List<Map<String,Object>> verifyCoupon(Long id,Long coupon_id) {
+    public List<Map<String,Object>> verifyCoupon(Long user_id,Long user_coupon_rel_id,Long time) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append("*");

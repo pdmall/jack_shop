@@ -39,7 +39,7 @@ public class ShopService extends BaseService<Shop> {
         userShopRel.setId(Tools.generatorId());
         userShopRel.setMaster(1);
         userShopRel.setUser_id(user_id);
-        userShopRel.setRole_id(1);
+        userShopRel.setEmployee_role_id(1);
         userShopRel.setShop_id(shopId);
         userShopRel.setUser_name("拥有者");
         shopDao.addUserShopRel(userShopRel);

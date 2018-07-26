@@ -2,7 +2,7 @@ package com.pdkj.jack_shop.model;
 
 public class Coupon {
     private Long id;
-    private Integer type;
+    private Integer type_of_id;
     private Double buy_price;
     private Double original_price;
     private String appointment;
@@ -27,12 +27,12 @@ public class Coupon {
         this.id = id;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getType_of_id() {
+        return type_of_id;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setType_of_id(Integer type_of_id) {
+        this.type_of_id = type_of_id;
     }
 
     public Double getBuy_price() {

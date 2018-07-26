@@ -56,7 +56,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count  ");
+        sql.append("unavailable_date,once_count,gb.type_of_id  ");
         sql.append("FROM ");
         sql.append(" group_buy gb , user_group_buy_rel ugbr");
         sql.append(" WHERE ");
@@ -69,7 +69,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,s.shop_name,s.home_img");
+        sql.append("unavailable_date,s.shop_name,s.home_img,gb.type_of_id ");
         sql.append("FROM ");
         sql.append(" group_buy gb ,shop s, user_group_buy_rel ugbr");
         sql.append(" WHERE ");
@@ -85,7 +85,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("SELECT ");
         sql.append("gb.title,gb.original_price,gb.buy_price,gb.appointment,gb.date_start,gb.date_end,");
         sql.append("gb.time_start,gb.time_end,gb.group_buy_img,gb.created,gb.shop_id,gb.state,gb.buy_person_limit,");
-        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id,s.shop_name");
+        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id,s.shop_name,gb.type_of_id ");
         sql.append("FROM ");
         sql.append("  group_buy gb ,shop s");
         sql.append(" WHERE ");
@@ -99,7 +99,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         sql.append("SELECT ");
         sql.append("gb.title,gb.original_price,gb.buy_price,gb.appointment,gb.date_start,gb.date_end,");
         sql.append("gb.time_start,gb.time_end,gb.group_buy_img,gb.created,gb.shop_id,gb.state,gb.buy_person_limit,");
-        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id,s.shop_name");
+        sql.append("gb.stock_count,gb.once_count,gb.unavailable_date,gb.diners_number,gb.id,s.shop_name,gb.type_of_id ");
         sql.append("FROM ");
         sql.append("is_pass_group_buy gb ,shop s where s.id = gb.shop_id and shop_id = ? order by gb.created DESC", shop_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());

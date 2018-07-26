@@ -73,7 +73,7 @@ public class UserController extends BaseController {
     }
     //验证卷的二维码
     @GetMapping("verifyCoupon")
-    public Result verifyCoupon(Long coupon_id,Integer is) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),coupon_id));
+    public Result verifyCoupon(Long user_coupon_rel_id,Long time) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),user_coupon_rel_id,time));
     }
 }
