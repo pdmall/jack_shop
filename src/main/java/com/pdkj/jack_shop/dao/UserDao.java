@@ -115,8 +115,8 @@ public class UserDao extends DaoBase {
     //验证卷
     public Map<String, Object> verifyCoupon(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
-        mySql.append("select");
-        mySql.append(" original_price,t.name,c.buy_price,s.shop_name,s.id");
+        mySql.append("select t.id type_of_id");
+        mySql.append(" original_price,t.name,c.buy_price,s.shop_name,s.id shop_id,c.id item_id");
         mySql.append("from");
         mySql.append("user_coupon_rel ucr , coupon c,type_of t ,shop s");
         mySql.append("where c.id = ucr.coupon_id AND c.type_of_id = t.id AND s.id = c.shop_id AND");
@@ -132,8 +132,8 @@ public class UserDao extends DaoBase {
     //验证团餐
     public Map<String, Object> verifyGroupBuy(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
-        mySql.append("select");
-        mySql.append(" original_price,gb.title,t.name,gb.buy_price,s.shop_name ,s.id");
+        mySql.append("select  t.id type_of_id");
+        mySql.append(" original_price,gb.title,t.name,gb.buy_price,s.shop_name ,s.id shop_id ,gb.id item_id");
         mySql.append("from");
         mySql.append("group_buy gb , user_group_buy_rel ugbr,type_of t,shop s ");
         mySql.append("where gb.id = ugbr.group_buy_id AND gb.type_of_id = t.id AND s.id = gb.shop_id AND");
