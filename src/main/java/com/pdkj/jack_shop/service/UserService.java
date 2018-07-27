@@ -112,24 +112,30 @@ public class UserService extends BaseService<User> {
     }
 
     public Map<String, Object> verifyCoupon(Long user_id, Integer type_of_id, Long item_rel_id) {
-        if (userDao.verifyUser(user_id, item_rel_id) > 0) {
-            if (type_of_id == 1) {
+        if (type_of_id == 1) {
+            if (userDao.verifyUserCoupon(user_id, item_rel_id) > 0) {
                 return userDao.verifyCoupon(item_rel_id);
-            } else if (type_of_id == 2) {
+            } else {
+                throw new CustomException("您没有审核资格哟");
+            }
+        } else if (type_of_id == 2) {
+            if (userDao.verifyUserGroupBuy(user_id, item_rel_id) > 0) {
                 return userDao.verifyGroupBuy(item_rel_id);
             } else {
-                throw new CustomException("这个卷是什么鬼");
+                throw new CustomException("您没有审核资格哟");
             }
         } else {
-            throw new CustomException("您没有审核资格哟");
+            throw new CustomException("这个卷是什么鬼");
         }
+
     }
-    public Map<String,Object> getCouponQR(Long id, Long coupon_id,Integer type_of_id) {
-        if (type_of_id==1){
-            return userDao.getCouponQR(id,coupon_id);
-        }else if(type_of_id==2){
-            return userDao.getGroupBuyQR(id,coupon_id);
-        }else{
+
+    public Map<String, Object> getCouponQR(Long id, Long coupon_id, Integer type_of_id) {
+        if (type_of_id == 1) {
+            return userDao.getCouponQR(id, coupon_id);
+        } else if (type_of_id == 2) {
+            return userDao.getGroupBuyQR(id, coupon_id);
+        } else {
             return null;
         }
     }

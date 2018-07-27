@@ -147,7 +147,7 @@ public class UserDao extends DaoBase {
     }
 
     //验证用户是否有资格扫描卷
-    public Integer verifyUser(Long user_id, Long item_rel_id) {
+    public Integer verifyUserCoupon(Long user_id, Long item_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append("count(*) count");
@@ -158,7 +158,18 @@ public class UserDao extends DaoBase {
         Map<String, Object> map = jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
         return Integer.valueOf(map.get("count").toString());
     }
-
+    //验证用户是否有资格扫描套餐
+    public Integer verifyUserGroupBuy(Long user_id, Long item_rel_id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("count(*) count");
+        mySql.append("from");
+        mySql.append("user_shop_rel usr,group_buy c ,user_group_buy_rel ucr ");
+        mySql.append(" where usr.shop_id = c.shop_id AND ucr.group_buy_id = c.id AND");
+        mySql.append(" usr.user_id = ? AND ucr.id = ?", user_id, item_rel_id);
+        Map<String, Object> map = jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
+        return Integer.valueOf(map.get("count").toString());
+    }
 
     public Map<String, Object> getCouponQR(Long id, Long coupon_id) {
         MySql mySql = new MySql();
