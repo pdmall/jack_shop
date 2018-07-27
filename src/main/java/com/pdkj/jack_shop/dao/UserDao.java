@@ -133,11 +133,11 @@ public class UserDao extends DaoBase {
     public Map<String, Object> verifyGroupBuy(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" original_price,t.name,c.buy_price,s.shop_name ,s.id");
+        mySql.append(" original_price,gb.title,t.name,gb.buy_price,s.shop_name ,s.id");
         mySql.append("from");
-        mySql.append("group_buy gb , user_group_buy_rel ugbr,type_of to,shop s ");
-        mySql.append("where gb.id = ugbr.group_buy_id AND gb.type_of_id = to.id AND s.id = gb.shop_id");
-        mySql.append("ugbr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);
+        mySql.append("group_buy gb , user_group_buy_rel ugbr,type_of t,shop s ");
+        mySql.append("where gb.id = ugbr.group_buy_id AND gb.type_of_id = t.id AND s.id = gb.shop_id AND");
+        mySql.append("ugbr.id = ? AND is_use = 1 AND gb.state = 1", user_coupon_rel_id);
         List<Map<String, Object>> list = jdbcTemplate.queryForList(mySql.toString(), mySql.getValues());
         if (list.get(0) != null) {
             return list.get(0);
