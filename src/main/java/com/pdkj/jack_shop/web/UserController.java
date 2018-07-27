@@ -84,6 +84,6 @@ public class UserController extends BaseController {
     //商家确认消费
     @GetMapping("getConfirmCoupon")
     public Result getConfirmCoupon(Long coupon_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getCouponQR(getUser().getId(),coupon_id));
+        return ResultGenerator.genSuccessResult(userService.getConfirmCoupon(getUser().getId(),coupon_id));
     }
 }

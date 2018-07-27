@@ -132,6 +132,9 @@ public class UserService extends BaseService<User> {
         }else{
             return null;
         }
+    }
 
+    public Object getConfirmCoupon(Long id, Long coupon_id) {
+        return null;
     }
 }
