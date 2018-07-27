@@ -108,10 +108,10 @@ public class UserOrderDao extends DaoBase<Banner> {
         jdbcTemplate.update(sql.toString(), sql.getValues());
     }
     //获得订单信息
-    public Map<String, Object> getOrder(String orderId){
+    public List<Map<String, Object>> getOrder(String orderId){
         MySql sql = new MySql();
         sql.append("select uo.id,user_id,type_of_id,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
-        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     //获得订单信息
     public Map<String, Object> getOrderRefund(String orderId){

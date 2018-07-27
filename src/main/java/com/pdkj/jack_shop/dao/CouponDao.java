@@ -72,7 +72,7 @@ public class CouponDao extends DaoBase {
         sql.append("c.shop_id = s.id AND c.goods_range_id = cgr.id AND c.id = ? ", id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
-
+    //获得
     public Map<String, Object> getSales(Long coupon_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
@@ -98,12 +98,10 @@ public class CouponDao extends DaoBase {
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return coupon.getId();
     }
-
+    //添加用户卷
     public void addUserCouponRel(UserCouponRel userCouponRel){
         userCouponRel.setId(Tools.generatorId());
         SqlInfo insertSQL = SQLTools.getInsertSQL(userCouponRel, "user_coupon_rel");
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
     }
-
-
 }

@@ -71,10 +71,14 @@ public class UserController extends BaseController {
     public Result getQRCode() throws CustomException {
         return ResultGenerator.genSuccessResult(userService.getQRCode(getUser().getId()));
     }
-    //验证卷的二维码
-    @GetMapping("verifyCoupon")
+    //验证卷的是否可用
+    @PostMapping("verifyCoupon")
     public Result verifyCoupon(Integer type_of_id,Long item_rel_id) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),type_of_id,item_rel_id));
     }
-
+    //获得二维码卷参数
+    @GetMapping("getCouponQR")
+    public Result getCouponQR(Long coupon_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getCouponQR(getUser().getId(),coupon_id));
+    }
 }

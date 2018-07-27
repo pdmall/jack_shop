@@ -112,7 +112,6 @@ public class UserService extends BaseService<User> {
     }
 
     public Object verifyCoupon(Long user_id, Integer type_of_id, Long item_rel_id) {
-        System.out.println(userDao);
             if (userDao.verifyUser(user_id,item_rel_id) > 0) {
                 if (type_of_id == 1) {
                     return userDao.verifyCoupon(item_rel_id);
@@ -124,5 +123,9 @@ public class UserService extends BaseService<User> {
             } else {
                 return "您没有审核资格哟";
             }
+    }
+
+    public Map<String,Object> getCouponQR(Long id, Long coupon_id) {
+        return userDao.getCouponQR(id,coupon_id);
     }
 }

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,28 +46,30 @@ public class PayService extends BaseService {
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type);
-                Map<String ,Object> map = userOrderDao.getOrder(order_id);
-                //添加卷(团餐)到卷包
-                if(1==Integer.valueOf(map.get("type_of_id").toString())){
-                    UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
-                    userGroupBuyRel.setIs_use(1);
-                    userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
-                    userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                    groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
-                }else if (2==Integer.valueOf(map.get("type_of_id").toString())) {
-                    UserCouponRel userCouponRel = new UserCouponRel();
-                    userCouponRel.setIs_use(1);
-                    userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
-                    userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                    couponDao.addUserCouponRel(userCouponRel);
-                }else if(4==Integer.valueOf(map.get("type_of_id").toString())){
-                    userDao.updateRole(Long.parseLong(map.get("user_id").toString()),Integer.parseInt(map.get("item_id").toString()));
+                List<Map<String, Object>> list = userOrderDao.getOrder(order_id);
+                for (Map<String, Object> map: list){
+                    //添加卷(团餐)到卷包
+                    if(1==Integer.valueOf(map.get("type_of_id").toString())){
+                        UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
+                        userGroupBuyRel.setIs_use(1);
+                        userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
+                        userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                        groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
+                    }else if (2==Integer.valueOf(map.get("type_of_id").toString())) {
+                        UserCouponRel userCouponRel = new UserCouponRel();
+                        userCouponRel.setIs_use(1);
+                        userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
+                        userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                        couponDao.addUserCouponRel(userCouponRel);
+                    }else if(4==Integer.valueOf(map.get("type_of_id").toString())){
+                        userDao.updateRole(Long.parseLong(map.get("user_id").toString()),Integer.parseInt(map.get("item_id").toString()));
+                    }
                 }
                 //流水记录 用户
                 FlowMoney flowMoney = new FlowMoney();
                 flowMoney.setId(Tools.generatorId());
-                flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
+                flowMoney.setUser_id(Long.parseLong(list.get(0).get("user_id").toString()));
+                flowMoney.setValue(Double.parseDouble(list.get(0).get("final_price").toString()));
                 flowMoney.setUser_order_id(Long.parseLong(order_id));
                 flowMoney.setFlow_state_id(1);
                 flowMoneyDao.addFlowMoney(flowMoney);
