@@ -37,6 +37,7 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         pageList.add("index");
         pageList.add("register");
         pageList.add("getVerCode");
+        pageList.add("notifyInfo");
     }
 
 
