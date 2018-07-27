@@ -166,10 +166,20 @@ public class UserDao extends DaoBase {
     public Map<String,Object> getCouponQR(Long id, Long coupon_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" original_price,to.name ");
+        mySql.append(" id ");
         mySql.append("from");
         mySql.append(" user_coupon_rel ");
         mySql.append("where user_id = ? AND coupon_id = ? AND is_use = 1 ",id,coupon_id);
+        return  jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
+    }
+
+    public Map<String,Object> getGroupBuyQR(Long id, Long group_buy_id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" id ");
+        mySql.append("from");
+        mySql.append(" user_group_buy_rel ");
+        mySql.append("where user_id = ? AND group_buy_id = ? AND is_use = 1 ",id,group_buy_id);
         return  jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
     }
 }

@@ -78,7 +78,7 @@ public class UserController extends BaseController {
     }
     //获得二维码卷参数
     @GetMapping("getCouponQR")
-    public Result getCouponQR(Long coupon_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getCouponQR(getUser().getId(),coupon_id));
+    public Result getCouponQR(Long coupon_id,Integer type_of_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.getCouponQR(getUser().getId(),coupon_id,type_of_id));
     }
 }
