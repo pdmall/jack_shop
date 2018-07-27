@@ -124,8 +124,14 @@ public class UserService extends BaseService<User> {
             throw new CustomException("您没有审核资格哟");
         }
     }
+    public Map<String,Object> getCouponQR(Long id, Long coupon_id,Integer type_of_id) {
+        if (type_of_id==1){
+            return userDao.getCouponQR(id,coupon_id);
+        }else if(type_of_id==2){
+            return userDao.getGroupBuyQR(id,coupon_id);
+        }else{
+            return null;
+        }
 
-    public Map<String, Object> getCouponQR(Long id, Long coupon_id) {
-        return userDao.getCouponQR(id, coupon_id);
     }
 }

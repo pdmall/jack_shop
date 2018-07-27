@@ -49,13 +49,13 @@ public class PayService extends BaseService {
                 List<Map<String, Object>> list = userOrderDao.getOrder(order_id);
                 for (Map<String, Object> map: list){
                     //添加卷(团餐)到卷包
-                    if(1==Integer.valueOf(map.get("type_of_id").toString())){
+                    if(2==Integer.valueOf(map.get("type_of_id").toString())){
                         UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
                         userGroupBuyRel.setIs_use(1);
                         userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
                         userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
                         groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
-                    }else if (2==Integer.valueOf(map.get("type_of_id").toString())) {
+                    }else if (1==Integer.valueOf(map.get("type_of_id").toString())) {
                         UserCouponRel userCouponRel = new UserCouponRel();
                         userCouponRel.setIs_use(1);
                         userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
