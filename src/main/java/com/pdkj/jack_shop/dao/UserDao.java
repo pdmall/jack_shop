@@ -169,7 +169,7 @@ public class UserDao extends DaoBase {
         mySql.append(" original_price,to.name ");
         mySql.append("from");
         mySql.append(" user_coupon_rel ");
-        mySql.append(" user_id = ? AND coupon_id = ? ",id,coupon_id);
-        return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
+        mySql.append("where user_id = ? AND coupon_id = ? AND is_use = 1 ",id,coupon_id);
+        return  jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
     }
 }
