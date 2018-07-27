@@ -1,23 +1,18 @@
 package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.configurer.AliYunOSS;
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Repository
 public class UserDao extends DaoBase {
@@ -118,7 +113,7 @@ public class UserDao extends DaoBase {
     }
 
     //验证卷
-    public Object verifyCoupon(Long user_coupon_rel_id) {
+    public Map<String, Object> verifyCoupon(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append(" original_price,t.name,c.buy_price,s.shop_name");
@@ -130,7 +125,7 @@ public class UserDao extends DaoBase {
         if (list.get(0) != null) {
             return list.get(0);
         } else {
-            return "没有这个卷了哟";
+            throw new CustomException("没有这个卷了哟");
         }
     }
 
@@ -148,7 +143,7 @@ public class UserDao extends DaoBase {
     }
 
     //验证团餐
-    public Object verifyGroupBuy(Long user_coupon_rel_id) {
+    public Map<String, Object> verifyGroupBuy(Long user_coupon_rel_id) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append(" original_price,to.name ");
@@ -159,7 +154,7 @@ public class UserDao extends DaoBase {
         if (list.get(0) != null) {
             return list.get(0);
         } else {
-            return "没有这个卷了哟";
+            return null;
         }
     }
 

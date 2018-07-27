@@ -111,21 +111,21 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public Object verifyCoupon(Long user_id, Integer type_of_id, Long item_rel_id) {
-            if (userDao.verifyUser(user_id,item_rel_id) > 0) {
-                if (type_of_id == 1) {
-                    return userDao.verifyCoupon(item_rel_id);
-                }else if (type_of_id == 2) {
-                    return userDao.verifyGroupBuy(item_rel_id);
-                }else{
-                    return "这个卷是什么鬼";
-                }
+    public Map<String, Object> verifyCoupon(Long user_id, Integer type_of_id, Long item_rel_id) {
+        if (userDao.verifyUser(user_id, item_rel_id) > 0) {
+            if (type_of_id == 1) {
+                return userDao.verifyCoupon(item_rel_id);
+            } else if (type_of_id == 2) {
+                return userDao.verifyGroupBuy(item_rel_id);
             } else {
-                return "您没有审核资格哟";
+                throw new CustomException("这个卷是什么鬼");
             }
+        } else {
+            throw new CustomException("您没有审核资格哟");
+        }
     }
 
-    public Map<String,Object> getCouponQR(Long id, Long coupon_id) {
-        return userDao.getCouponQR(id,coupon_id);
+    public Map<String, Object> getCouponQR(Long id, Long coupon_id) {
+        return userDao.getCouponQR(id, coupon_id);
     }
 }
