@@ -43,4 +43,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getOrder(orderId);
     }
 
+    public Map<String, Object> getDetailsQR(Long order_id) {
+        return userOrderDao.getDetailsQR(order_id);
+    }
 }
