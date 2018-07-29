@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class UserOrder {
     private Long id;
     private String pay_on;
-    private Integer state;
+    private Integer order_state_id;
     private Integer pay_type;
     private Long user_id;
     private Date created;
@@ -21,6 +21,15 @@ public class UserOrder {
     private Integer service_score;
     private Integer enviro_score;
     private Integer taste_score;
+    private Integer quantity;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;
@@ -38,12 +47,12 @@ public class UserOrder {
         this.pay_on = pay_on;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getOrder_state_id() {
+        return order_state_id;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setOrder_state_id(Integer order_state_id) {
+        this.order_state_id = order_state_id;
     }
 
     public Integer getPay_type() {
