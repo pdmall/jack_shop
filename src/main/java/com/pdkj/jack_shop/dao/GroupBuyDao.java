@@ -51,30 +51,19 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         }
     }
 
-    //查询套餐的详情
-    public Map<String, Object> getGroupBuyById(Long id) {
-        MySql sql = new MySql();
-        sql.append("SELECT ");
-        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,once_count,gb.type_of_id  ");
-        sql.append("FROM ");
-        sql.append(" group_buy gb , user_group_buy_rel ugbr");
-        sql.append(" WHERE ");
-        sql.append("gb.id = ugbr.group_buy_id and user_id = ? and state = ? and is_use = ?", id);
-        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
-    }
 
     //查询用户购买的套餐
-    public List<Map<String, Object>> getGroupBuyByUserId(Long userId,Pager pager) {
+    public List<Map<String, Object>> getGroupBuyByUserId(Long userId, Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append("title,gb.id,buy_price,original_price,diners_number,appointment,");
-        sql.append("unavailable_date,s.shop_name,s.home_img,gb.type_of_id ");
+        sql.append("gb.title,gb.buy_price,gb.original_price,gb.diners_number,gb.appointment,gb.state group_buy_state,");
+        sql.append("gb.unavailable_date,s.shop_name,gb.group_buy_img,gb.type_of_id,uod.state ,uod.id QR ");
         sql.append("FROM ");
-        sql.append(" group_buy gb ,shop s, user_group_buy_rel ugbr");
+        sql.append(" group_buy gb ,shop s,user_order_details uod ,user_order uo ");
         sql.append(" WHERE ");
-        sql.append("gb.shop_id = s.id AND gb.id = ugbr.group_buy_id and user_id = ? AND gb.state > 0  ", userId);
-        sql.append("order by gb.state ,is_use desc, ugbr.created desc");
+        sql.append("gb.shop_id = s.id AND gb.id = uod.item_id AND uo.id = uod.user_order_id AND");
+        sql.append(" uo.user_id = ? AND gb.state > 0  ", userId);
+        sql.append("order by gb.state ,uod.state desc, uo.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
@@ -116,5 +105,16 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         SqlInfo insertSQL = SQLTools.getInsertSQL(userGroupBuyRel, "user_group_buy_rel");
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
 
+    }
+
+    public Map<String , Object> verifyGroupBuy(Long item_id){
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end,title");
+        mySql.append("from");
+        mySql.append("GroupBuy");
+        mySql.append("where");
+        mySql.append("id = ? AND state = 1 ",item_id);
+        return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
 }

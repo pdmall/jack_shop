@@ -34,6 +34,7 @@ import java.util.Map;
  */
 @Service
 public class PayService extends BaseService {
+    //支付成功后反馈
     public void notifyInfo(HttpServletRequest request, HttpServletResponse response) {
         //获取付款类型
         try {
@@ -48,20 +49,8 @@ public class PayService extends BaseService {
                 userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type);
                 List<Map<String, Object>> list = userOrderDao.getOrder(order_id);
                 for (Map<String, Object> map: list){
-                    //添加卷(团餐)到卷包
-                    if(2==Integer.valueOf(map.get("type_of_id").toString())){
-                        UserGroupBuyRel userGroupBuyRel = new UserGroupBuyRel();
-                        userGroupBuyRel.setIs_use(1);
-                        userGroupBuyRel.setGroup_buy_id(Long.parseLong(map.get("item_id").toString()));
-                        userGroupBuyRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                        groupBuyDao.addUserGroupBuyRel(userGroupBuyRel);
-                    }else if (1==Integer.valueOf(map.get("type_of_id").toString())) {
-                        UserCouponRel userCouponRel = new UserCouponRel();
-                        userCouponRel.setIs_use(1);
-                        userCouponRel.setCoupon_id(Long.parseLong(map.get("item_id").toString()));
-                        userCouponRel.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                        couponDao.addUserCouponRel(userCouponRel);
-                    }else if(4==Integer.valueOf(map.get("type_of_id").toString())){
+                    //修改会员状态
+                    if(4==Integer.valueOf(map.get("type_of_id").toString())){
                         userDao.updateRole(Long.parseLong(map.get("user_id").toString()),Integer.parseInt(map.get("item_id").toString()));
                     }
                 }
@@ -70,30 +59,33 @@ public class PayService extends BaseService {
                 flowMoney.setId(Tools.generatorId());
                 flowMoney.setUser_id(Long.parseLong(list.get(0).get("user_id").toString()));
                 flowMoney.setValue(Double.parseDouble(list.get(0).get("final_price").toString()));
-                flowMoney.setUser_order_id(Long.parseLong(order_id));
+                flowMoney.setItem_id(Long.parseLong(order_id));
                 flowMoney.setFlow_state_id(1);
+                flowMoney.setItem_id_type(1);
                 flowMoneyDao.addFlowMoney(flowMoney);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+    //退款后反馈
     public void refundInfo(HttpServletRequest request, HttpServletResponse response) {
         try {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             if ("SUCCESS".equals(mapData.get("return_code"))) {
                 this.sendWeChat(response, "SUCCESS", "");
-                String out_refund_no =mapData.get("out_refund_no");
+                //退款订单号
+                String out_trade_no =mapData.get("out_trade_no");
                 //修改订单状态
-                userOrderDao.updateOrderRefund(out_refund_no,4);
-                Map<String ,Object> map = userOrderDao.getOrderByPayOn(out_refund_no);
+                userOrderDao.updateOrderRefund(out_trade_no,4);
                 //流水记录 用户
                 FlowMoney flowMoney = new FlowMoney();
                 flowMoney.setId(Tools.generatorId());
-                flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
-                flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
-                flowMoney.setUser_order_id(Long.parseLong(map.get("id").toString()));
+                flowMoney.setUser_id(Long.parseLong(userOrderDao.getOrderByPayOn(out_trade_no).get("user_id").toString()));
+                flowMoney.setValue(Double.parseDouble(mapData.get("refund_fee")));
+                flowMoney.setItem_id(Long.parseLong(out_trade_no));
+                flowMoney.setItem_id_type(2);
                 flowMoney.setFlow_state_id(4);
                 flowMoneyDao.addFlowMoney(flowMoney);
             }

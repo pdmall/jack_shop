@@ -21,8 +21,25 @@ public class FlowMoney {
     private Double value;
     private Date created;
     private Long user_id;
-    private Long user_order_id;
+    private Long item_id;
     private Integer flow_state_id;
+    private Integer item_id_type; //item_id 1为订单 2为卷 3套餐
+
+    public Long getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(Long item_id) {
+        this.item_id = item_id;
+    }
+
+    public Integer getItem_id_type() {
+        return item_id_type;
+    }
+
+    public void setItem_id_type(Integer item_id_type) {
+        this.item_id_type = item_id_type;
+    }
 
     public Long getId() {
         return id;
@@ -54,14 +71,6 @@ public class FlowMoney {
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
-    }
-
-    public Long getUser_order_id() {
-        return user_order_id;
-    }
-
-    public void setUser_order_id(Long user_order_id) {
-        this.user_order_id = user_order_id;
     }
 
     public Integer getFlow_state_id() {

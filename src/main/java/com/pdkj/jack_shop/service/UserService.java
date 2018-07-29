@@ -6,6 +6,7 @@ import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.model.FlowMoney;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,36 +113,80 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public Map<String, Object> verifyCoupon(Long user_id, Integer type_of_id, Long item_rel_id) {
-        if (type_of_id == 1) {
-            if (userDao.verifyUserCoupon(user_id, item_rel_id) > 0) {
-                return userDao.verifyCoupon(item_rel_id);
-            } else {
-                throw new CustomException("您没有审核资格哟");
-            }
-        } else if (type_of_id == 2) {
-            if (userDao.verifyUserGroupBuy(user_id, item_rel_id) > 0) {
-                return userDao.verifyGroupBuy(item_rel_id);
-            } else {
-                throw new CustomException("您没有审核资格哟");
+    public Map<String, Object> verifyCoupon(Long user_id, Long user_order_details) {
+        //获得本次消费单价
+        Map<String, Object> map = userOrderDao.getUserOrderDetails(user_order_details);
+        Long user_order_id = Long.parseLong(map.get("user_order_id").toString());
+        Integer type_of_id = Integer.valueOf(map.get("type_of_id").toString());
+        Integer order_state_id = Integer.valueOf(map.get("order_state_id").toString());
+        Long item_id = Long.parseLong(map.get("item_id").toString());
+        //获得这个商铺的所有者id
+        Map<String, Object> orderMap = userOrderDao.getShopIdByOrderId(user_order_id);
+        //消费的商铺
+        Long shop_id = Long.parseLong(orderMap.get("shop_id").toString());
+        if ( userDao.verifyUser(user_id,shop_id) > 0) {
+            if(order_state_id == 2){
+                if (type_of_id == 1) {
+                    return couponDao.verifyCoupon(item_id);
+                } else if (type_of_id == 2) {
+                    return groupBuyDao.verifyGroupBuy(item_id);
+                } else {
+                    throw new CustomException("类型不对哟");
+                }
+            }else{
+                throw new CustomException("卷已经失效了");
             }
         } else {
-            throw new CustomException("这个卷是什么鬼");
-        }
-
-    }
-
-    public Map<String, Object> getCouponQR(Long id, Long coupon_id, Integer type_of_id) {
-        if (type_of_id == 1) {
-            return userDao.getCouponQR(id, coupon_id);
-        } else if (type_of_id == 2) {
-            return userDao.getGroupBuyQR(id, coupon_id);
-        } else {
-            return null;
+            throw new CustomException("您没有审核资格哟");
         }
     }
 
-    public Object getConfirmCoupon(Long id, Long coupon_id,Integer type_of_id) {
-        return null;
+    @Transactional
+    public void getConfirm(Long user_order_details) {
+        //获得本次消费单价
+        Map<String, Object> map = userOrderDao.getUserOrderDetails(user_order_details);
+        Double price = Double.parseDouble(map.get("price").toString());
+        Long user_order_id = Long.parseLong(map.get("user_order_id").toString());
+        //获得这个商铺的所有者id
+        Map<String, Object> orderMap = userOrderDao.getShopIdByOrderId(user_order_id);
+        //消费者
+        Long user_id = Long.parseLong(orderMap.get("user_id").toString());
+        //消费的商铺
+        Long shop_id = Long.parseLong(orderMap.get("shop_id").toString());
+        Long shop_user = Long.parseLong(shopDao.getUserIdByShopId(shop_id).get("user_id").toString());
+        //红利
+        Double dividends = price / 100 > 0.01 ? (price / 100) : 0.01;
+        //修改消费者的卷状态
+        userOrderDao.updateOrderRefund(user_order_details.toString(), 3);
+        //修改商铺拥有者的钱包余额
+        userWalletDao.updateMoney(price - dividends, shop_user, 0);
+        //添加流水记录
+        FlowMoney flowMoney = new FlowMoney();
+        flowMoney.setId(Tools.generatorId());
+        flowMoney.setUser_id(shop_user);
+        flowMoney.setValue(price - dividends);
+        flowMoney.setItem_id(user_order_details);
+        flowMoney.setItem_id_type(2);
+        flowMoney.setFlow_state_id(7);
+        flowMoneyDao.addFlowMoney(flowMoney);
+        //添加红利
+        shareOrginDao.updateDividends(dividends, user_id);
+        //获得被返利用户的id
+        String level3 = shareOrginDao.getMyLevel3(user_id).get("Level3").toString();
+        //判断用户是否是钻石会员
+        if (userDao.getUserRole(level3, 3) > 0) {
+            //修改用户钱包余额 0 收入 1 支出
+            userWalletDao.updateMoney(dividends, level3, 0);
+            //添加流水记录
+            FlowMoney flowMoney1 = new FlowMoney();
+            flowMoney.setId(Tools.generatorId());
+            flowMoney.setUser_id(Long.parseLong(level3));
+            flowMoney.setValue(dividends);
+            flowMoney.setItem_id(user_order_details);
+            flowMoney.setItem_id_type(2);
+            flowMoney1.setFlow_state_id(4);
+            flowMoneyDao.addFlowMoney(flowMoney1);
+        }
     }
+
 }

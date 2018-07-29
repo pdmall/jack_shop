@@ -32,8 +32,8 @@ public class UserOrderController extends BaseController {
      */
 
     @GetMapping("addOrder")
-    public Result addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails) throws CustomException {
-        return ResultGenerator.genSuccessResult(userOrderService.addOrder(userOrder,userOrderDetails,getUser().getId()));
+    public Result addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails ,Integer quantity) throws CustomException {
+        return ResultGenerator.genSuccessResult(userOrderService.addOrder(userOrder,userOrderDetails,getUser().getId(),quantity));
     }
 
     /**

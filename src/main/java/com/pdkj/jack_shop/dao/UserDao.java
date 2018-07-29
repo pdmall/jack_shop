@@ -93,10 +93,9 @@ public class UserDao extends DaoBase {
         return effect;
     }
 
-    public int updateRole(Long id, Integer role_id) {
+    public void updateRole(Long id, Integer role_id) {
         String sql = "update user set role_id = ? where id = ?";
-        int effect = jdbcTemplate.update(sql, role_id, id);
-        return effect;
+        jdbcTemplate.update(sql, role_id, id);
     }
 
     public void delImg(String img_url) {
@@ -112,82 +111,47 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.queryForList(mySql.toString());
     }
 
-    //验证卷
-    public Map<String, Object> verifyCoupon(Long user_coupon_rel_id) {
-        MySql mySql = new MySql();
-        mySql.append("select t.id type_of_id");
-        mySql.append(" original_price,t.name,c.buy_price,s.shop_name,s.id shop_id,c.id item_id");
-        mySql.append("from");
-        mySql.append("user_coupon_rel ucr , coupon c,type_of t ,shop s");
-        mySql.append("where c.id = ucr.coupon_id AND c.type_of_id = t.id AND s.id = c.shop_id AND");
-        mySql.append("ucr.id = ? AND is_use = 1 AND coupon_state = 1", user_coupon_rel_id);
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(mySql.toString(), mySql.getValues());
-        if (list.get(0) != null) {
-            return list.get(0);
-        } else {
-            throw new CustomException("没有这个卷了哟");
-        }
-    }
-
-    //验证团餐
-    public Map<String, Object> verifyGroupBuy(Long user_coupon_rel_id) {
-        MySql mySql = new MySql();
-        mySql.append("select  t.id type_of_id");
-        mySql.append(" original_price,gb.title,t.name,gb.buy_price,s.shop_name ,s.id shop_id ,gb.id item_id");
-        mySql.append("from");
-        mySql.append("group_buy gb , user_group_buy_rel ugbr,type_of t,shop s ");
-        mySql.append("where gb.id = ugbr.group_buy_id AND gb.type_of_id = t.id AND s.id = gb.shop_id AND");
-        mySql.append("ugbr.id = ? AND is_use = 1 AND gb.state = 1", user_coupon_rel_id);
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(mySql.toString(), mySql.getValues());
-        if (list.get(0) != null) {
-            return list.get(0);
-        } else {
-            throw new CustomException("没有这个卷了哟");
-        }
-    }
-
     //验证用户是否有资格扫描卷
-    public Integer verifyUserCoupon(Long user_id, Long item_rel_id) {
+    public Integer verifyUser(Long user_id,Long shop_id) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append("count(*) count");
         mySql.append("from");
-        mySql.append("user_shop_rel usr,coupon c ,user_coupon_rel ucr ");
-        mySql.append(" where usr.shop_id = c.shop_id AND ucr.coupon_id = c.id AND");
-        mySql.append(" usr.user_id = ? AND ucr.id = ?", user_id, item_rel_id);
-        Map<String, Object> map = jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
-        return Integer.valueOf(map.get("count").toString());
-    }
-    //验证用户是否有资格扫描套餐
-    public Integer verifyUserGroupBuy(Long user_id, Long item_rel_id) {
-        MySql mySql = new MySql();
-        mySql.append("select");
-        mySql.append("count(*) count");
-        mySql.append("from");
-        mySql.append("user_shop_rel usr,group_buy c ,user_group_buy_rel ucr ");
-        mySql.append(" where usr.shop_id = c.shop_id AND ucr.group_buy_id = c.id AND");
-        mySql.append(" usr.user_id = ? AND ucr.id = ?", user_id, item_rel_id);
+        mySql.append("user_shop_rel");
+        mySql.append(" where ");
+        mySql.append(" user_id = ? AND shop_id = ?", user_id,shop_id);
         Map<String, Object> map = jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
         return Integer.valueOf(map.get("count").toString());
     }
 
-    public Map<String, Object> getCouponQR(Long id, Long coupon_id) {
+
+    public Map<String,Object> getUserByShopId(Object shop_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" id ");
+        mySql.append(" user_id ");
         mySql.append("from");
-        mySql.append(" user_coupon_rel ");
-        mySql.append("where user_id = ? AND coupon_id = ? AND is_use = 1 ", id, coupon_id);
+        mySql.append(" user_shop_rel ");
+        mySql.append("where shop_id = ? AND master = 1 ", shop_id);
         return jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
     }
 
-    public Map<String, Object> getGroupBuyQR(Long id, Long group_buy_id) {
+    public Integer getUserRole(String item_rel_id,Integer role_id) {
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append(" id ");
+        mySql.append(" count(*) count");
         mySql.append("from");
-        mySql.append(" user_group_buy_rel ");
-        mySql.append("where user_id = ? AND group_buy_id = ? AND is_use = 1 ", id, group_buy_id);
-        return jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
+        mySql.append(" user ");
+        mySql.append("where id = ? AND role_id = ?", item_rel_id,role_id);
+        return Integer.valueOf(jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues()).get("count").toString());
+    }
+
+    public Map<String,Object> verifyCoupon(Long user_order_details) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append(" ");
+        mySql.append("from");
+        mySql.append(" var ");
+        mySql.append("where id = ? AND role_id = ?", user_order_details);
+        return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
     }
 }

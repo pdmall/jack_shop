@@ -77,4 +77,18 @@ public class ShareOrginDao extends DaoBase {
     }
 
 
+    public void updateDividends(Double dividends, Long user_id) {
+        MySql mySql = new MySql();
+        mySql.append("UPDATE `share_orgin` SET");
+        mySql.append(" dividends += ? where level1 = ?",dividends,user_id);
+        jdbcTemplate.update(mySql.toString(),mySql.getValues());
+    }
+
+    public Map<String, Object> getMyLevel3(Long user_id) {
+        MySql mySql = new MySql();
+        mySql.append(" select ");
+        mySql.append(" Level3 ");
+        mySql.append("from share_orgin where level1 = ?",user_id);
+        return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
+    }
 }

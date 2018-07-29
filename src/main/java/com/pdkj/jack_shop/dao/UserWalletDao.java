@@ -10,6 +10,7 @@ package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.model.UserWallet;
 import com.pdkj.jack_shop.util.Tools;
+import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
@@ -41,5 +42,13 @@ public class UserWalletDao extends DaoBase<UserWallet> {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(wallet,"user_wallet");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
 
+    }
+
+    public Integer updateMoney(Object buy_price, Object user_id,Integer flow_record_type) {
+        MySql mySql = new MySql();
+        mySql.append("UPDATE `user_wallet` SET");
+        mySql.append("money"+(flow_record_type==0?"+= ?":"-= ?"),buy_price);
+        mySql.append("where user_id = ? AND state = 1",user_id);
+        return jdbcTemplate.update(mySql.toString(),mySql.getValues());
     }
 }

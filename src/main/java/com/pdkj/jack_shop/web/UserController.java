@@ -73,17 +73,15 @@ public class UserController extends BaseController {
     }
     //验证卷的是否可用
     @PostMapping("verifyCoupon")
-    public Result verifyCoupon(Integer type_of_id,Long item_rel_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),type_of_id,item_rel_id));
+    public Result verifyCoupon(Long user_order_details) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.verifyCoupon(getUser().getId(),user_order_details));
     }
-    //获得二维码卷参数
-    @GetMapping("getCouponQR")
-    public Result getCouponQR(Long coupon_id,Integer type_of_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getCouponQR(getUser().getId(),coupon_id,type_of_id));
-    }
+
     //商家确认消费
-    @GetMapping("getConfirmCoupon")
-    public Result getConfirmCoupon(Long item_id,Integer type_of_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.getConfirmCoupon(getUser().getId(),item_id,type_of_id));
+    @GetMapping("getConfirm")
+    public Result getConfirm(Long user_order_details) throws CustomException {
+        userService.getConfirm(user_order_details);
+        return ResultGenerator.genSuccessResult("完成");
     }
+
 }

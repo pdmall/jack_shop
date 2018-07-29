@@ -9,7 +9,9 @@ import com.pdkj.jack_shop.util.Tools;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,9 +30,15 @@ public class WxPayService extends BaseService {
         String payPrice = userOrderDao.getOrderPrice(order_id);
         return getPaymentInfo(open_id,order_id,payPrice,"订单付款",ip);
     }
-    public Map<String,String> refund( String order_id,String refund_fee, String ip) throws Exception {
-        Map<String,Object> map = userOrderDao.getOrderRefund(order_id);
-        return refund(map.get("pay_on").toString(),map.get("final_price").toString(),refund_fee ,ip);
+    public List<Map<String, String>> refund( String openId,String refund_order, String ip) throws Exception {
+        String orders = refund_order.replaceAll("_",",");
+        Map<String,Object> map = userOrderDao.getOrderInfo(openId);
+        List<Map<String, Object>> list = userOrderDao.getDetails(orders, map.get("id"));
+        List<Map<String, String>> retList = new ArrayList<Map<String, String>>();
+        for (Map<String,Object> objectMap:list) {
+            retList.add(refund(openId,map.get("final_price").toString(),objectMap.get("price").toString(),ip,objectMap.get("id").toString()));
+        }
+        return retList;
     }
     /**
      *
@@ -85,20 +93,20 @@ public class WxPayService extends BaseService {
         return data;
     }
     //退款
-    public  Map<String, String> refund(String pay_on, String payMoney,String refund_fee,String ip) throws Exception {
+    public  Map<String, String> refund(String pay_on, String payMoney,String refund_fee,String ip,String out_trade_no) throws Exception {
         //微信付款 是 以 分为单位。所有要将元* 100
         payMoney = new BigDecimal(payMoney).multiply(new BigDecimal(100)).setScale(0).toString();
         refund_fee = new BigDecimal(refund_fee).multiply(new BigDecimal(100)).setScale(0).toString();
         //test:
         payMoney = "1";
         String nonce_str = PayUtil.generateNonceStr();
-        Long aLong = Tools.generatorId();
+
         //组装参数，用户生成统一下单接口的签名
         Map<String, String> packageParams = new HashMap ();
         packageParams.put("appid", XCXInfo.APPID);
         packageParams.put("mch_id", XCXInfo.PAY_MCH_ID);
         packageParams.put("nonce_str", nonce_str);
-        packageParams.put("out_trade_no", aLong.toString());//退款订单号
+        packageParams.put("out_trade_no",out_trade_no);//退款订单号
         packageParams.put("out_refund_no", pay_on);//退款的那个订单
         packageParams.put("total_fee", payMoney);//支付金额，这边需要转成字符串类型，否则后面的签名会失败
         packageParams.put("refund_fee", refund_fee);//退款金额
@@ -110,10 +118,10 @@ public class WxPayService extends BaseService {
         String return_code = (String) map.get("return_code");//返回状态码
         Map<String, String> data = new HashMap<>();//返回给小程序端需要的参数
         if (return_code == "SUCCESS" ) {
-            data.put("out_refund_no", (String) map.get("out_refund_no"));
-            data.put("refund_fee", (String) map.get("refund_fee"));
-            data.put("total_fee", (String)map.get("total_fee"));
-            userOrderDao.updateOrderRefund((String)map.get("out_refund_no"),6);
+            data.put("out_refund_no", out_trade_no);
+            data.put("refund_fee", refund_fee);
+            data.put("total_fee", payMoney);
+            userOrderDao.updateOrderRefund(out_trade_no,6);
         }
         return data;
     }

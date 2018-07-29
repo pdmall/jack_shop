@@ -13,11 +13,13 @@ import java.util.Map;
 @Service
 public class UserOrderService extends BaseService<UserOrder> {
 
-    public Long addOrder(UserOrder userOrder,UserOrderDetails userOrderDetails,Long user_id) {
+    public Long addOrder(UserOrder userOrder, UserOrderDetails userOrderDetails, Long user_id, Integer quantity) {
         userOrder.setUser_id(user_id);
         Long id = userOrderDao.addOrder(userOrder);
-        userOrderDetails.setUser_order_id(id);
-        userOrderDao.addOrderDetails(userOrderDetails);
+        for (int i = 0; i < quantity; i++) {
+            userOrderDetails.setUser_order_id(id);
+            userOrderDao.addOrderDetails(userOrderDetails);
+        }
         return id;
     }
 
@@ -26,7 +28,7 @@ public class UserOrderService extends BaseService<UserOrder> {
     }
 
     public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
-        return userOrderDao.getUserOrder(user_id, order_state_id,page);
+        return userOrderDao.getUserOrder(user_id, order_state_id, page);
     }
 
     public List<Map<String, Object>> getShopOrder(Long shop_id, Pager page) {
@@ -36,6 +38,7 @@ public class UserOrderService extends BaseService<UserOrder> {
     public void paySuccess(String orderId, Date pay_time, Integer trade_type) {
         userOrderDao.paySuccess(orderId, pay_time, trade_type);
     }
+
     public List<Map<String, Object>> getOrder(String orderId) {
         return userOrderDao.getOrder(orderId);
     }

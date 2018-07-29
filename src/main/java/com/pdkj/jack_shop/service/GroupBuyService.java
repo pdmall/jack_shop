@@ -29,9 +29,7 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
         return groupBuyDao.getGroupBuyByShopId(shop_id,coupon_state,pager);
     }
 
-    public Map<String, Object> getGroupBuyById(Long id) {
-        return groupBuyDao.getGroupBuyById(id);
-    }
+
 
     public List<Map<String, Object>> getGroupBuyByUserId(Long userId,Pager pager) {
         return groupBuyDao.getGroupBuyByUserId(userId,pager);

@@ -9,8 +9,6 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.Coupon;
-import com.pdkj.jack_shop.model.GroupBuy;
-import com.pdkj.jack_shop.model.ShopType;
 import com.pdkj.jack_shop.model.UserCouponRel;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
@@ -48,15 +46,14 @@ public class CouponDao extends DaoBase {
     public List<Map<String, Object>> getCouponByUserId(Long user_id,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append(" c.id,c.original_price,c.buy_price,c.appointment,c.date_start,c.date_end,c.type_of_id,c.time_start,");
-        sql.append(" c.time_end,c.created,c.buy_person_limit,c.stock_count,c.once_count,ucr.id user_coupon_rel_id ,");
-        sql.append(" c.unavailable_date,cgr.range_name,c.shop_id,s.shop_name,s.home_img,coupon_state,is_use");
+        sql.append(" c.original_price,c.buy_price,c.appointment,c.type_of_id,uod.id QR ,");
+        sql.append(" c.unavailable_date,cgr.range_name,s.shop_name,s.home_img,c.coupon_state,uod.state");
         sql.append("FROM ");
-        sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ,user_coupon_rel ucr");
+        sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ,user_order_details uod ,user_order uo");
         sql.append("WHERE ");
-        sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND ucr.coupon_id = c.id AND");
-        sql.append(" ucr.user_id = ? ",  user_id);
-        sql.append("order by c.coupon_state ,is_use desc, ucr.created desc");
+        sql.append("  c.shop_id = s.id AND c.goods_range_id = cgr.id AND uod.item_id = c.id AND uod.user_order_id = uo.id");
+        sql.append(" uo.user_id = ? ",  user_id);
+        sql.append("order by c.coupon_state ,uod.state desc, uo.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
@@ -72,7 +69,7 @@ public class CouponDao extends DaoBase {
         sql.append("c.shop_id = s.id AND c.goods_range_id = cgr.id AND c.id = ? ", id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
-    //获得
+    //获得销售总数
     public Map<String, Object> getSales(Long coupon_id) {
         MySql sql = new MySql();
         sql.append("SELECT ");
@@ -98,10 +95,16 @@ public class CouponDao extends DaoBase {
         jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
         return coupon.getId();
     }
-    //添加用户卷
-    public void addUserCouponRel(UserCouponRel userCouponRel){
-        userCouponRel.setId(Tools.generatorId());
-        SqlInfo insertSQL = SQLTools.getInsertSQL(userCouponRel, "user_coupon_rel");
-        jdbcTemplate.update(insertSQL.getSql(), insertSQL.getValues());
+
+    public Map<String , Object> verifyCoupon(Long item_id){
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end");
+        mySql.append("from");
+        mySql.append("coupon");
+        mySql.append("where");
+        mySql.append("id = ? AND coupon_state = 1 ",item_id);
+        return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
+
 }

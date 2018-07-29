@@ -253,4 +253,15 @@ public class ShopDao extends DaoBase<Shop> {
         SqlInfo sqlInfo = SQLTools.getInsertSQL(userShopRel,"user_shop_rel");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
+
+    public Map<String,Object> getUserIdByShopId(Long shop_id){
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append(" user_id ");
+        sql.append("FROM");
+        sql.append("user_shop_rel ");
+        sql.append("WHERE");
+        sql.append("shop_id = ? AND master = 1",shop_id);
+        return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
+    }
 }
