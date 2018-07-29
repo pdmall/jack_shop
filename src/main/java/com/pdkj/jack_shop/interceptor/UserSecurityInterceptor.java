@@ -136,7 +136,7 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         }
         String linkString = sb.toString();
         linkString = StringUtils.substring(linkString, 0, linkString.length() - 1);//去除最后一个'&'
-        String APP_SECRET = "Potato";//密钥，自己修改
+        String APP_SECRET = "pdkj";//密钥，自己修改
         String sign = DigestUtils.sha1Hex(linkString + APP_SECRET);//混合密钥md5
         return StringUtils.equals(sign, requestSign);//比较
     }

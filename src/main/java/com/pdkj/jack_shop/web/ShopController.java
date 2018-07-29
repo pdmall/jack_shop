@@ -233,7 +233,6 @@ public class ShopController extends BaseController {
     public Result addPhoto(Photo photo) throws CustomException {
         photo.setUser_id(getUser().getId());
         photoService.addPhoto(photo);
-        System.out.println(photo);
         return ResultGenerator.genSuccessResult(photo);
     }
 
