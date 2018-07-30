@@ -57,13 +57,13 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("gb.title,gb.buy_price,gb.original_price,gb.diners_number,gb.appointment,gb.state group_buy_state,");
-        sql.append("gb.unavailable_date,s.shop_name,gb.group_buy_img,gb.type_of_id,uod.state ,uod.id QR ");
+        sql.append("gb.unavailable_date,s.shop_name,gb.group_buy_img,gb.type_of_id,uod.order_state_id ,uod.id QR ");
         sql.append("FROM ");
         sql.append(" group_buy gb ,shop s,user_order_details uod ,user_order uo ");
         sql.append(" WHERE ");
         sql.append("gb.shop_id = s.id AND gb.id = uod.item_id AND uo.id = uod.user_order_id AND");
-        sql.append(" uo.user_id = ? AND gb.state > 0  ", userId);
-        sql.append("order by gb.state ,uod.state desc, uo.created desc");
+        sql.append(" uo.user_id = ? AND gb.state > 0  AND uod.type_of_id = 2", userId);
+        sql.append("order by gb.state ,uod.order_state_id desc, uo.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
