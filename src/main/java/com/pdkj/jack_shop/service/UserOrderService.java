@@ -39,7 +39,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         userOrderDao.paySuccess(orderId, pay_time, trade_type);
     }
 
-    public List<Map<String, Object>> getOrder(String orderId) {
+    public List<Map<String, Object>> getOrderInfo(String orderId) {
         return userOrderDao.getOrder(orderId);
     }
 

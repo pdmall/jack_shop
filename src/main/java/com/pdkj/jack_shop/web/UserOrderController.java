@@ -77,8 +77,15 @@ public class UserOrderController extends BaseController {
     public Result getShopOrder(Long shop_id , Pager pager){
         return ResultGenerator.genSuccessResult(userOrderService.getShopOrder(shop_id,pager));
     }
+    //获得订单详情二维码
     @GetMapping("getDetailsQR")
     public Result getDetailsQR(Long order_id){
         return ResultGenerator.genSuccessResult(userOrderService.getDetailsQR(order_id));
     }
+
+    @GetMapping("getOrderInfo")
+    public Result getOrderInfo(String order_id){
+        return ResultGenerator.genSuccessResult(userOrderService.getOrderInfo(order_id));
+    }
 }
+

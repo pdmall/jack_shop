@@ -44,9 +44,10 @@ public class PayService extends BaseService {
                 this.sendWeChat(response, "SUCCESS", "");
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
+                String pay_on = mapData.get("out_trade_no");
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-                userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type);
+                userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type,pay_on);
                 List<Map<String, Object>> list = userOrderDao.getOrder(order_id);
                 for (Map<String, Object> map: list){
                     //修改会员状态

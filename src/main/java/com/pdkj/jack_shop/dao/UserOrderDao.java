@@ -72,8 +72,9 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     //获得用户订单
-    public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id,Pager page) {
+    public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id");
@@ -81,14 +82,15 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("user_order uo,shop s");
         sql.append("WHERE");
         sql.append("s.id = uo.shop_id AND ");
-        sql.append("uo.user_id  = ?  ",user_id);
-        if(order_state_id != 0){
-            sql.append("AND uo.order_state_id  = ? ",order_state_id);
+        sql.append("uo.user_id  = ?  ", user_id);
+        if (order_state_id != 0) {
+            sql.append("AND uo.order_state_id  = ? ", order_state_id);
         }
         sql.append("order by uo.created desc");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     //获得订单最终需要支付价格
     public String getOrderPrice(String order_id) {
         String sql = "select final_price from user_order where id =  ? and order_state_id = 1";
@@ -100,33 +102,38 @@ public class UserOrderDao extends DaoBase<Banner> {
     }
 
     //支付是修改订单状态
-    public void paySuccess(String orderId, Date pay_time, Integer trade_type) {
+    public void paySuccess(String orderId, Date pay_time, Integer trade_type,String pay_on) {
         MySql sql = new MySql();
-        sql.append("update user_order set order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1",  pay_time,trade_type, orderId);
+        sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1",pay_on, pay_time, trade_type, orderId);
         jdbcTemplate.update(sql.toString(), sql.getValues());
     }
+
     //获得订单信息
-    public List<Map<String, Object>> getOrder(String orderId){
+    public List<Map<String, Object>> getOrder(String orderId) {
         MySql sql = new MySql();
-        sql.append("select uo.id,user_id,type_of_id,final_price,item_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uo.id = ?",orderId);
+        sql.append("select uo.id,user_id,type_of_id,final_price,item_id ");
+        sql.append("from user_order  where uo.id = ?", orderId);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     //获得订单信息
-    public Map<String, Object> getOrderInfo(String pay_on){
+    public Map<String, Object> getOrderInfo(String pay_on) {
         MySql sql = new MySql();
-        sql.append("select id,final_price from user_order uo where  uo.pay_on = ?",pay_on);
+        sql.append("select id,final_price from user_order uo where  uo.pay_on = ?", pay_on);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
+
     //修改订单状态根据id
-    public void updateOrderRefund(String out_refund_no,Integer order_state_id) {
+    public void updateOrderRefund(String out_refund_no, Integer order_state_id) {
         MySql sql = new MySql();
-        sql.append("update user_order_details set order_state_id = ? where id = ?",order_state_id,out_refund_no);
+        sql.append("update user_order_details set order_state_id = ? where id = ?", order_state_id, out_refund_no);
         jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
+
     //获得订单信息
-    public Map<String, Object> getOrderByPayOn(String out_trade_no){
+    public Map<String, Object> getOrderByPayOn(String out_trade_no) {
         MySql sql = new MySql();
-        sql.append("select uo.id,user_id,type_of_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uod.id = ?",out_trade_no);
+        sql.append("select uo.id,user_id,type_of_id from user_order uo,user_order_details uod where uo.id = uod.user_order_id and uod.id = ?", out_trade_no);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
@@ -137,32 +144,35 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order_details ");
         sql.append("where");
-        sql.append("user_order_id =? AND state = 0 AND id in(?)",id,orders);
+        sql.append("user_order_id =? AND state = 0 AND id in(?)", id, orders);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     //获得订单详情id
-    public Map<String,Object> getUserOrderDetails(Long user_order_details) {
+    public Map<String, Object> getUserOrderDetails(Long user_order_details) {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" user_order_id,price,item_id,type_of_id,order_state_id");
         sql.append("FROM");
         sql.append("user_order_details ");
         sql.append("where");
-        sql.append("id = ?",user_order_details);
+        sql.append("id = ?", user_order_details);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
+
     //获得订单商铺id
-    public Map<String,Object> getShopIdByOrderId(Long user_order_id) {
+    public Map<String, Object> getShopIdByOrderId(Long user_order_id) {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" shop_id,user_id");
         sql.append("FROM");
         sql.append(" user_order ");
         sql.append("where");
-        sql.append("id = ?",user_order_id);
+        sql.append("id = ?", user_order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
+    //获得二维码
     public List<Map<String, Object>> getDetailsQR(Long order_id) {
         MySql sql = new MySql();
         sql.append("select");
@@ -170,7 +180,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order_details ");
         sql.append("where");
-        sql.append("user_order_id = ?",order_id);
+        sql.append("user_order_id = ?", order_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 }
