@@ -57,7 +57,7 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
         MySql sql = new MySql();
         sql.append("SELECT ");
         sql.append("gb.title,gb.buy_price,gb.original_price,gb.diners_number,gb.appointment,gb.state group_buy_state,");
-        sql.append("gb.unavailable_date,s.shop_name,gb.group_buy_img,gb.type_of_id,uod.order_state_id ,uod.id QR ");
+        sql.append("gb.unavailable_date,s.shop_name,gb.group_buy_img,gb.type_of_id,uod.order_state_id ,uod.id QR ,uod.use_state");
         sql.append("FROM ");
         sql.append(" group_buy gb ,shop s,user_order_details uod ,user_order uo ");
         sql.append(" WHERE ");

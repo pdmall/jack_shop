@@ -46,7 +46,7 @@ public class CouponDao extends DaoBase {
     public List<Map<String, Object>> getCouponByUserId(Long user_id,Pager pager) {
         MySql sql = new MySql();
         sql.append("SELECT ");
-        sql.append(" c.original_price,c.buy_price,c.appointment,c.type_of_id,uod.id QR ,");
+        sql.append(" c.original_price,c.buy_price,c.appointment,c.type_of_id,uod.id QR ,uod.use_state,");
         sql.append(" c.unavailable_date,cgr.range_name,s.shop_name,s.home_img,c.coupon_state,uod.order_state_id");
         sql.append("FROM ");
         sql.append("coupon AS c, shop s ,coupon_goods_range AS cgr ,user_order_details uod ,user_order uo");

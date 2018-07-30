@@ -80,7 +80,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order uo,shop s");
         sql.append("WHERE");
-        sql.append("s.id = uo.shop_id AND uo.order_state_id = os.id AND");
+        sql.append("s.id = uo.shop_id AND ");
         sql.append("uo.user_id  = ?  ",user_id);
         if(order_state_id != 0){
             sql.append("AND uo.order_state_id  = ? ",order_state_id);
