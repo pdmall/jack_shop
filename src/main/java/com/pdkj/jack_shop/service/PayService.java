@@ -47,19 +47,18 @@ public class PayService extends BaseService {
                 String pay_on = mapData.get("out_trade_no");
                 String order_id = mapData.get("attach");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-                userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type,pay_on);
-                List<Map<String, Object>> list = userOrderDao.getOrder(order_id);
-                for (Map<String, Object> map: list){
-                    //修改会员状态
-                    if(4==Integer.valueOf(map.get("type_of_id").toString())){
-                        userDao.updateRole(Long.parseLong(map.get("user_id").toString()),Integer.parseInt(map.get("item_id").toString()));
-                    }
+                userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type, pay_on);
+                Map<String, Object> map = userOrderDao.getOrder(order_id);
+                List<Map<String, Object>> list = userOrderDao.getOrderDetails(order_id);
+                //修改会员状态
+                if (4 == Integer.valueOf(list.get(0).get("type_of_id").toString())) {
+                    userDao.updateRole(Long.parseLong(map.get("user_id").toString()), Integer.parseInt(map.get("item_id").toString()));
                 }
                 //流水记录 用户
                 FlowMoney flowMoney = new FlowMoney();
                 flowMoney.setId(Tools.generatorId());
-                flowMoney.setUser_id(Long.parseLong(list.get(0).get("user_id").toString()));
-                flowMoney.setValue(Double.parseDouble(list.get(0).get("final_price").toString()));
+                flowMoney.setUser_id(Long.parseLong(map.get("user_id").toString()));
+                flowMoney.setValue(Double.parseDouble(map.get("final_price").toString()));
                 flowMoney.setItem_id(Long.parseLong(order_id));
                 flowMoney.setFlow_state_id(1);
                 flowMoney.setItem_id_type(1);
@@ -69,6 +68,7 @@ public class PayService extends BaseService {
             System.out.println(e.getMessage());
         }
     }
+
     //退款后反馈
     public void refundInfo(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -77,9 +77,9 @@ public class PayService extends BaseService {
             if ("SUCCESS".equals(mapData.get("return_code"))) {
                 this.sendWeChat(response, "SUCCESS", "");
                 //退款订单号
-                String out_trade_no =mapData.get("out_trade_no");
+                String out_trade_no = mapData.get("out_trade_no");
                 //修改订单状态
-                userOrderDao.updateOrderRefund(out_trade_no,4);
+                userOrderDao.updateOrderRefund(out_trade_no, 4);
                 //流水记录 用户
                 FlowMoney flowMoney = new FlowMoney();
                 flowMoney.setId(Tools.generatorId());

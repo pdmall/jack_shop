@@ -35,7 +35,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getShopOrder(shop_id, page);
     }
 
-    public List<Map<String, Object>> getOrderInfo(String orderId) {
+    public Map<String, Object> getOrderInfo(String orderId) {
         return userOrderDao.getOrder(orderId);
     }
 

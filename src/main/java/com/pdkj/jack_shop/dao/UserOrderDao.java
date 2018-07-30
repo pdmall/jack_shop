@@ -109,11 +109,11 @@ public class UserOrderDao extends DaoBase<Banner> {
     }
 
     //获得订单信息
-    public List<Map<String, Object>> getOrder(String orderId) {
+    public Map<String, Object> getOrder(String orderId) {
         MySql sql = new MySql();
-        sql.append("select uo.id,user_id,type_of_id,final_price,item_id ");
-        sql.append("from user_order  where uo.id = ?", orderId);
-        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+        sql.append("select id,created,final_price,quantity ");
+        sql.append("from user_order where id = ?", orderId);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
     //获得订单信息
@@ -177,6 +177,17 @@ public class UserOrderDao extends DaoBase<Banner> {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" id");
+        sql.append("FROM");
+        sql.append("user_order_details ");
+        sql.append("where");
+        sql.append("user_order_id = ?", order_id);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+    //根据订单获得订单详情
+    public List<Map<String, Object>> getOrderDetails(String order_id) {
+        MySql sql = new MySql();
+        sql.append("select");
+        sql.append(" id,type_of_id,price");
         sql.append("FROM");
         sql.append("user_order_details ");
         sql.append("where");
