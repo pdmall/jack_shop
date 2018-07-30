@@ -77,7 +77,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id");
+        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price");
         sql.append("FROM");
         sql.append("user_order uo,shop s");
         sql.append("WHERE");
