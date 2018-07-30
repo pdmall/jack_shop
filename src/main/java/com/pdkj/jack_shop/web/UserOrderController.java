@@ -83,9 +83,9 @@ public class UserOrderController extends BaseController {
         return ResultGenerator.genSuccessResult(userOrderService.getDetailsQR(order_id));
     }
 
-    @GetMapping("getOrderInfo")
-    public Result getOrderInfo(String order_id){
-        return ResultGenerator.genSuccessResult(userOrderService.getOrderInfo(order_id));
+    @GetMapping("userOrderDetails")
+    public Result userOrderDetails(String order_id){
+        return ResultGenerator.genSuccessResult(userOrderService.userOrderDetails(order_id));
     }
 }
 

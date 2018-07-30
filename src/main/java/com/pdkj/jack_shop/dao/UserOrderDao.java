@@ -77,11 +77,11 @@ public class UserOrderDao extends DaoBase<Banner> {
     public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price");
+        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price,os.name state_name");
         sql.append("FROM");
-        sql.append("user_order uo,shop s");
+        sql.append("user_order uo,shop s,order_state os");
         sql.append("WHERE");
-        sql.append("s.id = uo.shop_id AND ");
+        sql.append("s.id = uo.shop_id AND os.id = uo.order_state_id AND");
         sql.append("uo.user_id  = ?  ", user_id);
         if (order_state_id != 0) {
             sql.append("AND uo.order_state_id  = ? ", order_state_id);
@@ -193,5 +193,17 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("where");
         sql.append("user_order_id = ?", order_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public Map<String,Object> userOrderDetails(String order_id) {
+        MySql sql = new MySql();
+        sql.append("select");
+        sql.append(" uod.type_of_id,uod.price,uod.item_id,u.phone,uo.final_price,quantity,uo.created,os.name state_name,to.name type_name");
+        sql.append("FROM");
+        sql.append("user_order_details uod,user u, user_order uo,order_state os,type_of");
+        sql.append("where");
+        sql.append(" uod.user_order_id = uo.id AND u.id = uo.user_id AND uo.order_state_id = os.id AND ");
+        sql.append(" os. uo.id = ?", order_id);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 }

@@ -35,11 +35,12 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getShopOrder(shop_id, page);
     }
 
-    public Map<String, Object> getOrderInfo(String orderId) {
-        return userOrderDao.getOrder(orderId);
-    }
-
     public List<Map<String, Object>> getDetailsQR(Long order_id) {
         return userOrderDao.getDetailsQR(order_id);
+    }
+
+    public Map<String, Object> userOrderDetails(String order_id) {
+        Map<String, Object> map = userOrderDao.userOrderDetails(order_id);
+        return null;
     }
 }
