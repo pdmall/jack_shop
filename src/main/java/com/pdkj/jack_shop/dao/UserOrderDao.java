@@ -111,7 +111,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     //获得订单信息
     public Map<String, Object> getOrder(String orderId) {
         MySql sql = new MySql();
-        sql.append("select id,created,final_price,quantity ");
+        sql.append("select id,created,final_price,quantity,user_id ");
         sql.append("from user_order where id = ?", orderId);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
