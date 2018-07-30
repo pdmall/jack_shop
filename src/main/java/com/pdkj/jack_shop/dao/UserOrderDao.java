@@ -198,12 +198,12 @@ public class UserOrderDao extends DaoBase<Banner> {
     public Map<String,Object> userOrderDetails(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" uod.type_of_id,uod.price,uod.item_id,u.phone,uo.final_price,quantity,uo.created,os.name state_name,to.name type_name");
+        sql.append(" uod.type_of_id,uod.price,uod.item_id,u.phone,uo.final_price,quantity,uo.created,os.name state_name,t.name type_name");
         sql.append("FROM");
-        sql.append("user_order_details uod,user u, user_order uo,order_state os,type_of to");
+        sql.append("user_order_details uod,user u, user_order uo,order_state os,type_of t");
         sql.append("where");
         sql.append(" uod.user_order_id = uo.id AND u.id = uo.user_id AND uo.order_state_id = os.id AND ");
-        sql.append("to.id = uod.type_of_id AND uo.id = ?", order_id);
+        sql.append("t.id = uod.type_of_id AND uo.id = ?", order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 }

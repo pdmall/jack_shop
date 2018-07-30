@@ -40,7 +40,6 @@ public class UserOrderService extends BaseService<UserOrder> {
     }
 
     public Map<String, Object> userOrderDetails(String order_id) {
-        Map<String, Object> map = userOrderDao.userOrderDetails(order_id);
-        return null;
+        return userOrderDao.userOrderDetails(order_id);
     }
 }
