@@ -154,4 +154,14 @@ public class UserDao extends DaoBase {
         mySql.append("where id = ? AND role_id = ?", user_order_details);
         return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
     }
+
+    public List<Map<String, Object>> getRoleById(Object id) {
+        MySql mySql = new MySql();
+        mySql.append("select");
+        mySql.append("*");
+        mySql.append("from");
+        mySql.append("role");
+        mySql.append("where id = ?",id);
+        return jdbcTemplate.queryForList(mySql.toString());
+    }
 }

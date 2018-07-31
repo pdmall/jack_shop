@@ -220,4 +220,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("t.id = uod.type_of_id AND uo.id = ?", order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
+
+
+
 }

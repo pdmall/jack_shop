@@ -113,9 +113,9 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public Map<String, Object> verifyCoupon(Long user_id, Long user_order_details) {
+    public Map<String, Object> verifyCoupon(Long user_id, String coupon_id,Integer count) {
         //获得本次消费单价
-        Map<String, Object> map = userOrderDao.getUserOrderDetails(user_order_details);
+        Map<String, Object> map = userOrderDao.getOrder(coupon_id);
         Long user_order_id = Long.parseLong(map.get("user_order_id").toString());
         Integer type_of_id = Integer.valueOf(map.get("type_of_id").toString());
         Integer order_state_id = Integer.valueOf(map.get("order_state_id").toString());

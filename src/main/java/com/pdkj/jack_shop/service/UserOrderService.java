@@ -1,11 +1,13 @@
 package com.pdkj.jack_shop.service;
 
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.UserOrder;
 import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +42,18 @@ public class UserOrderService extends BaseService<UserOrder> {
     }
 
     public Map<String, Object> userOrderDetails(String order_id) {
-        Map<String, Object> map = userOrderDao.userOrderDetails(order_id);
-        if(Long.parseLong(map.get("type_of_id").toString())>0){
-
-        }map.get("item_id");
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_order",userOrderDao.userOrderDetails(order_id));
+        if(Integer.valueOf(map.get("type_of_id").toString())==1){
+            map.put("item",couponDao.getCoupon(map.get("item_id")));
+        }else if(Integer.valueOf(map.get("type_of_id").toString())==2){
+            map.put("item",groupBuyDao.getGroupBuy(map.get("item_id")));
+        }else if(Integer.valueOf(map.get("type_of_id").toString())==4){
+            map.put("item",userDao.getRoleById(map.get("item_id")));
+        }else{
+            throw new CustomException("类型不对哟");
+        }
+        return map;
     }
 
     public List<Map<String, Object>> getQRState(Long order_id){
