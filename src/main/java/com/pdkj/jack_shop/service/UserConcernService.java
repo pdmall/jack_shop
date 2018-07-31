@@ -32,4 +32,8 @@ public class UserConcernService extends BaseService<UserConcern>{
         data.put("count",userConcernDao.getUserConcernCount(shop_id));
        return data;
     }
+
+    public Integer concern(UserConcern userConcern){
+        return userConcernDao.concern(userConcern);
+    }
 }

@@ -9,7 +9,10 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.UserConcern;
+import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
+import com.pdkj.jack_shop.util.sql.SQLTools;
+import com.pdkj.jack_shop.util.sql.SqlInfo;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
@@ -44,5 +47,11 @@ public class UserConcernDao extends DaoBase<UserConcern> {
         sql.append("WHERE");
         sql.append("uc.be_user_id = u.id AND uc.shop_id = ?",shop_id);
         return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
+    }
+    public Integer concern(UserConcern userConcern){
+        userConcern.setId(Tools.generatorId());
+        userConcern.setIs_cancel(1);
+         SqlInfo sqlInfo = SQLTools.getInsertSQL(userConcern,"user_concern");
+        return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 }
