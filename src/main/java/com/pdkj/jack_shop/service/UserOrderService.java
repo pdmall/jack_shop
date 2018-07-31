@@ -40,6 +40,14 @@ public class UserOrderService extends BaseService<UserOrder> {
     }
 
     public Map<String, Object> userOrderDetails(String order_id) {
-        return userOrderDao.userOrderDetails(order_id);
+        Map<String, Object> map = userOrderDao.userOrderDetails(order_id);
+        if(Long.parseLong(map.get("type_of_id").toString())>0){
+
+        }map.get("item_id");
+        return null;
+    }
+
+    public List<Map<String, Object>> getQRState(Long order_id){
+        return userOrderDao.getQRState(order_id);
     }
 }

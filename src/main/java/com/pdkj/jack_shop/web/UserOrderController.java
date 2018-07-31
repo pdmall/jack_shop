@@ -87,5 +87,11 @@ public class UserOrderController extends BaseController {
     public Result userOrderDetails(String order_id){
         return ResultGenerator.genSuccessResult(userOrderService.userOrderDetails(order_id));
     }
+    //获得二维码 和 状态
+    @GetMapping("getQRState")
+    public Result getQRState(Long order_id){
+        return ResultGenerator.genSuccessResult(userOrderService.getQRState(order_id));
+    }
+
 }
 

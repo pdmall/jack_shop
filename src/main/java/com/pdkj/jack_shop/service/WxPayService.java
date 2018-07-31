@@ -30,13 +30,13 @@ public class WxPayService extends BaseService {
         String payPrice = userOrderDao.getOrderPrice(order_id);
         return getPaymentInfo(open_id,order_id,payPrice,"订单付款",ip);
     }
-    public List<Map<String, String>> refund( String openId,String refund_order, String ip) throws Exception {
+    public List<Map<String, String>> refund( String refund_order, String ip,Long order_id) throws Exception {
         String orders = refund_order.replaceAll("_",",");
-        Map<String,Object> map = userOrderDao.getOrderInfo(openId);
+        Map<String,Object> map = userOrderDao.getOrderInfo(order_id);
         List<Map<String, Object>> list = userOrderDao.getDetails(orders, map.get("id"));
         List<Map<String, String>> retList = new ArrayList<Map<String, String>>();
         for (Map<String,Object> objectMap:list) {
-            retList.add(refund(openId,map.get("final_price").toString(),objectMap.get("price").toString(),ip,objectMap.get("id").toString()));
+            retList.add(refund(map.get("pay_on").toString(),map.get("final_price").toString(),objectMap.get("price").toString(),ip,objectMap.get("id").toString()));
         }
         return retList;
     }

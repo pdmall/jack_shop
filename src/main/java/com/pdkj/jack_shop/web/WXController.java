@@ -38,10 +38,8 @@ public class WXController extends BaseController {
     }
     @PostMapping("refund")
     //refund_order 用_连接订单id
-    public Result refund(String refund_order,String ip,String wxCode) throws Exception {
-        String openId = wxService.getOpenId(wxCode);
-         wxPayService.refund(openId, refund_order, ip);
-        return ResultGenerator.genSuccessResult();
+    public Result refund(String refund_order,String ip,Long order_id) throws Exception {
+        return ResultGenerator.genSuccessResult(wxPayService.refund( refund_order, ip,order_id));
     }
 
 
