@@ -77,7 +77,8 @@ public class UserOrderDao extends DaoBase<Banner> {
     public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price,os.name state_name");
+        sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price,");
+        sql.append("os.name state_name,s.id shop_id");
         sql.append("FROM");
         sql.append("user_order uo,shop s,order_state os");
         sql.append("WHERE");
@@ -102,9 +103,9 @@ public class UserOrderDao extends DaoBase<Banner> {
     }
 
     //支付是修改订单状态
-    public void paySuccess(String orderId, Date pay_time, Integer trade_type,String pay_on) {
+    public void paySuccess(String orderId, Date pay_time, Integer trade_type, String pay_on) {
         MySql sql = new MySql();
-        sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1",pay_on, pay_time, trade_type, orderId);
+        sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1", pay_on, pay_time, trade_type, orderId);
         jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 
@@ -183,6 +184,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("user_order_id = ?", order_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
+
     //根据订单获得订单详情
     public List<Map<String, Object>> getOrderDetails(String order_id) {
         MySql sql = new MySql();
@@ -195,7 +197,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    public Map<String,Object> userOrderDetails(String order_id) {
+    public Map<String, Object> userOrderDetails(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" uod.type_of_id,uod.price,uod.item_id,u.phone,uo.final_price,quantity,uo.created,os.name state_name,t.name type_name");
