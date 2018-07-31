@@ -193,7 +193,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order_details uod,order_state os ");
         sql.append("where");
-        sql.append("user_order_id = ?", order_id);
+        sql.append("uod.order_state_id = os.id AND user_order_id = ?", order_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 

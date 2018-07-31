@@ -114,7 +114,7 @@ public class CouponDao extends DaoBase {
         mySql.append("from");
         mySql.append("coupon c,shop s");
         mySql.append("where");
-        mySql.append("c.shop_id = s.id AND id = ? ",item_id);
+        mySql.append("c.shop_id = s.id AND c.id = ? ",item_id);
         return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
 
