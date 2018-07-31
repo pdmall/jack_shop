@@ -26,6 +26,10 @@ public class ShopCommentController extends BaseController {
     public Result getCommentReply(Long order_id) throws CustomException {
         return ResultGenerator.genSuccessResult(shopCommentService.getCommentReply(order_id));
     }
-
+    //添加评论
+    @GetMapping("addCommentReply")
+    public Result addCommentReply(Long order_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopCommentService.getCommentReply(order_id));
+    }
 
 }

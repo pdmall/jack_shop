@@ -177,7 +177,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     public List<Map<String, Object>> getDetailsQR(Long order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" id");
+        sql.append(" id,order_state_id");
         sql.append("FROM");
         sql.append("user_order_details ");
         sql.append("where");
