@@ -173,51 +173,38 @@ public class UserOrderDao extends DaoBase<Banner> {
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
-    //获得二维码
-    public List<Map<String, Object>> getDetailsQR(Long order_id) {
+    //获得订单信息的基本状态
+    public Map<String, Object> getDetails(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" id");
+        sql.append(" uod.id,type_of_id,item_id,price,t.name type_name");
         sql.append("FROM");
-        sql.append("user_order_details ");
+        sql.append("user_order_details uod,type_of t");
         sql.append("where");
-        sql.append("user_order_id = ?", order_id);
-        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+        sql.append("uod.type_of_id = t.id AND user_order_id = ? limit 1", order_id);
+        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
     //获得二维码
     public List<Map<String, Object>> getQRState(Long order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" id,os.name state_name");
+        sql.append(" uod.id,os.name state_name");
         sql.append("FROM");
-        sql.append("user_order_details,order_state ");
+        sql.append("user_order_details uod,order_state os ");
         sql.append("where");
         sql.append("user_order_id = ?", order_id);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 
-    //根据订单获得订单详情
-    public List<Map<String, Object>> getOrderDetails(String order_id) {
+    public Map<String, Object> userOrderInfo(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" id,type_of_id,price");
+        sql.append(" uo.created,u.phone,uo.final_price,uo.quantity");
         sql.append("FROM");
-        sql.append("user_order_details ");
+        sql.append("user_order uo ,user u ");
         sql.append("where");
-        sql.append("user_order_id = ?", order_id);
-        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
-    }
-
-    public Map<String, Object> userOrderDetails(String order_id) {
-        MySql sql = new MySql();
-        sql.append("select");
-        sql.append(" uod.type_of_id,uod.price,uod.item_id,u.phone,uo.final_price,quantity,uo.created,os.name state_name,t.name type_name");
-        sql.append("FROM");
-        sql.append("user_order_details uod,user u, user_order uo,order_state os,type_of t");
-        sql.append("where");
-        sql.append(" uod.user_order_id = uo.id AND u.id = uo.user_id AND uo.order_state_id = os.id AND ");
-        sql.append("t.id = uod.type_of_id AND uo.id = ?", order_id);
+        sql.append("u.id = uo.user_id AND uo.id = ?", order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 

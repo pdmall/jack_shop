@@ -37,19 +37,17 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.getShopOrder(shop_id, page);
     }
 
-    public List<Map<String, Object>> getDetailsQR(Long order_id) {
-        return userOrderDao.getDetailsQR(order_id);
-    }
-
-    public Map<String, Object> userOrderDetails(String order_id) {
+    public Map<String, Object> getOrderInfo(String order_id) {
         Map<String, Object> map = new HashMap<>();
-        map.put("user_order",userOrderDao.userOrderDetails(order_id));
-        if(Integer.valueOf(map.get("type_of_id").toString())==1){
-            map.put("item",couponDao.getCoupon(map.get("item_id")));
-        }else if(Integer.valueOf(map.get("type_of_id").toString())==2){
-            map.put("item",groupBuyDao.getGroupBuy(map.get("item_id")));
-        }else if(Integer.valueOf(map.get("type_of_id").toString())==4){
-            map.put("item",userDao.getRoleById(map.get("item_id")));
+        Map<String, Object> details = userOrderDao.getDetails(order_id);
+        map.put("user_order",userOrderDao.userOrderInfo(order_id));
+        map.put("details",details);
+        if(Integer.valueOf(details.get("type_of_id").toString())==1){
+            map.put("item",couponDao.getCoupon(details.get("item_id")));
+        }else if(Integer.valueOf(details.get("type_of_id").toString())==2){
+            map.put("item",groupBuyDao.getGroupBuy(details.get("item_id")));
+        }else if(Integer.valueOf(details.get("type_of_id").toString())==4){
+            map.put("item",userDao.getRoleById(details.get("item_id")));
         }else{
             throw new CustomException("类型不对哟");
         }
@@ -59,4 +57,5 @@ public class UserOrderService extends BaseService<UserOrder> {
     public List<Map<String, Object>> getQRState(Long order_id){
         return userOrderDao.getQRState(order_id);
     }
+
 }

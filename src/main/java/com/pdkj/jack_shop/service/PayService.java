@@ -49,9 +49,9 @@ public class PayService extends BaseService {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
                 userOrderDao.paySuccess(order_id, sdf.parse(time_end), trade_type, pay_on);
                 Map<String, Object> map = userOrderDao.getOrder(order_id);
-                List<Map<String, Object>> list = userOrderDao.getOrderDetails(order_id);
+                Map<String, Object> list = userOrderDao.getDetails(order_id);
                 //修改会员状态
-                if (4 == Integer.valueOf(list.get(0).get("type_of_id").toString())) {
+                if (4 == Integer.valueOf(list.get("type_of_id").toString())) {
                     userDao.updateRole(Long.parseLong(map.get("user_id").toString()), Integer.parseInt(map.get("item_id").toString()));
                 }
                 //流水记录 用户
