@@ -115,7 +115,7 @@ public class UserService extends BaseService<User> {
 
     public Map<String, Object> verifyOrderDetails(Long user_id, String user_order_id, Integer count) {
         //获得可用卷的数量
-        Map<String, Object> counts = userOrderDao.verifyOrderDetails(user_order_id);
+        Integer counts = userOrderDao.verifyOrderDetails(user_order_id);
         //获得订单信息
         Map<String, Object> orderInfo = userOrderDao.getOrder(user_order_id);
         //获得订单详情
@@ -125,7 +125,7 @@ public class UserService extends BaseService<User> {
         //消费的商铺
         Long shop_id = Long.parseLong(orderInfo.get("shop_id").toString());
         if (userDao.verifyUser(user_id, shop_id) > 0) {
-            if (Integer.valueOf(counts.toString()) >= count) {
+            if (counts >= count) {
                 if (type_of_id == 1) {
                     return couponDao.verifyCoupon(item_id);
                 } else if (type_of_id == 2) {

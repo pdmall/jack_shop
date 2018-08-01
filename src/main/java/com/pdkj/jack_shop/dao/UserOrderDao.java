@@ -208,7 +208,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
-    public Map<String, Object> verifyOrderDetails(String order_id) {
+    public Integer verifyOrderDetails(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" count(*) count ");
@@ -216,6 +216,6 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("user_order_details ");
         sql.append("where");
         sql.append(" user_order_id = ? AND use_state = 0 AND order_state_id = 2 ", order_id);
-        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+        return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
     }
 }

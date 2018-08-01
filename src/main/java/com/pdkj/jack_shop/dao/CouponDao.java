@@ -99,11 +99,11 @@ public class CouponDao extends DaoBase {
     public Map<String , Object> verifyCoupon(Long item_id){
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end");
+        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end,shop_name");
         mySql.append("from");
-        mySql.append("coupon");
+        mySql.append("coupon c,shop s");
         mySql.append("where");
-        mySql.append("id = ? AND coupon_state = 1 ",item_id);
+        mySql.append("c.shop_id = s.id AND c.id = ? AND coupon_state = 1 ",item_id);
         return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
     //获得卷的过期日期和价格 商铺名称
