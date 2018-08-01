@@ -54,4 +54,10 @@ public class UserConcernDao extends DaoBase<UserConcern> {
          SqlInfo sqlInfo = SQLTools.getInsertSQL(userConcern,"user_concern");
         return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
+
+    public Map<String, Object> noConcern(Long user_id, Long shop_id) {
+        MySql sql = new MySql();
+        sql.append("update user_concern set is_cancel = 0 where user_id = ? AND shop_id = ? ",user_id,shop_id);
+        return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
+    }
 }

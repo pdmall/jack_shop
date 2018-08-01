@@ -5,6 +5,7 @@ import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.UserConcern;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +24,13 @@ public class UserConcernController extends BaseController {
         return ResultGenerator.genSuccessResult(userConcernService.getUserConcernList(shop_id));
     }
     //用户关注
-    @GetMapping("concern")
+    @PostMapping("concern")
     public Result concern(UserConcern userConcern){
         return ResultGenerator.genSuccessResult(userConcernService.concern(userConcern));
+    }
+    //用户关注
+    @PostMapping("noConcern")
+    public Result noConcern(Long shop_id){
+        return ResultGenerator.genSuccessResult(userConcernService.noConcern(getUser().getId() ,shop_id));
     }
 }

@@ -36,4 +36,8 @@ public class UserConcernService extends BaseService<UserConcern>{
     public Integer concern(UserConcern userConcern){
         return userConcernDao.concern(userConcern);
     }
+
+    public Object noConcern(Long user_id, Long shop_id) {
+        return userConcernDao.noConcern(user_id,shop_id);
+    }
 }
