@@ -67,7 +67,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("WHERE ");
         sql.append("	uo.order_state_id = os.id AND");
         sql.append("	uo.id = uod.user_order_id AND");
-        sql.append("	uo.user_id = 6 ");
+        sql.append("	uo.user_id = 6 AND uo.shop_id = ?",shop_id);
         sql.append("GROUP BY uo.id");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
@@ -106,6 +106,8 @@ public class UserOrderDao extends DaoBase<Banner> {
     public void paySuccess(String orderId, Date pay_time, Integer trade_type, String pay_on) {
         MySql sql = new MySql();
         sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1", pay_on, pay_time, trade_type, orderId);
+        String sqlupd = "update user_order_details set order_state_id = 2 where user_order_id = ?";
+        jdbcTemplate.update(sqlupd, orderId);
         jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 
@@ -200,11 +202,11 @@ public class UserOrderDao extends DaoBase<Banner> {
     public Map<String, Object> userOrderInfo(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" uo.created,u.phone,uo.final_price,uo.quantity");
+        sql.append(" uo.created,u.phone,uo.final_price,uo.quantity,os.name state_name");
         sql.append("FROM");
-        sql.append("user_order uo ,user u ");
+        sql.append("user_order uo ,user u ,order_state os  ");
         sql.append("where");
-        sql.append("u.id = uo.user_id AND uo.id = ?", order_id);
+        sql.append(" uod.order_state_id = os.id AND u.id = uo.user_id AND uo.id = ?", order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 

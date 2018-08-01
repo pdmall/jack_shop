@@ -31,7 +31,7 @@ public class ShopService extends BaseService<Shop> {
     }
 
     @Transactional
-    public Long addShop(IsPassShop shop,Label label, ShopType shopType,Long user_id){
+    public Long addShop(IsPassShop shop,Label label, Long type_id,Long user_id){
         Long shopId = shopDao.addShop(shop);
         label.setShop_id(shopId);
         labelDao.addLabel(label);
@@ -43,7 +43,7 @@ public class ShopService extends BaseService<Shop> {
         userShopRel.setShop_id(shopId);
         userShopRel.setUser_name("拥有者");
         shopDao.addUserShopRel(userShopRel);
-        shopTypeDao.addShopTypeRel(new ShopTypeRel(shopId,shopType.getId()) );
+        shopTypeDao.addShopTypeRel(new ShopTypeRel(shopId,type_id));
         return shopId;
     }
     public Map<String, Object> getShop(Long id){

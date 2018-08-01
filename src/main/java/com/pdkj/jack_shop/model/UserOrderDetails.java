@@ -24,6 +24,15 @@ public class UserOrderDetails {
     private Integer use_state;
     private Date use_time;
     private Double price;
+    private Integer order_tate_id;
+
+    public Integer getOrder_tate_id() {
+        return order_tate_id;
+    }
+
+    public void setOrder_tate_id(Integer order_tate_id) {
+        this.order_tate_id = order_tate_id;
+    }
 
     public Long getId() {
         return id;

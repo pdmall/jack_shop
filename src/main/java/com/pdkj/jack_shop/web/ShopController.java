@@ -46,8 +46,8 @@ public class ShopController extends BaseController {
      * @throws CustomException
      */
     @PostMapping("addShop")
-    public Result addShop(IsPassShop shop, Label label, ShopType shopType) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.addShop(shop,label, shopType,getUser().getId()));
+    public Result addShop(IsPassShop shop, String label_name,Long type_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.addShop(shop,new Label(label_name), type_id,getUser().getId()));
     }
 
     /**

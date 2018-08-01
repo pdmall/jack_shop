@@ -72,11 +72,15 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.getQRCode(getUser().getId()));
     }
     //验证卷的是否可用
-    @PostMapping("verifyCoupon")
-    public Result verifyCoupon(String user_order_id ,Integer count) throws CustomException {
+    @PostMapping("verifyCoupons")
+    public Result verifyCoupons(String user_order_id ,Integer count) throws CustomException {
         return ResultGenerator.genSuccessResult(userService.verifyOrderDetails(getUser().getId(),user_order_id,count));
     }
 
+/*    @PostMapping("verifyCoupon")
+    public Result verifyCoupon(Long user_order_details_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.verifyOrderDetails(getUser().getId(),user_order_details_id));
+    }*/
 
     //商家确认消费
     @GetMapping("getConfirm")

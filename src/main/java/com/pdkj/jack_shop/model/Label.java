@@ -18,6 +18,11 @@ public class Label {
     private Long id;
     private String name;
     private Long shop_id;
+    public Label() {
+    }
+    public Label(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

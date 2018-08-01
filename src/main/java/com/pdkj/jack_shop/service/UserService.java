@@ -147,7 +147,28 @@ public class UserService extends BaseService<User> {
             throw new CustomException("您没有审核资格哟");
         }
     }
-
+    /*public Map<String, Object> verifyOrderDetails(Long user_id, Long user_order_details_id) {
+        //获得订单详情
+        Map<String, Object> orderDetails = userOrderDao.getUserOrderDetails(user_order_details_id);
+        Integer type_of_id = Integer.valueOf(orderDetails.get("type_of_id").toString());
+        Long item_id = Long.parseLong(orderDetails.get("item_id").toString());
+        //消费的商铺
+        Long shop_id = Long.parseLong(orderInfo.get("shop_id").toString());
+        Map<String,Object> ret =  null;
+        if (userDao.verifyUser(user_id, shop_id) > 0) {
+                if (type_of_id == 1) {
+                    ret = couponDao.verifyCoupon(item_id);
+                    return ret;
+                } else if (type_of_id == 2) {
+                    ret = groupBuyDao.verifyGroupBuy(item_id);
+                    return ret;
+                } else {
+                    throw new CustomException("类型不对哟");
+                }
+        } else {
+            throw new CustomException("您没有审核资格哟");
+        }
+    }*/
     @Transactional
     public void getConfirm(Long user_order_details) {
         //获得本次消费单价
