@@ -113,28 +113,35 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public Map<String, Object> verifyCoupon(Long user_id, String coupon_id,Integer count) {
-        //获得本次消费单价
-        Map<String, Object> map = userOrderDao.getOrder(coupon_id);
-        Long user_order_id = Long.parseLong(map.get("user_order_id").toString());
-        Integer type_of_id = Integer.valueOf(map.get("type_of_id").toString());
-        Integer order_state_id = Integer.valueOf(map.get("order_state_id").toString());
-        Long item_id = Long.parseLong(map.get("item_id").toString());
-        //获得这个商铺的所有者id
-        Map<String, Object> orderMap = userOrderDao.getShopIdByOrderId(user_order_id);
+    public Map<String, Object> verifyOrderDetails(Long user_id, String user_order_id, Integer count) {
+        //获得可用卷的数量
+        Integer counts = userOrderDao.verifyOrderDetails(user_order_id);
+        //获得订单信息
+        Map<String, Object> orderInfo = userOrderDao.getOrder(user_order_id);
+        //获得订单详情
+        Map<String, Object> orderDetails = userOrderDao.getDetails(user_order_id);
+        Integer type_of_id = Integer.valueOf(orderDetails.get("type_of_id").toString());
+        Long item_id = Long.parseLong(orderDetails.get("item_id").toString());
         //消费的商铺
-        Long shop_id = Long.parseLong(orderMap.get("shop_id").toString());
-        if ( userDao.verifyUser(user_id,shop_id) > 0) {
-            if(order_state_id == 2){
+        Long shop_id = Long.parseLong(orderInfo.get("shop_id").toString());
+        Map<String,Object> ret =  null;
+        if (userDao.verifyUser(user_id, shop_id) > 0) {
+            if (counts >= count) {
                 if (type_of_id == 1) {
-                    return couponDao.verifyCoupon(item_id);
+                    ret = couponDao.verifyCoupon(item_id);
+                    ret.put("user_order_id",user_order_id);
+                    ret.put("count",count);
+                    return ret;
                 } else if (type_of_id == 2) {
-                    return groupBuyDao.verifyGroupBuy(item_id);
+                    ret.put("user_order_id",user_order_id);
+                    ret.put("count",count);
+                    ret = groupBuyDao.verifyGroupBuy(item_id);
+                    return ret;
                 } else {
                     throw new CustomException("类型不对哟");
                 }
-            }else{
-                throw new CustomException("卷已经失效了");
+            } else {
+                throw new CustomException("数量不足哟");
             }
         } else {
             throw new CustomException("您没有审核资格哟");

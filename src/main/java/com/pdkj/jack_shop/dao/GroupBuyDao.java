@@ -110,11 +110,11 @@ public class GroupBuyDao extends DaoBase<GroupBuy> {
     public Map<String , Object> verifyGroupBuy(Long item_id){
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end,title");
+        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end,title,shop_name");
         mySql.append("from");
-        mySql.append("group_buy");
+        mySql.append("group_buy gb,shop s");
         mySql.append("where");
-        mySql.append("id = ? AND state = 1 ",item_id);
+        mySql.append("gb.shop_id = s.id AND gb.id = ? AND state = 1 ",item_id);
         return jdbcTemplate.queryForMap(mySql.toString(),mySql.getValues());
     }
 
