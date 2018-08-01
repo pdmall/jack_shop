@@ -75,7 +75,7 @@ public class PayService extends BaseService {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             if ("SUCCESS".equals(mapData.get("return_code"))) {
-                this.sendWeChat(response, "SUCCESS", "");
+                this.sendWeChatOk(response, "SUCCESS", "");
                 //退款订单号
                 String out_trade_no = mapData.get("out_trade_no");
                 //修改订单状态
