@@ -41,7 +41,7 @@ public class PayService extends BaseService {
             String reqParams = NetUtils.getStringFromInputStream(request.getInputStream());
             Map<String, String> mapData = PayUtil.xmlToMap(reqParams);
             if ("SUCCESS".equals(mapData.get("return_code"))) {
-                this.sendWeChat(response, "SUCCESS", "");
+                this.sendWeChatOk(response, "SUCCESS", "");
                 Integer trade_type = 1;  // 交易类型
                 String time_end = mapData.get("time_end");//支付完成时间
                 String pay_on = mapData.get("out_trade_no");
@@ -102,7 +102,7 @@ public class PayService extends BaseService {
      * @param returnCode    返回状态码
      * @param returnMessage 返回信息
      */
-    private void sendWeChat(HttpServletResponse response, String returnCode, String returnMessage) {
+    private void sendWeChatOk(HttpServletResponse response, String returnCode, String returnMessage) {
         try {
             response.setContentType("text/xml");
             response.setCharacterEncoding("UTF-8");
