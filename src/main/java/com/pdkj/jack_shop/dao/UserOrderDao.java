@@ -206,7 +206,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order uo ,user u ,order_state os  ");
         sql.append("where");
-        sql.append(" uod.order_state_id = os.id AND u.id = uo.user_id AND uo.id = ?", order_id);
+        sql.append(" uo.order_state_id = os.id AND u.id = uo.user_id AND uo.id = ?", order_id);
         return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
     }
 
