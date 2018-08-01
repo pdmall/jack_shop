@@ -77,11 +77,14 @@ public class UserController extends BaseController {
         return ResultGenerator.genSuccessResult(userService.verifyOrderDetails(getUser().getId(),user_order_id,count));
     }
 
+
     //商家确认消费
     @GetMapping("getConfirm")
     public Result getConfirm(Long user_order_details) throws CustomException {
         userService.getConfirm(user_order_details);
         return ResultGenerator.genSuccessResult("完成");
     }
+
+
 
 }

@@ -124,12 +124,19 @@ public class UserService extends BaseService<User> {
         Long item_id = Long.parseLong(orderDetails.get("item_id").toString());
         //消费的商铺
         Long shop_id = Long.parseLong(orderInfo.get("shop_id").toString());
+        Map<String,Object> ret =  null;
         if (userDao.verifyUser(user_id, shop_id) > 0) {
             if (counts >= count) {
                 if (type_of_id == 1) {
-                    return couponDao.verifyCoupon(item_id);
+                    ret = couponDao.verifyCoupon(item_id);
+                    ret.put("user_order_id",user_order_id);
+                    ret.put("count",count);
+                    return ret;
                 } else if (type_of_id == 2) {
-                    return groupBuyDao.verifyGroupBuy(item_id);
+                    ret.put("user_order_id",user_order_id);
+                    ret.put("count",count);
+                    ret = groupBuyDao.verifyGroupBuy(item_id);
+                    return ret;
                 } else {
                     throw new CustomException("类型不对哟");
                 }
