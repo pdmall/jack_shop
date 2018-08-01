@@ -220,4 +220,15 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append(" user_order_id = ? AND use_state = 0 AND order_state_id = 2 ", order_id);
         return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
     }
+
+    public Integer verifyOrder(Long user_order_details_id) {
+        MySql sql = new MySql();
+        sql.append("select");
+        sql.append(" * ");
+        sql.append("FROM");
+        sql.append("user_order_details uod , ");
+        sql.append("where");
+        sql.append(" id = ? AND use_state = 0 AND order_state_id = 2 ", user_order_details_id);
+        return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
+    }
 }

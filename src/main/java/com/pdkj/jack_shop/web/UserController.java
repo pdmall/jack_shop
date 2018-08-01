@@ -78,8 +78,8 @@ public class UserController extends BaseController {
     }
 
 /*    @PostMapping("verifyCoupon")
-    public Result verifyCoupon(Long user_order_details_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userService.verifyOrderDetails(getUser().getId(),user_order_details_id));
+    public Result verifyCoupon(Long user_order_details_id,String user_order_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userService.verifyOrderDetails(getUser().getId(),user_order_details_id,user_order_id));
     }*/
 
     //商家确认消费

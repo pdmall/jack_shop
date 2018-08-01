@@ -38,6 +38,19 @@ public class UserConcernDao extends DaoBase<UserConcern> {
         sql.append("uc.be_user_id = u.id AND uc.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+
+    public List<Map<String, Object>> getShopConcernList(Long user_id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append("uc.created,u.id,s.shop_name,s.home_img");
+        sql.append("FROM");
+        sql.append("user_concern uc ,shop s");
+        sql.append("WHERE");
+        sql.append("uc.shop_id = s.id AND uc.shop_id = ?",user_id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
+
+
     public Map<String, Object> getUserConcernCount(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");

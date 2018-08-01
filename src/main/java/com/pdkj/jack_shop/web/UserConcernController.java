@@ -23,6 +23,11 @@ public class UserConcernController extends BaseController {
     public Result getUserConcernList(Long shop_id) throws CustomException {
         return ResultGenerator.genSuccessResult(userConcernService.getUserConcernList(shop_id));
     }
+    //获得用户关注列表
+    @GetMapping("getShopConcernList")
+    public Result getShopConcernList(Long user_id) throws CustomException {
+        return ResultGenerator.genSuccessResult(userConcernService.getShopConcernList(user_id));
+    }
     //用户关注
     @PostMapping("concern")
     public Result concern(UserConcern userConcern){

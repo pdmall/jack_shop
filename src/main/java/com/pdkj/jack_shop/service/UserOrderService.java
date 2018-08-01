@@ -20,7 +20,7 @@ public class UserOrderService extends BaseService<UserOrder> {
         Long id = userOrderDao.addOrder(userOrder);
         for (int i = 0; i < userOrder.getQuantity(); i++) {
             userOrderDetails.setUser_order_id(id);
-            userOrderDetails.setOrder_tate_id(1);
+            userOrderDetails.setOrder_state_id(1);
             userOrderDao.addOrderDetails(userOrderDetails);
         }
         return id;
