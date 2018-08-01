@@ -202,7 +202,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     public Map<String, Object> userOrderInfo(String order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" uo.created,u.phone,uo.final_price,uo.quantity,os.name state_name");
+        sql.append(" uo.created,u.phone,uo.final_price,uo.quantity,os.name state_name ,os.id state_id ");
         sql.append("FROM");
         sql.append("user_order uo ,user u ,order_state os  ");
         sql.append("where");
