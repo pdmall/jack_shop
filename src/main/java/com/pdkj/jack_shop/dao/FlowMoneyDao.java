@@ -36,15 +36,8 @@ public class FlowMoneyDao extends DaoBase{
         sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs");
         sql.append("WHERE");
         sql.append("	fm.flow_state_id = fs.id AND fm.item_id = uo.id AND uo.shop_id = s.id AND");
-        sql.append(" item_id_type = 1 AND fm.user_id = ?",id);
-        sql.append("UNION");
-        sql.append("SELECT");
-        sql.append("    fm.id,fm.`value`,fm.created,s.shop_name,fs.`name`,fs.flow_record_type");
-        sql.append("FROM");
-        sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs,user_order_details uod");
-        sql.append("WHERE");
-        sql.append("	fm.flow_state_id = fs.id AND fm.item_id = uod.id AND uo.shop_id = s.id AND");
-        sql.append("	uod.user_order_id = uo.id AND item_id_type = 2 AND fm.user_id = ?",id);
+        sql.append(" fm.user_id = ?",id);
+        sql.append("order by fm.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
