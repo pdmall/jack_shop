@@ -34,8 +34,7 @@ public class UserConcernService extends BaseService<UserConcern>{
     }
     //获得用户关注列表
     public List<Map<String,Object>> getShopConcernList(Long user_id) {
-        List<Map<String,Object>>list = userConcernDao.getShopConcernList(user_id);
-        return list;
+        return userConcernDao.getShopConcernList(user_id);
     }
 
 
