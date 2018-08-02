@@ -42,22 +42,33 @@ public class FlowMoneyDao extends DaoBase{
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
-    public List<Map<String,Object>> getFlowMoneyReckon(Long id,Pager pager) {
-        MySql sql = new MySql();
-        sql.append("SELECT");
-        sql.append("fs.flow_record_type, sum(`value`) sum");
-        sql.append("FROM");
-        sql.append("	flow_money AS fm,flow_state AS fs");
-        sql.append("WHERE");
-        sql.append("	fm.flow_state_id = fs.id AND");
-        sql.append("	fm.user_id = ?",id);
-        sql.append("group by fs.flow_record_type");
-        sql.limit(pager);
-        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
-    }
     public void addFlowMoney(FlowMoney flowMoney){
         flowMoney.setId(Tools.generatorId());
         SqlInfo sqlInfo = SQLTools.getInsertSQL(flowMoney,"flow_money");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+    }
+
+    public Object getFlowMoneyGet(Long id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append(" IFNULL(sum(`value`),0) sum ");
+        sql.append("FROM");
+        sql.append("	flow_money AS fm,flow_state AS fs");
+        sql.append("WHERE");
+        sql.append("	fm.flow_state_id = fs.id AND");
+        sql.append("	fm.user_id = ? AND fs.flow_record_type = 0",id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
+    }
+
+    public Object getFlowMoneyPay(Long id) {
+        MySql sql = new MySql();
+        sql.append("SELECT");
+        sql.append(" IFNULL(sum(`value`),0) sum ");
+        sql.append("FROM");
+        sql.append("	flow_money AS fm,flow_state AS fs");
+        sql.append("WHERE");
+        sql.append("	fm.flow_state_id = fs.id AND");
+        sql.append("	fm.user_id = ? AND fs.flow_record_type = 1",id);
+        return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 }

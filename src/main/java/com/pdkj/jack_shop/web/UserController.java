@@ -78,9 +78,9 @@ public class UserController extends BaseController {
     }
     
     //商家确认消费
-    @GetMapping("getConfirm")
-    public Result getConfirm(Long user_order_details_id) throws CustomException {
-        userService.getConfirm(user_order_details_id);
+    @PostMapping("confirm")
+    public Result confirm(Long user_order_id ,Integer count , String user_order_details_id , Double sum) throws CustomException {
+        userService.getConfirm(user_order_id ,count , user_order_details_id,sum);
         return ResultGenerator.genSuccessResult("完成");
     }
 

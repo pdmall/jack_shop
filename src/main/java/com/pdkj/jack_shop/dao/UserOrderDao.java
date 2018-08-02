@@ -130,7 +130,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     public void updateOrderRefund(String out_refund_no, Integer order_state_id) {
         MySql sql = new MySql();
         sql.append("update user_order_details set order_state_id = ? where id = ?", order_state_id, out_refund_no);
-        jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+        jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 
     //获得订单信息
@@ -226,9 +226,21 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("select");
         sql.append(" * ");
         sql.append("FROM");
-        sql.append("user_order_details uod , ");
+        sql.append("user_order_details uod  ");
         sql.append("where");
         sql.append(" id = ? AND use_state = 0 AND order_state_id = 2 ", user_order_details_id);
         return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
+    }
+
+    public List<Map<String, Object>> getDetailsId(Long user_order_id,Integer count) {
+        MySql sql = new MySql();
+        sql.append("select");
+        sql.append(" id ");
+        sql.append("FROM");
+        sql.append(" user_order_details uod ");
+        sql.append("where");
+        sql.append(" uod.user_order_id = ? AND use_state = 0 AND order_state_id = 2",user_order_id);
+        sql.append("limit ?",count);
+        return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
 }

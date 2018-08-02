@@ -100,7 +100,7 @@ public class CouponDao extends DaoBase {
     public Map<String , Object> verifyCoupon(Long item_id){
         MySql mySql = new MySql();
         mySql.append("select");
-        mySql.append("original_price,buy_price,date_start,date_end,time_start,time_end,shop_name");
+        mySql.append("shop_id,original_price,buy_price,date_start,date_end,time_start,time_end,shop_name");
         mySql.append("from");
         mySql.append("coupon c,shop s");
         mySql.append("where");

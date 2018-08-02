@@ -28,7 +28,8 @@ public class FlowMoneyService extends BaseService {
     public Map<String,Object> getFlowMoney(Long id,Pager pager) {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("flowsMoneys",flowMoneyDao.getFlowMoney(id,pager));
-        map.put("FlowMoneySum",flowMoneyDao.getFlowMoneyReckon(id,pager));
+        map.put("FlowMoneyGet",flowMoneyDao.getFlowMoneyGet(id));
+        map.put("FlowMoneyPay",flowMoneyDao.getFlowMoneyPay(id));
         return map;
     }
     public void addFlowMoney(FlowMoney flowMoney){
