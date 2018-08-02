@@ -64,7 +64,6 @@ public class UserConcernDao extends DaoBase<UserConcern> {
     }
     public Integer concern(UserConcern userConcern){
         userConcern.setId(Tools.generatorId());
-        userConcern.setIs_cancel(1);
          SqlInfo sqlInfo = SQLTools.getInsertSQL(userConcern,"user_concern");
         return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
