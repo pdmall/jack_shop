@@ -43,4 +43,5 @@ public class UserConcernController extends BaseController {
     public Result isConcern(Long shop_id){
         return ResultGenerator.genSuccessResult(userConcernService.isConcern(getUser().getId() ,shop_id));
     }
+
 }
