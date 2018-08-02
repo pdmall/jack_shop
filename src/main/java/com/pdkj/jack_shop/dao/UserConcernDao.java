@@ -75,7 +75,7 @@ public class UserConcernDao extends DaoBase<UserConcern> {
     }
     public Map<String, Object> isConcern(Long user_id, Long shop_id){
         MySql sql = new MySql();
-        sql.append("select count(*) count from user_concern where be_user_id = ? AND shop_id = ? ",user_id,shop_id);
+        sql.append("select count(*) count from user_concern where be_user_id = ? AND shop_id = ? AND is_cancel = 1 ",user_id,shop_id);
         return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
     }
 }
