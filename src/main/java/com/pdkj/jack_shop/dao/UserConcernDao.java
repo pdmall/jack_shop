@@ -46,7 +46,7 @@ public class UserConcernDao extends DaoBase<UserConcern> {
         sql.append("FROM");
         sql.append("user_concern uc ,shop s");
         sql.append("WHERE");
-        sql.append("uc.shop_id = s.id AND uc.shop_id = ?",user_id);
+        sql.append("uc.shop_id = s.id AND uc.user_id = ?",user_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
