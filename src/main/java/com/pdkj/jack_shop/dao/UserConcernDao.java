@@ -35,7 +35,8 @@ public class UserConcernDao extends DaoBase<UserConcern> {
         sql.append("FROM");
         sql.append("user_concern AS uc , `user` AS u");
         sql.append("WHERE");
-        sql.append("uc.be_user_id = u.id AND uc.shop_id = ?",shop_id);
+        sql.append("uc.be_user_id = u.id AND uc.shop_id = ? AND uc.is_cancel = 1 ",shop_id);
+        sql.append("order by uc.created desc");
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 
@@ -46,7 +47,7 @@ public class UserConcernDao extends DaoBase<UserConcern> {
         sql.append("FROM");
         sql.append("user_concern uc ,shop s , label l");
         sql.append("WHERE");
-        sql.append("uc.shop_id = s.id AND s.id = l.shop_id AND uc.be_user_id = ?",user_id);
+        sql.append("uc.shop_id = s.id AND s.id = l.shop_id AND uc.be_user_id = ? AND uc.is_cancel = 1 ",user_id);
         sql.append("order by uc.created desc");
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
@@ -69,12 +70,12 @@ public class UserConcernDao extends DaoBase<UserConcern> {
 
     public Object noConcern(Long user_id, Long shop_id) {
         MySql sql = new MySql();
-        sql.append("update user_concern set is_cancel = 0 where bu_user_id = ? AND shop_id = ? ",user_id,shop_id);
+        sql.append("update user_concern set is_cancel = 0 where be_user_id = ? AND shop_id = ? ",user_id,shop_id);
         return jdbcTemplate.update(sql.toString(),sql.getValues());
     }
     public Map<String, Object> isConcern(Long user_id, Long shop_id){
         MySql sql = new MySql();
-        sql.append("select count(*) count from user_concern where bu_user_id = ? AND shop_id = ? ",user_id,shop_id);
+        sql.append("select count(*) count from user_concern where be_user_id = ? AND shop_id = ? ",user_id,shop_id);
         return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
     }
 }
