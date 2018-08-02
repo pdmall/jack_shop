@@ -81,6 +81,7 @@ public class UserOrderController extends BaseController {
     //获得二维码 和 状态
     @GetMapping("getQRState")
     public Result getQRState(Long order_id){
+
         return ResultGenerator.genSuccessResult(userOrderService.getQRState(order_id));
     }
 
