@@ -38,4 +38,9 @@ public class UserConcernController extends BaseController {
     public Result noConcern(Long shop_id){
         return ResultGenerator.genSuccessResult(userConcernService.noConcern(getUser().getId() ,shop_id));
     }
+    //判断是否是关注商铺
+    @PostMapping("isConcern")
+    public Result isConcern(Long shop_id){
+        return ResultGenerator.genSuccessResult(userConcernService.isConcern(getUser().getId() ,shop_id));
+    }
 }
