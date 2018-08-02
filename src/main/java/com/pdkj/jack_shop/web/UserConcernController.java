@@ -18,15 +18,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("userConcern")
 public class UserConcernController extends BaseController {
-    //获得用户关注列表
-    @GetMapping("getUserConcernList")
+    //获得商铺关注列表
+    @GetMapping("getShopConcernList")
     public Result getUserConcernList(Long shop_id) throws CustomException {
         return ResultGenerator.genSuccessResult(userConcernService.getUserConcernList(shop_id));
     }
     //获得用户关注列表
-    @GetMapping("getShopConcernList")
-    public Result getShopConcernList(Long user_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(userConcernService.getShopConcernList(user_id));
+    @GetMapping("getUserConcernList")
+    public Result getShopConcernList() throws CustomException {
+        return ResultGenerator.genSuccessResult(userConcernService.getShopConcernList(getUser().getId()));
     }
     //用户关注
     @PostMapping("concern")
