@@ -31,7 +31,7 @@ public class UserConcernController extends BaseController {
     //用户关注
     @PostMapping("concern")
     public Result concern(UserConcern userConcern){
-        return ResultGenerator.genSuccessResult(userConcernService.concern(userConcern));
+        return ResultGenerator.genSuccessResult(userConcernService.concern(getUser().getId(),userConcern));
     }
     //取消用户关注
     @PostMapping("noConcern")

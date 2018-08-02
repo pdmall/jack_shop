@@ -38,7 +38,9 @@ public class UserConcernService extends BaseService<UserConcern>{
     }
 
 
-    public Integer concern(UserConcern userConcern){
+    public Integer concern(Long user_id, UserConcern userConcern){
+        userConcern.setBe_user_id(user_id);
+        userConcern.setIs_cancel(1);
         return userConcernDao.concern(userConcern);
     }
 
