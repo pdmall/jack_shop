@@ -33,7 +33,7 @@ public class UserConcernController extends BaseController {
     public Result concern(UserConcern userConcern){
         return ResultGenerator.genSuccessResult(userConcernService.concern(userConcern));
     }
-    //用户关注
+    //取消用户关注
     @PostMapping("noConcern")
     public Result noConcern(Long shop_id){
         return ResultGenerator.genSuccessResult(userConcernService.noConcern(getUser().getId() ,shop_id));

@@ -42,11 +42,12 @@ public class UserConcernDao extends DaoBase<UserConcern> {
     public List<Map<String, Object>> getShopConcernList(Long user_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("uc.created,u.id,s.shop_name,s.home_img");
+        sql.append("uc.created,u.id,s.shop_name,s.home_img,s.street,l.name label_name");
         sql.append("FROM");
-        sql.append("user_concern uc ,shop s");
+        sql.append("user_concern uc ,shop s , label l");
         sql.append("WHERE");
-        sql.append("uc.shop_id = s.id AND uc.user_id = ?",user_id);
+        sql.append("uc.shop_id = s.id AND s.id = l.shop_id AND uc.user_id = ?",user_id);
+        sql.append("order by uc.created desc");
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
 

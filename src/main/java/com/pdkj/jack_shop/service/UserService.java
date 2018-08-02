@@ -113,7 +113,7 @@ public class UserService extends BaseService<User> {
         return userDao.getRole();
     }
 
-    public Map<String, Object> verifyOrderDetails(Long user_id, String user_order_id, Integer count) {
+    public Map<String, Object> verifyOrderDetails(Long user_id, String user_order_id, Integer count, String user_order_details_id) {
         //获得可用卷的数量
         Integer counts = userOrderDao.verifyOrderDetails(user_order_id);
         //获得订单信息
@@ -131,11 +131,13 @@ public class UserService extends BaseService<User> {
                     ret = couponDao.verifyCoupon(item_id);
                     ret.put("user_order_id",user_order_id);
                     ret.put("count",count);
+                    ret.put("user_order_details_id",user_order_details_id);
                     return ret;
                 } else if (type_of_id == 2) {
+                    ret = groupBuyDao.verifyGroupBuy(item_id);
                     ret.put("user_order_id",user_order_id);
                     ret.put("count",count);
-                    ret = groupBuyDao.verifyGroupBuy(item_id);
+                    ret.put("user_order_details_id",user_order_details_id);
                     return ret;
                 } else {
                     throw new CustomException("类型不对哟");
