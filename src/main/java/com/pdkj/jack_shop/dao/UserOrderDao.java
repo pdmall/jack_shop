@@ -8,6 +8,7 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.UserOrder;
 import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.Tools;
@@ -116,7 +117,11 @@ public class UserOrderDao extends DaoBase<Banner> {
         MySql sql = new MySql();
         sql.append("select id,created,final_price,quantity,user_id,shop_id ");
         sql.append("from user_order where id = ?", orderId);
-        return jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+        if(list.size() > 0){
+            return list.get(0);
+        }
+        throw new CustomException("订单不存在");
     }
 
     //获得订单信息

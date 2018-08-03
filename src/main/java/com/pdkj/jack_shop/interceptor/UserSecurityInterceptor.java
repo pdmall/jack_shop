@@ -20,8 +20,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class UserSecurityInterceptor extends InterceptorRegistry implements HandlerInterceptor {

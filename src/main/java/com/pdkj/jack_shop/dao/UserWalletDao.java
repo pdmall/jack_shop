@@ -13,7 +13,6 @@ import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.SQLTools;
 import com.pdkj.jack_shop.util.sql.SqlInfo;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -9,7 +9,6 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.SignIn;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

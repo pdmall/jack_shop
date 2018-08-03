@@ -1,7 +1,6 @@
 package com.pdkj.jack_shop.dao;
 
 import com.pdkj.jack_shop.configurer.AliYunOSS;
-import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
