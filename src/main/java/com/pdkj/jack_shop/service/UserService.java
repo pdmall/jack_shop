@@ -174,19 +174,18 @@ public class UserService extends BaseService<User> {
     }*/
     @Transactional
     public void getConfirm(Long user_order_id, Integer count, String user_order_details_id, Double sum) {
+        Map<String, Object> map = userOrderDao.getShopIdByOrderId(user_order_id);
+        //消费者
+        Long user_id = Long.parseLong(map.get("user_id").toString());
+        //商铺id
+        Long shop_id = Long.parseLong(map.get("shop_id").toString());
+        //店铺所有者
+        Long shop_user = Long.parseLong(shopDao.getUserIdByShopId(shop_id).get("user_id").toString());
+        //红利
+        Double dividends = sum / 100 > 0.01 ? (sum / 100) : 0.01;
+        //修改消费者的卷状态
+        List<Map<String, Object>> list = userOrderDao.getDetailsId(user_order_id, count);
         if (user_order_details_id == null) {
-            Map<String, Object> map = userOrderDao.getShopIdByOrderId(user_order_id);
-            //消费者
-            Long user_id = Long.parseLong(map.get("user_id").toString());
-            //商铺id
-            Long shop_id = Long.parseLong(map.get("shop_id").toString());
-            //店铺所有者
-            Long shop_user = Long.parseLong(shopDao.getUserIdByShopId(shop_id).get("user_id").toString());
-            //红利
-            Double dividends = sum / 100 > 0.01 ? (sum / 100) : 0.01;
-            //修改消费者的卷状态
-            List<Map<String, Object>> list = userOrderDao.getDetailsId(user_order_id, count);
-
             if (list.size() >= count) {
                 for (Map<String, Object> map1 : list) {
                     userOrderDao.updateOrderRefund(map1.get("id").toString(), 3);
@@ -194,8 +193,7 @@ public class UserService extends BaseService<User> {
             } else {
                 throw new CustomException("数量不足");
             }
-
-            //修改商铺拥有者的钱包余额
+        /*    //修改商铺拥有者的钱包余额
             userWalletDao.updateMoney(sum - dividends, shop_user, 0);
             //添加流水记录
             FlowMoney flowMoney = new FlowMoney();
@@ -218,19 +216,52 @@ public class UserService extends BaseService<User> {
                     userWalletDao.updateMoney(dividends, level3, 0);
                     //添加流水记录
                     FlowMoney flowMoney1 = new FlowMoney();
-                    flowMoney.setId(Tools.generatorId());
-                    flowMoney.setUser_id(Long.parseLong(level3));
-                    flowMoney.setValue(dividends);
-                    flowMoney.setItem_id(user_order_id);
-                    flowMoney.setItem_id_type(2);
+                    flowMoney1.setId(Tools.generatorId());
+                    flowMoney1.setUser_id(Long.parseLong(level3));
+                    flowMoney1.setValue(dividends);
+                    flowMoney1.setItem_id(user_order_id);
+                    flowMoney1.setItem_id_type(2);
                     flowMoney1.setFlow_state_id(4);
                     flowMoneyDao.addFlowMoney(flowMoney1);
                 }
-            }
+            }*/
         } else {
-
+            //修改消费者的卷状态
+            if (userOrderDao.updateDetails(3, user_order_details_id) == 0) {
+                throw new CustomException("该卷失效");
+            }
         }
-
+        //修改商铺拥有者的钱包余额
+        userWalletDao.updateMoney(sum - dividends, shop_user, 0);
+        //添加流水记录
+        FlowMoney flowMoney = new FlowMoney();
+        flowMoney.setId(Tools.generatorId());
+        flowMoney.setUser_id(shop_user);
+        flowMoney.setValue(sum - dividends);
+        flowMoney.setItem_id(user_order_id);
+        flowMoney.setItem_id_type(2);
+        flowMoney.setFlow_state_id(7);
+        flowMoneyDao.addFlowMoney(flowMoney);
+        //添加红利
+        shareOrginDao.updateDividends(dividends, user_id);
+        //获得被返利用户的id
+        List<Map<String, Object>> level3s = shareOrginDao.getMyLevel3(user_id);
+        if (level3s.size() > 0) {
+            String level3 = level3s.get(0).get("Level3").toString();
+            //判断用户是否是钻石会员
+            if (userDao.getUserRole(level3, 3) > 0) {
+                //修改用户钱包余额 0 收入 1 支出
+                userWalletDao.updateMoney(dividends, level3, 0);
+                //添加流水记录
+                FlowMoney flowMoney1 = new FlowMoney();
+                flowMoney1.setId(Tools.generatorId());
+                flowMoney1.setUser_id(Long.parseLong(level3));
+                flowMoney1.setValue(dividends);
+                flowMoney1.setItem_id(user_order_id);
+                flowMoney1.setItem_id_type(2);
+                flowMoney1.setFlow_state_id(4);
+                flowMoneyDao.addFlowMoney(flowMoney1);
+            }
+        }
     }
-
 }

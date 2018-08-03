@@ -68,7 +68,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("WHERE ");
         sql.append("	uo.order_state_id = os.id AND");
         sql.append("	uo.id = uod.user_order_id AND");
-        sql.append("	uo.user_id = 6 AND uo.shop_id = ?",shop_id);
+        sql.append("	uo.user_id = 6 AND uo.shop_id = ?", shop_id);
         sql.append("GROUP BY uo.id");
         sql.limit(page);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
@@ -118,7 +118,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("select id,created,final_price,quantity,user_id,shop_id ");
         sql.append("from user_order where id = ?", orderId);
         List<Map<String, Object>> list = jdbcTemplate.queryForList(sql.toString(), sql.getValues());
-        if(list.size() > 0){
+        if (list.size() > 0) {
             return list.get(0);
         }
         throw new CustomException("订单不存在");
@@ -237,15 +237,22 @@ public class UserOrderDao extends DaoBase<Banner> {
         return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
     }
 
-    public List<Map<String, Object>> getDetailsId(Long user_order_id,Integer count) {
+    public List<Map<String, Object>> getDetailsId(Long user_order_id, Integer count) {
         MySql sql = new MySql();
         sql.append("select");
         sql.append(" id ");
         sql.append("FROM");
         sql.append(" user_order_details uod ");
         sql.append("where");
-        sql.append(" uod.user_order_id = ? AND use_state = 0 AND order_state_id = 2",user_order_id);
-        sql.append("limit ?",count);
+        sql.append(" uod.user_order_id = ? AND use_state = 0 AND order_state_id = 2", user_order_id);
+        sql.append("limit ?", count);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
+    }
+
+    public Integer updateDetails(Integer order_state_id,String id) {
+        MySql sql = new MySql();
+        sql.append("update user_order_details set ");
+        sql.append(" order_state_id = ? where id = ? AND order_state_id = 2", order_state_id, id);
+        return jdbcTemplate.update(sql.toString(), sql.getValues());
     }
 }
