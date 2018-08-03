@@ -27,4 +27,9 @@ public class BannerDao extends DaoBase<Banner> {
         String sql = "SELECT id,img_url,`type`,`value` from banner where is_available = 1";
         return jdbcTemplate.queryForList(sql);
     }
+
+    public List<Map<String,Object>> getSuperDiscount() {
+        String sql = "SELECT  `name`,img_url,url,is_available,id  FROM `super_discount` where is_available = 1";
+        return jdbcTemplate.queryForList(sql);
+    }
 }

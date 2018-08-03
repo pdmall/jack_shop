@@ -22,7 +22,11 @@ public class bannerController extends BaseController {
         List<Map<String, Object>> list =  bannerService.getHomeBanner();
         return ResultGenerator.genSuccessResult(list);
     }
-
+    //获得首页广告栏信息
+    @GetMapping("getSuperDiscount")
+    public Result getSuperDiscount() throws CustomException {
+        return ResultGenerator.genSuccessResult(bannerService.getSuperDiscount());
+    }
 
 
 }
