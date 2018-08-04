@@ -33,6 +33,7 @@ public class ShopController extends BaseController {
      * @return
      * @throws CustomException
      */
+
     @GetMapping("getShopList")
     public Result getShopList(Pager pager) throws CustomException {
         return ResultGenerator.genSuccessResult(shopService.getShopList(pager));

@@ -3,10 +3,13 @@ package com.pdkj.jack_shop.configurer;
 public class XCXInfo {
 
 
-    public static final String APPID = "wx903822fb7d2f3961";
-//public static final String APPID = "wx9d82360ba0304046"; //二维码
+//    public static final String APPID = "wx903822fb7d2f3961";
+//    public static final String APPID = "wx9d82360ba0304046"; //二维码
 
-    public static final String APPSECRET = "022ae660f86828b6e61f40d24d2215eb";
+    public static final String APPID = "wxda787e4bfeafe899";
+    public static final String APPSECRET = "043f4cd27f377f78e96c016e84116a58";
+
+//    public static final String APPSECRET = "022ae660f86828b6e61f40d24d2215eb";
     //public static final String APPSECRET = "cef00252dbb5c92677f456be9bbb26ff";
     //微信支付使用
 
@@ -15,7 +18,6 @@ public class XCXInfo {
 
     public final static String URL_OPENID = "https://api.weixin.qq.com/sns/jscode2session";
     public final static String URL_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token";
-
 
     //微信支付的商户id
     public static final String PAY_MCH_ID = "1504111201";
