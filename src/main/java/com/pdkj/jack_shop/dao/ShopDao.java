@@ -34,8 +34,8 @@ public class ShopDao extends DaoBase<Shop> {
     public List<Map<String, Object>> getShopList(Pager page) {
         MySql sql = new MySql();
         sql.append("select DISTINCT(shop.id),shop_name,shop_address,longitude,");
-        sql.append("latitude,average_cons,service_score,street,");
-        sql.append("enviro_score,taste_score,home_img,label.name");
+        sql.append("latitude,street,average_cons,service_score,enviro_score,taste_score,");
+        sql.append("home_img,label.name ,(service_score+enviro_score+taste_score)/3 avg_score");
         sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
         sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
         sql.append("inner join label on shop.id = label.shop_id ");
@@ -50,13 +50,13 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("SELECT");
         sql.append(" shop.id,name label,shop_name,shop_address,province,street,city,county,shop_phone,shop_state,buss_open,buss_close,");
         sql.append(" longitude,latitude,average_cons,introduce,license_img,service_score,enviro_score,taste_score,");
-        sql.append(" home_img,detail_imgs FROM shop,label where shop.id = ? and label.shop_id = shop.id",id);
+        sql.append(" home_img,detail_imgs,(service_score+enviro_score+taste_score)/3 avg_score FROM shop,label where shop.id = ? and label.shop_id = shop.id",id);
         Map<String, Object> map = jdbcTemplate.queryForMap(sql.toString(), sql.getValues());
         return map;
     }
     //获得商铺的地址 以及电话
     public Map<String, Object> findAddressById(Long id) {
-        String sql = "select id,shop_name,shop_address,province,city,county,shop_phone," +
+        String sql = "select id,shop_name,shop_address,province,city,county,shop_phone,street," +
                 "longitude,latitude from shop where id=? ";
         return jdbcTemplate.queryForMap(sql, id);
     }
@@ -64,25 +64,23 @@ public class ShopDao extends DaoBase<Shop> {
     public List<Map<String, Object>> findByClassify(Long type_id, Pager pager) throws CustomException {
         MySql sql = new MySql();
         sql.append("select ");
-        sql.append("    shop.id,shop_name,shop_address,longitude,");
-        sql.append("    latitude,average_cons,service_score,");
-        sql.append("    enviro_score,taste_score,home_img");
+        sql.append(" DISTINCT(shop.id),shop_name,shop_address,longitude,");
+        sql.append("latitude,street,average_cons,service_score,enviro_score,taste_score,");
+        sql.append("home_img ,(service_score+enviro_score+taste_score)/3 avg_score");
         sql.append("    from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id where type_id =?", type_id);
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     //搜索框查询商铺
-    public List<Map<String, Object>> searchBox(String name, String county, Pager pager) {
+    public List<Map<String, Object>> searchBox(Long key,Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
-        sql.append("shop.id,shop_name,shop_address,longitude, ");
+        sql.append("s.id,shop_name,shop_address,longitude, ");
         sql.append("latitude,average_cons,service_score,");
         sql.append("enviro_score,taste_score,home_img  ");
-        sql.append("from shop inner join shop_type_rel on shop.id = shop_type_rel.shop_id ");
-        sql.append("inner join shop_type on shop_type.id = shop_type_rel.type_id ");
+        sql.append("from shop s,shop_search_key_rel sskr");
         sql.append("where");
-        String key = SQLTools.FuzzyKey(name);
-        sql.append("(shop_type.name like ? OR  shop_name like ?) and county = ? and shop_state  = 1", key, key, county);
+        sql.append(" sskr.search_key_id = ? and shop_state  = 1 and s.id = sskr.shop_id ",key);
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
@@ -150,27 +148,28 @@ public class ShopDao extends DaoBase<Shop> {
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     //搜索框 提示 根据店铺名称
-    public List<Map<String, Object>> getShopName(String name, Pager pager) {
+    public List<Map<String, Object>> getSearchKey(String name, Pager pager) {
         MySql sql = new MySql();
         sql.append("select ");
-        sql.append(" DISTINCT(shop_name) ");
-        sql.append(" from shop   ");
+        sql.append(" id,item ");
+        sql.append(" from search_key ");
         sql.append(" where");
         String key = SQLTools.FuzzyKey(name);
-        sql.append(" shop_name like ? ", key);
+        sql.append(" item like ? ", key);
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     //获得用户的商铺审核日志
-    public List<Map<String, Object>> getShopPassFinish(Long id){
+    public List<Map<String, Object>> getShopPassFinish(Long id, Pager pager){
         MySql sql = new MySql();
         sql.append("SELECT  ");
-        sql.append("spl.id,spl.shop_id,reason,created");
+        sql.append("spl.id,spl.shop_id,reason ,spl.created");
         sql.append("FROM");
         sql.append("shop_pass_log AS spl ,user_shop_rel AS usr");
         sql.append("WHERE");
-        sql.append("spl.shop_id =  usr.shop_id AND usr.master = 1");
+        sql.append("spl.shop_id =  usr.shop_id AND usr.master = 1 AND");
         sql.append("usr.user_id = ?",id);
+        sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(), sql.getValues());
     }
     //添加一个商铺
@@ -190,7 +189,7 @@ public class ShopDao extends DaoBase<Shop> {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("s.shop_name,s.shop_address,s.id,s.county,ss.name state_name ,s.province,s.city,");
-        sql.append("s.street,s.shop_phone,s.buss_open,s.buss_close,s.created,s.updated,s.longitude,");
+        sql.append("s.street,s.shop_phone,s.buss_open,s.buss_close,s.created,s.updated,s.longitude,ss.id shop_state_id,");
         sql.append("s.latitude,s.average_cons,s.introduce,s.license_img,s.service_score,s.enviro_score,");
         sql.append("s.taste_score,s.home_img,s.detail_imgs,s.food_safety_permit_img,usr.shop_id,usr.user_id");
         sql.append("FROM");
@@ -203,11 +202,12 @@ public class ShopDao extends DaoBase<Shop> {
     public List<Map<String,Object>> getEmployee(Long shop_id) {
         MySql sql = new MySql();
         sql.append("SELECT");
-        sql.append("u.icon,usr.id,usr.employee_role_id,er.name role_name,usr.user_name,u.phone");
+        sql.append("u.icon,usr.id,usr.employee_role_id,er.name role_name,usr.user_name");
         sql.append("FROM");
         sql.append("user_shop_rel usr,employee_role er , `user` u");
         sql.append("WHERE");
-        sql.append("usr.user_id = u.id AND usr.employee_role_id = er.id  AND usr.shop_id = ?",shop_id);
+        sql.append("usr.user_id = u.id AND usr.employee_role_id = er.id  " );
+        sql.append("AND usr AND usr.shop_id = ?",shop_id);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
     //获得商铺的店员角色
@@ -239,7 +239,7 @@ public class ShopDao extends DaoBase<Shop> {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("s.shop_name,s.shop_address,s.id,s.county,ss.name state_name ,s.province,s.city,");
-        sql.append("s.street,s.shop_phone,s.buss_open,s.buss_close,s.created,s.updated,s.longitude,");
+        sql.append("s.street,s.shop_phone,s.buss_open,s.buss_close,s.created,s.updated,s.longitude,ss.id shop_state_id,");
         sql.append("s.latitude,s.average_cons,s.introduce,s.license_img,s.service_score,s.enviro_score,");
         sql.append("s.taste_score,s.home_img,s.detail_imgs,s.food_safety_permit_img,usr.shop_id,usr.user_id");
         sql.append("FROM");
@@ -263,5 +263,11 @@ public class ShopDao extends DaoBase<Shop> {
         sql.append("WHERE");
         sql.append("shop_id = ? AND master = 1",shop_id);
         return jdbcTemplate.queryForMap(sql.toString(),sql.getValues());
+    }
+
+
+    public Integer updateShop(IsPassShop shop) {
+        SqlInfo sqlInfo = SQLTools.getUpdateById(shop,"is_pass_shop",shop.getId());
+        return jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AliYunOSS {
 
-    private static String endpoint = "oss-cn-beijing.aliyuncs.com";
+        private static String endpoint = "oss-cn-beijing.aliyuncs.com";
 
     private static String accessKeyId = "LTAIDWdxnQoZi0hN";
     private static String accessKeySecret = "wrZon4HUxqrfxBhQ1AdTUX8gmtT5M4";

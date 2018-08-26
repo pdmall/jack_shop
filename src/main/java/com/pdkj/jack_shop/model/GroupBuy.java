@@ -18,7 +18,7 @@ public class GroupBuy {
     private Integer stock_count;
     private Integer once_count;
     private String unavailable_date;
-    private String diners_number;
+    private String diners_number_id;
     private Integer type_of_id;
 
     public Integer getType_of_id() {
@@ -165,11 +165,11 @@ public class GroupBuy {
         this.unavailable_date = unavailable_date;
     }
 
-    public String getDiners_number() {
-        return diners_number;
+    public String getDiners_number_id() {
+        return diners_number_id;
     }
 
-    public void setDiners_number(String diners_number) {
-        this.diners_number = diners_number;
+    public void setDiners_number_id(String diners_number_id) {
+        this.diners_number_id = diners_number_id;
     }
 }

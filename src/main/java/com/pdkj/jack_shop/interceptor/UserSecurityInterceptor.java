@@ -2,9 +2,7 @@ package com.pdkj.jack_shop.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.pdkj.jack_shop.configurer.WebMvcConfigurer;
-import com.pdkj.jack_shop.core.Result;
-import com.pdkj.jack_shop.core.ResultCode;
-import com.pdkj.jack_shop.core.ResultGenerator;
+import com.pdkj.jack_shop.core.*;
 import com.pdkj.jack_shop.model.User;
 import com.pdkj.jack_shop.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -56,6 +54,12 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
         pageList.add("addOrder");
         pageList.add("getUserOrder");
         pageList.add("getWallet");
+        pageList.add("getShopPassFinish");
+        pageList.add("shareOrgin");
+        pageList.add("getMyAll");
+        pageList.add("walletPayment");
+        pageList.add("updatePayPassword");
+        pageList.add("getUpdatePasswordVerCode");
     }
 
 
@@ -83,11 +87,11 @@ public class UserSecurityInterceptor extends InterceptorRegistry implements Hand
             //验证签名
             if (true) { //测试用
                 String token = request.getParameter("token");
-                System.out.println(token);
                 user = userService.getUserByToken(token);
+                if(user==null)
+                    throw new TokenException("登录失效");
                 request.setAttribute("user", user);
             } else {
-
                 boolean pass = validateSign(request);
                 if (pass) {
                     String token = request.getParameter("token");

@@ -1,36 +1,29 @@
 package com.pdkj.jack_shop.model;
 /**
- * @Project: jack_shop
+ * @Project: shop_seller
  * @Package com.pdkj.jack_shop.model
  * @author lvchong
- * @date 2018/7/21 16:19
+ * @date 2018/8/21 16:09
  * @Copyright: 2018 www.zyht.com Inc. All rights reserved.
  * @version V1.0
  */
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author lvchong
- * @ClassName FlowMoney
+ * @ClassName ShopFlowMoney
  * @Description 类描述
- * @date 2018/7/21
+ * @date 2018/8/21
  */
-public class FlowMoney {
+public class ShopFlowMoney {
     private Long id;
     private Double value;
     private Date created;
-    private Long user_id;
+    private Long shop_id;
     private Long item_id;
     private Integer flow_state_id;
-
-    public Long getItem_id() {
-        return item_id;
-    }
-
-    public void setItem_id(Long item_id) {
-        this.item_id = item_id;
-    }
+    private String title;
 
     public Long getId() {
         return id;
@@ -56,12 +49,20 @@ public class FlowMoney {
         this.created = created;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getShop_id() {
+        return shop_id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setShop_id(Long shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public Long getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(Long item_id) {
+        this.item_id = item_id;
     }
 
     public Integer getFlow_state_id() {
@@ -70,5 +71,13 @@ public class FlowMoney {
 
     public void setFlow_state_id(Integer flow_state_id) {
         this.flow_state_id = flow_state_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

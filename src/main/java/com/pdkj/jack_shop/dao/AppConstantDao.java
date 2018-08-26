@@ -8,6 +8,7 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.core.app_constant;
 import com.pdkj.jack_shop.util.sql.MySql;
 import org.springframework.stereotype.Repository;
 
@@ -22,10 +23,16 @@ import java.util.Map;
  */
 
 @Repository
-public class ParameterDao extends DaoBase{
-    public List<Map<String,Object>> getParam(){
+public class AppConstantDao extends DaoBase{
+    public List<Map<String,Object>> getAppConstant(){
         MySql sql = new MySql();
-        sql.append("select * from parameter");
+        sql.append("select * from app_constant");
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
     }
+    public Object getPriceConstant(app_constant constant){
+        MySql sql = new MySql();
+        sql.append("select value from app_constant where id = ?",constant.app_constant());
+        return jdbcTemplate.queryForMap(sql.toString(),sql.getValues()).get("value");
+    }
+
 }

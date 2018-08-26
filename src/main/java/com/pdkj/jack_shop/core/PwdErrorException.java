@@ -1,14 +1,18 @@
 package com.pdkj.jack_shop.core;
 
-public class CustomException extends RuntimeException {
+public class PwdErrorException extends RuntimeException {
     private String message;
-    public CustomException() {
+
+    public PwdErrorException() {
     }
-    public CustomException(String message) {
+
+    public PwdErrorException(String message) {
         super(message);
         this.message = message;
+
     }
-    public CustomException(String message, Throwable cause) {
+
+    public PwdErrorException(String message, Throwable cause) {
         super(message, cause);
     }
 

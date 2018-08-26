@@ -14,7 +14,7 @@ package com.pdkj.jack_shop.model;
  * @Description 类描述
  * @date 2018/6/29
  */
-public class banner {
+public class Banner {
     private String id;
     private String img_url;
     private String type;

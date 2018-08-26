@@ -14,7 +14,7 @@ package com.pdkj.jack_shop.model;
  * @Description 参数
  * @date 2018/7/21
  */
-public class parameter {
+public class AppConstant {
     public Long id;
     public String name;
     public String value;

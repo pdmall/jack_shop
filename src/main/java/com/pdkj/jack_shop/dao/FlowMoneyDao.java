@@ -9,6 +9,7 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.model.FlowMoney;
+import com.pdkj.jack_shop.model.ShopFlowMoney;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
 import com.pdkj.jack_shop.util.sql.Pager;
@@ -35,8 +36,8 @@ public class FlowMoneyDao extends DaoBase{
         sql.append("FROM");
         sql.append("	flow_money AS fm,user_order AS uo,shop AS s,flow_state AS fs");
         sql.append("WHERE");
-        sql.append("	fm.flow_state_id = fs.id AND fm.item_id = uo.id AND uo.shop_id = s.id AND");
-        sql.append(" fm.user_id = ?",id);
+        sql.append(" fm.user_id = ? AND",id);
+        sql.append("	fm.flow_state_id = fs.id AND fm.item_id = uo.id AND uo.shop_id = s.id ");
         sql.append("order by fm.created desc");
         sql.limit(pager);
         return jdbcTemplate.queryForList(sql.toString(),sql.getValues());
@@ -45,6 +46,12 @@ public class FlowMoneyDao extends DaoBase{
     public void addFlowMoney(FlowMoney flowMoney){
         flowMoney.setId(Tools.generatorId());
         SqlInfo sqlInfo = SQLTools.getInsertSQL(flowMoney,"flow_money");
+        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
+    }
+
+    public void addShopFlowMoney(ShopFlowMoney flowMoney){
+        flowMoney.setId(Tools.generatorId());
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(flowMoney,"shop_flow_money");
         jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
     }
 

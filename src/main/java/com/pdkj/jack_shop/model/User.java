@@ -30,6 +30,16 @@ public class User implements Serializable {
 
     private String open_id;
 
+    private String pay_password;
+
+    public String getPay_password() {
+        return pay_password;
+    }
+
+    public void setPay_password(String pay_password) {
+        this.pay_password = pay_password;
+    }
+
     public String getOpen_id() {
         return open_id;
     }

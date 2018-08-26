@@ -52,4 +52,15 @@ public class ShareOrginController extends BaseController {
     public Result getMyAll() throws CustomException {
         return ResultGenerator.genSuccessResult(shareOrginService.getMyAll(getUser().getId()));
     }
+    //合伙人分红
+    @GetMapping("getShareOrgin")
+    public Result getShareOrgin() throws CustomException {
+        return ResultGenerator.genSuccessResult(shareOrginService.getShareOrgin(getUser().getId()));
+    }
+    //合伙人总收益
+    @GetMapping("getShareOrginSum")
+    public Result getShareOrginSum() throws CustomException {
+        return ResultGenerator.genSuccessResult(shareOrginService.getShareOrginSum(getUser().getId()));
+    }
+
 }

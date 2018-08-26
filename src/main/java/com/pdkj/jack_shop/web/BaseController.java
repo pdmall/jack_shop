@@ -53,16 +53,24 @@ public class BaseController {
     @Resource
     public AnalysisService analysisService;
     @Resource
-    public ParameterService parameterService;
+    public AppConstantService appConstantService;
     @Resource
     public ShareOrginService shareOrginService;
     @Resource
     public FlowMoneyService flowMoneyService;
     @Resource
     public PayService payService;
+    @Resource
+    public OssConfigService ossConfigService;
 
     public User getUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        return (User) requestAttributes.getAttribute("user", 0);
+        User user = (User) requestAttributes.getAttribute("user", 0);
+        if(user.getPay_password()==null && user.getPay_password()==""){
+            user.setPassword("0");
+        }else {
+            user.setPassword("1");
+        }
+        return user;
     }
 }

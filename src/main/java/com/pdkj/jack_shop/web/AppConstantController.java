@@ -14,13 +14,11 @@ import java.util.Map;
  * Created by CodeGenerator on 2018/06/26.
  */
 @RestController
-@RequestMapping("parameter")
-public class ParameterController extends BaseController {
+@RequestMapping("appConstant")
+public class AppConstantController extends BaseController {
     //获得显示奖励金额
-    @GetMapping("getParam")
-    public Result getParam() throws CustomException {
-        return ResultGenerator.genSuccessResult(parameterService.getParam());
+    @GetMapping("getAppConstant")
+    public Result getAppConstant() throws CustomException {
+        return ResultGenerator.genSuccessResult(appConstantService.getAppConstant());
     }
-
-
 }

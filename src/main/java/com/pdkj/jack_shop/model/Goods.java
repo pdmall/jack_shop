@@ -22,7 +22,25 @@ public class Goods {
     private String img_url;
     private String describe;
     private Long shop_id;
+    private Long type_id;
     private Integer type_of_id;
+    private Integer is_hot;
+
+    public Long getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(Long type_id) {
+        this.type_id = type_id;
+    }
+
+    public Integer getIs_hot() {
+        return is_hot;
+    }
+
+    public void setIs_hot(Integer is_hot) {
+        this.is_hot = is_hot;
+    }
 
     public Long getShop_id() {
         return shop_id;

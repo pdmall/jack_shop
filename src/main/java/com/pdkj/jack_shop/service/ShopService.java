@@ -21,20 +21,25 @@ import java.util.Map;
 @Service
 public class ShopService extends BaseService<Shop> {
 
-    public List<Map<String,Object>> getShopList(Pager page) {
+    public List<Map<String, Object>> getShopList(Pager page) {
         List<Map<String, Object>> shop = shopDao.getShopList(page);
-        for (Map<String,Object> map : shop){
-            map.put("coupons",couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()),1,page));
-            map.put("groupBuys",groupBuyDao.getGroupBuyByShopId(Long.valueOf(map.get("id").toString()),1,page));
+        for (Map<String, Object> map : shop) {
+            map.put("coupons", couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()), 1, page));
+            map.put("groupBuys", groupBuyDao.getGroupBuyByShopId(Long.valueOf(map.get("id").toString()), 1, page));
+            map.put("searchKey", searchKeyDao.getShopSearchKey(map.get("id")));
         }
         return shop;
     }
 
     @Transactional
-    public Long addShop(IsPassShop shop,Label label, Long type_id,Long user_id){
+    public Long addShop(IsPassShop shop, String[] items, Long type_id, Long user_id) {
         Long shopId = shopDao.addShop(shop);
-        label.setShop_id(shopId);
-        labelDao.addLabel(label);
+        for (String item : items) {
+            Object o = searchKeyDao.addSearchKey(item);
+            searchKeyDao.addSearchKeyRel(shopId, o);
+        }
+        Object o = searchKeyDao.addSearchKey(shop.getShop_name());
+        searchKeyDao.addSearchKeyRel(shopId, o);
         UserShopRel userShopRel = new UserShopRel();
         userShopRel.setId(Tools.generatorId());
         userShopRel.setMaster(1);
@@ -43,76 +48,77 @@ public class ShopService extends BaseService<Shop> {
         userShopRel.setShop_id(shopId);
         userShopRel.setUser_name("拥有者");
         shopDao.addUserShopRel(userShopRel);
-        shopTypeDao.addShopTypeRel(new ShopTypeRel(shopId,type_id));
+        shopWalletDao.save(shopId);
+        ;
+        shopTypeDao.addShopTypeRel(new ShopTypeRel(shopId, type_id));
         return shopId;
     }
-    public Map<String, Object> getShop(Long id){
-        Map<String,Object> stringObjectMap = shopDao.getShop(id);
-        stringObjectMap.put("groupBuys",groupBuyDao.getGroupBuyByShopId(id,1,new Pager()));
-        stringObjectMap.put("coupons",couponDao.getCouponByShopId(id,1, new Pager()));
+
+    //获取商铺信息
+    public Map<String, Object> getShop(Long id) {
+        Map<String, Object> stringObjectMap = shopDao.getShop(id);
+        stringObjectMap.put("searchKey", searchKeyDao.getShopSearchKey(id));
+        stringObjectMap.put("groupBuys", groupBuyDao.getGroupBuyByShopId(id, 1, new Pager()));
+        stringObjectMap.put("coupons", couponDao.getCouponByShopId(id, 1, new Pager()));
         return stringObjectMap;
     }
-    public Map<String, Object> findAddressById(Long id){
+
+    //根据商铺ID查询商铺位置
+    public Map<String, Object> findAddressById(Long id) {
         return shopDao.findAddressById(id);
     }
-    public List<Map<String, Object>> findByClassify(Long type_id,Pager pager) {
-        return shopDao.findByClassify(type_id,pager);
-    }
-    public List<Map<String, Object>> searchBox(String name ,String county,Pager pager){
-        return shopDao.searchBox(name,county,pager);
+
+    //根据类型分类
+    public List<Map<String, Object>> findByClassify(Long type_id, Pager pager) {
+        List<Map<String, Object>> shop = shopDao.findByClassify(type_id, pager);
+        for (Map<String, Object> map : shop) {
+            map.put("coupons", couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()), 1, pager));
+            map.put("groupBuys", groupBuyDao.getGroupBuyByShopId(Long.valueOf(map.get("id").toString()), 1, pager));
+            map.put("searchKey", searchKeyDao.getShopSearchKey(map.get("id")));
+        }
+        return shop;
     }
 
-    public List<Map<String, Object>> shopSort(String name,Long type_id, String county, Pager pager){
-        return shopDao.shopSort(name,2L,"温江区",pager);
-    }
-    public List<Map<String, Object>> shopDistanceSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude){
-        return shopDao.shopDistanceSort( name, type_id,  county,  pager, latitude, longitude);
-    }
-    public List<Map<String, Object>> shopDistanceValueSort(String name,Long type_id, String county, Pager pager,String latitude,String longitude ,int distance){
-        return shopDao.shopDistanceValueSort( name, type_id,  county,  pager, latitude, longitude,distance);
-    }
-    public List<Map<String, Object>> shopMealTime(Long mealTimeId, String county, Pager pager){
-        return shopDao.shopMealTime( county,pager, mealTimeId);
+    //搜索框搜索的内容
+    public List<Map<String, Object>> searchBox(Long key, Pager pager) {
+        List<Map<String, Object>> shop = shopDao.searchBox(key, pager);
+        for (Map<String, Object> map : shop) {
+            map.put("coupons", couponDao.getCouponByShopId(Long.valueOf(map.get("id").toString()), 1, pager));
+            map.put("groupBuys", groupBuyDao.getGroupBuyByShopId(Long.valueOf(map.get("id").toString()), 1, pager));
+            map.put("searchKey", searchKeyDao.getShopSearchKey(map.get("id")));
+        }
+        return shop;
     }
 
-    public List<Map<String, Object>> getShopName(String name , Pager pager ){
-        return shopDao.getShopName( name,pager);
+    //按评分排序
+    public List<Map<String, Object>> shopSort(String name, Long type_id, String county, Pager pager) {
+        return shopDao.shopSort(name, 2L, "温江区", pager);
     }
 
-    public List<Map<String, Object>> getShopPassFinish(Long id){
-        return shopDao.getShopPassFinish(id);
+    //按距离排序
+    public List<Map<String, Object>> shopDistanceSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude) {
+        return shopDao.shopDistanceSort(name, type_id, county, pager, latitude, longitude);
     }
 
-    //添加属于哪个商铺的菜品
-    public void addShopGoods(Goods goods,Long shop_id){
-        shopDao.addShopGoodsRel(shop_id,goodsDao.addGoods(goods));
+    //获得多少距离以内的商铺
+    public List<Map<String, Object>> shopDistanceValueSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude, int distance) {
+        return shopDao.shopDistanceValueSort(name, type_id, county, pager, latitude, longitude, distance);
     }
-    //查询用户的商铺
-    public List<Map<String, Object>> getMyShopList(Long user_id) {
-        List<Map<String, Object>> list = shopDao.getMyIsPassShop(user_id);
-        list.addAll(shopDao.getMyShopList(user_id));
-        return list;
+
+    //按用餐时段查询
+    public List<Map<String, Object>> shopMealTime(Long mealTimeId, String county, Pager pager) {
+        return shopDao.shopMealTime(county, pager, mealTimeId);
     }
-    //获得商铺的店员
-    public List<Map<String, Object>> getEmployee(Long shop_id) {
-        return shopDao.getEmployee(shop_id);
+
+    //搜索框 提示 字典检索
+    public List<Map<String, Object>> getSearchKey(String name, Pager pager) {
+        return shopDao.getSearchKey(name, pager);
     }
-    //获得店员
-    public  List<Map<String, Object>> getEmployeeRole() {
-        return shopDao.getEmployeeRole();
+
+    //获得用户的商铺审核日志
+    public List<Map<String, Object>> getShopPassFinish(Long id, Pager pager) {
+        return shopDao.getShopPassFinish(id, pager);
     }
-    //修改店员
-    public void updateEmployee(UserShopRel userShopRel) {
-        shopDao.updateEmployee(userShopRel);
-    }
-    //添加店员
-    public void addEmployee(UserShopRel userShopRel) {
-        userShopRel.setId(Tools.generatorId());
-        shopDao.addEmployee(userShopRel);
-    }
-    //删除店员
-    public void delEmployee(Long id) {
-        shopDao.delEmployee(id);
-    }
+
 
 }

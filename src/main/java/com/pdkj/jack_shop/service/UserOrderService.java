@@ -30,8 +30,8 @@ public class UserOrderService extends BaseService<UserOrder> {
         return userOrderDao.updateOrder(userOrder);
     }
 
-    public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
-        return userOrderDao.getUserOrder(user_id, order_state_id, page);
+    public List<Map<String, Object>> getUserOrderList(Long user_id, Integer order_state_id, Pager page) {
+        return userOrderDao.getUserOrderList(user_id, order_state_id, page);
     }
 
     public List<Map<String, Object>> getShopOrder(Long shop_id, Pager page) {

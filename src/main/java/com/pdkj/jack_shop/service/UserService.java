@@ -4,6 +4,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.pdkj.jack_shop.configurer.AliYunSMS;
 import com.pdkj.jack_shop.core.CustomException;
+import com.pdkj.jack_shop.core.ParameterException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.FlowMoney;
@@ -61,13 +62,18 @@ public class UserService extends BaseService<User> {
 
     public User register(User user, String verCode) throws Exception {
         String oldCode = (String) getCache("verCode" + user.getPhone());
-        if (oldCode.equals(verCode)) {
+        /*if (oldCode.equals(verCode)) {*/
+        if (true) {
             User oldUser = userDao.getUserByPhone(user.getPhone());
             if (oldUser == null) {
                 user.setToken(Tools.uuid());
                 user.setQr_code(qrCodeDao.addQRCode(user.getPhone()));
                 userWalletDao.save(userDao.save(user));
-                user.setPassword(null);
+                if(user.getPay_password()==null && user.getPay_password()==""){
+                    user.setPassword("0");
+                }else{
+                    user.setPassword("1");
+                }
                 return user;
             } else {
                 oldUser.setToken(Tools.uuid());
@@ -190,9 +196,71 @@ public class UserService extends BaseService<User> {
                 for (Map<String, Object> map1 : list) {
                     userOrderDao.updateOrderRefund(map1.get("id").toString(), 3);
                 }
+                if(true){
+
+                }
             } else {
                 throw new CustomException("数量不足");
             }
+        } else {
+            //修改消费者的卷状态
+            if (userOrderDao.updateDetails(3, user_order_details_id) == 0) {
+                throw new CustomException("该卷失效");
+            }else{
+
+            }
+        }
+        //修改商铺拥有者的钱包余额
+        userWalletDao.updateMoney(sum - dividends, shop_user, 0);
+        //添加流水记录
+        FlowMoney flowMoney = new FlowMoney();
+        flowMoney.setId(Tools.generatorId());
+        flowMoney.setUser_id(shop_user);
+        flowMoney.setValue(sum - dividends);
+        flowMoney.setItem_id(user_order_id);
+        flowMoney.setFlow_state_id(7);
+        flowMoneyDao.addFlowMoney(flowMoney);
+        //添加红利
+        shareOrginDao.updateDividends(dividends, user_id);
+        //获得被返利用户的id
+        Long level3 = shareOrginDao.getMyLevel3Id(user_id);
+        if (level3 != null) {
+            //判断用户是否是钻石会员
+            if (userDao.getUserRole(level3, 3) > 0) {
+                //修改用户钱包余额 0 收入 1 支出
+                userWalletDao.updateMoney(dividends, level3, 0);
+                //添加流水记录
+                FlowMoney flowMoney1 = new FlowMoney();
+                flowMoney1.setId(Tools.generatorId());
+                flowMoney1.setUser_id(level3);
+                flowMoney1.setValue(dividends);
+                flowMoney1.setItem_id(user_order_id);
+                flowMoney1.setFlow_state_id(4);
+                flowMoneyDao.addFlowMoney(flowMoney1);
+            }
+        }
+    }
+
+    public String updatePayPassword(Long user_id, String payPassword) {
+        if(userDao.updatePayPassword(user_id,payPassword)>0){
+            return "修改成功";
+        }else {
+            return "修改失败";
+        }
+    }
+
+
+    public List<Map<String,Object>> payType() {
+        return userDao.payType();
+    }
+
+    public String verifVerCode(String phone, String verCode) {
+        String oldCode = (String) getCache("verCode" + phone);
+        if (oldCode.equals(verCode))
+            return "成功";
+        throw new CustomException("验证不正确");
+    }
+}
         /*    //修改商铺拥有者的钱包余额
             userWalletDao.updateMoney(sum - dividends, shop_user, 0);
             //添加流水记录
@@ -225,43 +293,3 @@ public class UserService extends BaseService<User> {
                     flowMoneyDao.addFlowMoney(flowMoney1);
                 }
             }*/
-        } else {
-            //修改消费者的卷状态
-            if (userOrderDao.updateDetails(3, user_order_details_id) == 0) {
-                throw new CustomException("该卷失效");
-            }
-        }
-        //修改商铺拥有者的钱包余额
-        userWalletDao.updateMoney(sum - dividends, shop_user, 0);
-        //添加流水记录
-        FlowMoney flowMoney = new FlowMoney();
-        flowMoney.setId(Tools.generatorId());
-        flowMoney.setUser_id(shop_user);
-        flowMoney.setValue(sum - dividends);
-        flowMoney.setItem_id(user_order_id);
-        flowMoney.setItem_id_type(2);
-        flowMoney.setFlow_state_id(7);
-        flowMoneyDao.addFlowMoney(flowMoney);
-        //添加红利
-        shareOrginDao.updateDividends(dividends, user_id);
-        //获得被返利用户的id
-        List<Map<String, Object>> level3s = shareOrginDao.getMyLevel3(user_id);
-        if (level3s.size() > 0) {
-            String level3 = level3s.get(0).get("Level3").toString();
-            //判断用户是否是钻石会员
-            if (userDao.getUserRole(level3, 3) > 0) {
-                //修改用户钱包余额 0 收入 1 支出
-                userWalletDao.updateMoney(dividends, level3, 0);
-                //添加流水记录
-                FlowMoney flowMoney1 = new FlowMoney();
-                flowMoney1.setId(Tools.generatorId());
-                flowMoney1.setUser_id(Long.parseLong(level3));
-                flowMoney1.setValue(dividends);
-                flowMoney1.setItem_id(user_order_id);
-                flowMoney1.setItem_id_type(2);
-                flowMoney1.setFlow_state_id(4);
-                flowMoneyDao.addFlowMoney(flowMoney1);
-            }
-        }
-    }
-}

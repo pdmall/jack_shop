@@ -41,7 +41,7 @@ public class QRCodeDao extends DaoBase {
 
     String APPID = "wx9d82360ba0304046";
     String SECRET = "cef00252dbb5c92677f456be9bbb26ff";
-    String page ="pages/index/index";
+    String page ="pages/my/loginOrRegi/loginOrRegi";
 
 
     public String addQRCode(String phone) throws Exception {

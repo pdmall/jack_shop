@@ -9,6 +9,8 @@ package com.pdkj.jack_shop.dao;
  */
 
 import com.pdkj.jack_shop.core.CustomException;
+import com.pdkj.jack_shop.core.ParameterException;
+import com.pdkj.jack_shop.core.app_constant;
 import com.pdkj.jack_shop.model.UserOrder;
 import com.pdkj.jack_shop.model.UserOrderDetails;
 import com.pdkj.jack_shop.util.Tools;
@@ -75,7 +77,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     }
 
     //获得用户订单
-    public List<Map<String, Object>> getUserOrder(Long user_id, Integer order_state_id, Pager page) {
+    public List<Map<String, Object>> getUserOrderList(Long user_id, Integer order_state_id, Pager page) {
         MySql sql = new MySql();
         sql.append("SELECT");
         sql.append("s.shop_name,uo.id,uo.quantity,uo.created,order_state_id,s.home_img,final_price,");
@@ -83,8 +85,9 @@ public class UserOrderDao extends DaoBase<Banner> {
         sql.append("FROM");
         sql.append("user_order uo,shop s,order_state os");
         sql.append("WHERE");
-        sql.append("s.id = uo.shop_id AND os.id = uo.order_state_id AND");
+        sql.append("s.id = uo.shop_id AND os.id = uo.order_state_id AND")                                                                                                                                                                                                ;
         sql.append("uo.user_id  = ?  ", user_id);
+        sql.append(" AND uo.shop_id != ? ", app_constant.PDKJ_ID.app_constant());
         if (order_state_id != 0) {
             sql.append("AND uo.order_state_id  = ? ", order_state_id);
         }
@@ -106,7 +109,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     //支付是修改订单状态
     public void paySuccess(String orderId, Date pay_time, Integer trade_type, String pay_on) {
         MySql sql = new MySql();
-        sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ?  where id = ? and order_state_id = 1", pay_on, pay_time, trade_type, orderId);
+        sql.append("update user_order set pay_on = ?,order_state_id = 2 ,pay_time = ? ,pay_type = ? where id = ? and order_state_id = 1", pay_on, pay_time, trade_type, orderId);
         String sqlupd = "update user_order_details set order_state_id = 2 where user_order_id = ?";
         jdbcTemplate.update(sqlupd, orderId);
         jdbcTemplate.update(sql.toString(), sql.getValues());
@@ -121,7 +124,7 @@ public class UserOrderDao extends DaoBase<Banner> {
         if (list.size() > 0) {
             return list.get(0);
         }
-        throw new CustomException("订单不存在");
+        throw new ParameterException("订单不存在");
     }
 
     //获得订单信息
@@ -172,7 +175,7 @@ public class UserOrderDao extends DaoBase<Banner> {
     public Map<String, Object> getShopIdByOrderId(Long user_order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" shop_id,user_id");
+        sql.append(" shop_id,user_id,final_price");
         sql.append("FROM");
         sql.append(" user_order ");
         sql.append("where");
@@ -226,14 +229,14 @@ public class UserOrderDao extends DaoBase<Banner> {
         return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
     }
 
-    public Integer verifyOrder(Long user_order_details_id) {
+    public Integer verifyNoPayOrder(Long user_order_id) {
         MySql sql = new MySql();
         sql.append("select");
-        sql.append(" * ");
+        sql.append(" count(*) count ");
         sql.append("FROM");
-        sql.append("user_order_details uod  ");
+        sql.append("user_order ");
         sql.append("where");
-        sql.append(" id = ? AND use_state = 0 AND order_state_id = 2 ", user_order_details_id);
+        sql.append(" id = ? AND order_state_id = 1 ", user_order_id);
         return Integer.valueOf(jdbcTemplate.queryForMap(sql.toString(), sql.getValues()).get("count").toString());
     }
 

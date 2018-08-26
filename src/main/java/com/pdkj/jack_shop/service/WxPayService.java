@@ -92,7 +92,7 @@ public class WxPayService extends BaseService {
         data.put("payState", "wx");
         return data;
     }
-    //退款
+    //微信退款
     public  Map<String, String> refund(String pay_on, String payMoney,String refund_fee,String ip,String out_trade_no) throws Exception {
         //微信付款 是 以 分为单位。所有要将元* 100
         payMoney = new BigDecimal(payMoney).multiply(new BigDecimal(100)).setScale(0).toString();
@@ -100,7 +100,6 @@ public class WxPayService extends BaseService {
         //test:
         payMoney = "1";
         String nonce_str = PayUtil.generateNonceStr();
-
         //组装参数，用户生成统一下单接口的签名
         Map<String, String> packageParams = new HashMap ();
         packageParams.put("appid", XCXInfo.APPID);
@@ -125,5 +124,4 @@ public class WxPayService extends BaseService {
         }
         return data;
     }
-
 }

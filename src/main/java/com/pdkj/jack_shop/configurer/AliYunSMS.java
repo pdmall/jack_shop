@@ -33,6 +33,7 @@ public class AliYunSMS {
     public static final String reginAndLogin = "SMS_135825038";
     public static final String addEmployee = "SMS_139228298";
     public static final String vrCode = "SMS_139228298";
+    public static final String updatePayPassword = "SMS_142135078";
 
 
     public static SendSmsResponse sendSms(String phone,String vrCode,String template) throws ClientException {

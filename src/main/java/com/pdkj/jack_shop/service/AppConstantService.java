@@ -20,9 +20,9 @@ import java.util.Map;
  * @date 2018/7/21
  */
 @Service
-public class ParameterService extends BaseService {
+public class AppConstantService extends BaseService {
 
-    public List<Map<String, Object>> getParam() {
-        return parameterDao.getParam();
+    public List<Map<String, Object>> getAppConstant() {
+        return appConstantDao.getAppConstant();
     }
 }

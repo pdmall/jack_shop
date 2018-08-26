@@ -39,13 +39,17 @@ public class UserConcernService extends BaseService<UserConcern>{
 
 
     public Integer concern(Long user_id, UserConcern userConcern){
-        userConcern.setBe_user_id(user_id);
-        userConcern.setIs_cancel(1);
-        return userConcernDao.concern(userConcern);
+        if(Integer.valueOf(userConcernDao.isConcern(user_id,userConcern.getShop_id()).get("count").toString())>0){
+            return userConcernDao.noConcern(user_id,userConcern.getShop_id(),1);
+        }else{
+            userConcern.setBe_user_id(user_id);
+            userConcern.setIs_cancel(1);
+            return userConcernDao.concern(userConcern);
+        }
     }
 
     public Object noConcern(Long user_id, Long shop_id) {
-        return userConcernDao.noConcern(user_id,shop_id);
+        return userConcernDao.noConcern(user_id,shop_id,0);
     }
     public Object isConcern(Long user_id, Long shop_id){
         return userConcernDao.isConcern(user_id,shop_id);

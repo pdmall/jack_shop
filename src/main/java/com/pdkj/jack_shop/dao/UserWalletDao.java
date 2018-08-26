@@ -8,6 +8,7 @@ package com.pdkj.jack_shop.dao;
  * @version V1.0
  */
 
+import com.pdkj.jack_shop.core.CustomException;
 import com.pdkj.jack_shop.model.UserWallet;
 import com.pdkj.jack_shop.util.Tools;
 import com.pdkj.jack_shop.util.sql.MySql;
@@ -27,9 +28,12 @@ import java.util.Map;
 
 @Repository
 public class UserWalletDao extends DaoBase<UserWallet> {
-    public List<Map<String, Object>> getWallet(Long user_id) {
-        String sql = "SELECT id,user_id,money from user_wallet where state = 1 and user_id = ?";
-        return jdbcTemplate.queryForList(sql,user_id);
+    public Map<String, Object> getWallet(Object user_id) {
+        String sql = "SELECT id,money from user_wallet where wallet_state = 1 and user_id = ?";
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, user_id);
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
     }
 
     public void save(Long user_id) {
@@ -38,16 +42,26 @@ public class UserWalletDao extends DaoBase<UserWallet> {
         wallet.setMoney(0.0);
         wallet.setState(1);
         wallet.setUser_id(user_id);
-        SqlInfo sqlInfo = SQLTools.getInsertSQL(wallet,"user_wallet");
-        jdbcTemplate.update(sqlInfo.getSql(),sqlInfo.getValues());
-
+        SqlInfo sqlInfo = SQLTools.getInsertSQL(wallet, "user_wallet");
+        jdbcTemplate.update(sqlInfo.getSql(), sqlInfo.getValues());
     }
 
-    public Integer updateMoney(Object buy_price, Object user_id,Integer flow_record_type) {
+    public Integer updateMoney(Object buy_price, Object user_id, Integer flow_record_type) {
         MySql mySql = new MySql();
-        mySql.append("UPDATE `user_wallet` SET");
-        mySql.append("money"+(flow_record_type==0?" =+ ?":"-= ?"),buy_price);
-        mySql.append("where user_id = ? AND state = 1",user_id);
-        return jdbcTemplate.update(mySql.toString(),mySql.getValues());
+        if (flow_record_type == 0) {
+            mySql.append("UPDATE `user_wallet` SET");
+            mySql.append("money = money + ?", buy_price);
+            mySql.append("where user_id = ? AND wallet_state = 1", user_id);
+        } else {
+            Map<String, Object> map = getWallet(user_id);
+            if (map == null)
+                throw new CustomException("钱包被冻结咯");
+            if (Double.valueOf(buy_price.toString()) >= Double.valueOf(map.get("money").toString()))
+                throw new CustomException("余额不足");
+            mySql.append("UPDATE `user_wallet` SET");
+            mySql.append("money = money - ?", buy_price);
+            mySql.append("where user_id = ? AND wallet_state = 1", user_id);
+        }
+        return jdbcTemplate.update(mySql.toString(), mySql.getValues());
     }
 }

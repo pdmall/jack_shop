@@ -35,6 +35,7 @@ public class PhotoDao extends  DaoBase<Photo>{
         mySql.append("select id,shop_id,user_id,img_url,created from photo where shop_id = ?" , shop_id);
         return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
+
     public List<Map<String,Object>> getGoodsPhoto(Long shop_id){
         MySql mySql = new MySql();
         mySql.append("select g.img_url,g.name from  goods g ");

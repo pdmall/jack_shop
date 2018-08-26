@@ -1,11 +1,16 @@
 package com.pdkj.jack_shop.web;
 
+import com.alibaba.fastjson.JSON;
 import com.pdkj.jack_shop.core.CustomException;
+import com.pdkj.jack_shop.core.ParameterException;
 import com.pdkj.jack_shop.core.Result;
 import com.pdkj.jack_shop.core.ResultGenerator;
 import com.pdkj.jack_shop.model.*;
+import com.pdkj.jack_shop.util.Ognl;
 import com.pdkj.jack_shop.util.sql.Pager;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by CodeGenerator on 2018/06/26.
@@ -28,7 +33,6 @@ public class ShopController extends BaseController {
 
     /**
      * 获得商铺列表
-     *
      * @param pager
      * @return
      * @throws CustomException
@@ -47,8 +51,11 @@ public class ShopController extends BaseController {
      * @throws CustomException
      */
     @PostMapping("addShop")
-    public Result addShop(IsPassShop shop, String label_name,Long type_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.addShop(shop,new Label(label_name), type_id,getUser().getId()));
+    public Result addShop(IsPassShop shop, String items,Long type_id) throws CustomException {
+        if(Ognl.isEmpty(items))
+            throw new CustomException("参数异常");
+        String[] itemArr = items.trim().split(",");
+        return ResultGenerator.genSuccessResult(shopService.addShop(shop,itemArr, type_id,getUser().getId()));
     }
 
     /**
@@ -60,6 +67,8 @@ public class ShopController extends BaseController {
      */
     @GetMapping("getShop")
     public Result getShop(Long id) throws CustomException {
+        if(Ognl.isEmpty(id))
+            throw new ParameterException("参数异常");
         return ResultGenerator.genSuccessResult(shopService.getShop(id));
     }
 
@@ -71,6 +80,8 @@ public class ShopController extends BaseController {
      */
     @GetMapping("findAddressById")
     public Result findAddressById(Long id) throws CustomException {
+        if(Ognl.isEmpty(id))
+            throw new ParameterException("参数异常");
         return ResultGenerator.genSuccessResult(shopService.findAddressById(id));
     }
 
@@ -82,6 +93,8 @@ public class ShopController extends BaseController {
      */
     @GetMapping("findByClassify")
     public Result findByClassify(Long id, Pager pager) throws CustomException {
+        if(Ognl.isEmpty(id))
+            throw new ParameterException("参数异常");
         return ResultGenerator.genSuccessResult(shopService.findByClassify(id, pager));
     }
 
@@ -89,13 +102,12 @@ public class ShopController extends BaseController {
      * 搜索框查询
      *
      * @param key    搜索框中的值
-     * @param county 属于哪个城市
      * @return
      * @throws CustomException
      */
     @GetMapping("search")
-    public Result searchBox(String key, String county, Pager pager) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.searchBox(key, county, pager));
+    public Result searchBox(Long key, Pager pager) throws CustomException {
+        return ResultGenerator.genSuccessResult(shopService.searchBox(key,  pager));
     }
 
     /**
@@ -111,7 +123,6 @@ public class ShopController extends BaseController {
     public Result shopSort(String key, String county, Long type_id, Pager pager) {
         return ResultGenerator.genSuccessResult(shopService.shopSort(key, type_id, county, pager));
     }
-
     /**
      * 按距离排序
      *
@@ -127,9 +138,6 @@ public class ShopController extends BaseController {
     public Result shopDistanceSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude) {
         return ResultGenerator.genSuccessResult(shopService.shopDistanceSort(name, type_id, county, pager, latitude, longitude));
     }
-    /*
-     */
-
     /**
      * 按距离排序
      *
@@ -141,7 +149,6 @@ public class ShopController extends BaseController {
     public Result shopDistanceValueSort(String name, Long type_id, String county, Pager pager, String latitude, String longitude, int distance) {
         return ResultGenerator.genSuccessResult(shopService.shopDistanceValueSort(name, type_id, county, pager, latitude, longitude, distance));
     }
-
     /**
      * 按时段查询
      *
@@ -154,66 +161,18 @@ public class ShopController extends BaseController {
     public Result shopMealTime(Long mealTimeId, String county, Pager pager) {
         return ResultGenerator.genSuccessResult(shopService.shopMealTime(mealTimeId, county, pager));
     }
-
-    @GetMapping("getShopName")
-    public Result getShopName(String name, Pager pager) {
-        return ResultGenerator.genSuccessResult(shopService.getShopName(name, pager));
+    @GetMapping("getSearchKey")
+    public Result getSearchKey(String name, Pager pager) {
+        return ResultGenerator.genSuccessResult(shopService.getSearchKey(name, pager));
     }
-
-
     /**
-     * 商铺添加返回消息
-     * @param id
+     * 获得商铺返回消息
      * @return
      */
     @GetMapping("getShopPassFinish")
-    public Result getShopPassFinish(Long id) {
-        return ResultGenerator.genSuccessResult(shopService.getShopPassFinish(id));
+    public Result getShopPassFinish(Pager pager) {
+        return ResultGenerator.genSuccessResult(shopService.getShopPassFinish(getUser().getId(),pager));
     }
-
-    //添加商铺的商品
-    @GetMapping("addShopGoods")
-    public Result addShopGoods(Goods goods,Long shop_id) {
-        shopService.addShopGoods(goods,shop_id);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    //获得商铺的店员
-    @GetMapping("getEmployee")
-    public Result getEmployee(Long shop_id) throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.getEmployee(shop_id));
-    }
-
-    //获得商铺的角色
-    @GetMapping("getEmployeeRole")
-    public Result getEmployeeRole() throws CustomException {
-        return ResultGenerator.genSuccessResult(shopService.getEmployeeRole());
-    }
-
-    //修改商铺店员的角色
-    @PostMapping("updateEmployee")
-    public Result updateEmployee(UserShopRel userShopRel) throws CustomException {
-        shopService.updateEmployee(userShopRel);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    //添加商铺店员的角色
-    @PostMapping("addEmployee")
-    public Result addEmployee(UserShopRel userShopRel,User user,String verCode) throws Exception {
-        User u = userService.register(user, verCode);
-        userShopRel.setUser_id(u.getId());
-        userShopRel.setMaster(0);
-        shopService.addEmployee(userShopRel);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    //添加商铺店员的角色
-    @PostMapping("delEmployee")
-    public Result delEmployee(Long id) throws CustomException {
-        shopService.delEmployee(id);
-        return ResultGenerator.genSuccessResult();
-    }
-
     //查看用户上传的图片
     @GetMapping("getUserPhoto")
     public Result getUserPhoto() throws CustomException {
@@ -222,11 +181,15 @@ public class ShopController extends BaseController {
     //查看本店图片
     @GetMapping("getShopPhoto")
     public Result getShopPhoto(Long shop_id) throws CustomException {
+        if(Ognl.isEmpty(shop_id))
+            throw new ParameterException("参数异常");
         return ResultGenerator.genSuccessResult(photoService.getShopPhoto(shop_id));
     }
     //查看商品图片
     @GetMapping("getGoodsPhoto")
     public Result getGoodsPhoto(Long shop_id) throws CustomException {
+        if(Ognl.isEmpty(shop_id))
+            throw new ParameterException("参数异常");
         return ResultGenerator.genSuccessResult(photoService.getGoodsPhoto(shop_id));
     }
     //添加照片
@@ -236,6 +199,4 @@ public class ShopController extends BaseController {
         photoService.addPhoto(photo);
         return ResultGenerator.genSuccessResult(photo);
     }
-
-
 }

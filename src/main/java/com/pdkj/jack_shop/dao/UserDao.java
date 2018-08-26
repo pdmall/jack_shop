@@ -92,7 +92,7 @@ public class UserDao extends DaoBase {
         return effect;
     }
 
-    public void updateRole(Long id, Integer role_id) {
+    public void updateRole(Object id, Object role_id) {
         String sql = "update user set role_id = ? where id = ?";
         jdbcTemplate.update(sql, role_id, id);
     }
@@ -134,7 +134,7 @@ public class UserDao extends DaoBase {
         return jdbcTemplate.queryForList(mySql.toString(), mySql.getValues()).get(0);
     }
 
-    public Integer getUserRole(String item_rel_id,Integer role_id) {
+    public Integer getUserRole(Long item_rel_id,Integer role_id) {
         MySql mySql = new MySql();
         mySql.append("select");
         mySql.append(" count(*) count");
@@ -144,16 +144,6 @@ public class UserDao extends DaoBase {
         return Integer.valueOf(jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues()).get("count").toString());
     }
 
-    public Map<String,Object> verifyCoupon(Long user_order_details) {
-        MySql mySql = new MySql();
-        mySql.append("select");
-        mySql.append(" ");
-        mySql.append("from");
-        mySql.append(" var ");
-        mySql.append("where id = ? AND role_id = ?", user_order_details);
-        return jdbcTemplate.queryForMap(mySql.toString(), mySql.getValues());
-    }
-
     public List<Map<String, Object>> getRoleById(Object id) {
         MySql mySql = new MySql();
         mySql.append("select");
@@ -161,6 +151,18 @@ public class UserDao extends DaoBase {
         mySql.append("from");
         mySql.append("role");
         mySql.append("where id = ?",id);
-        return jdbcTemplate.queryForList(mySql.toString());
+        return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
+    }
+
+    public Integer updatePayPassword(Long user_id, String payPassword) {
+        MySql mySql = new MySql();
+        mySql.append("update user set pay_password = ? where id = ?",payPassword,user_id);
+        return jdbcTemplate.update(mySql.toString(),mySql.getValues());
+    }
+
+    public List<Map<String,Object>> payType() {
+        MySql mySql = new MySql();
+        mySql.append("select * from pay_type");
+        return jdbcTemplate.queryForList(mySql.toString(),mySql.getValues());
     }
 }

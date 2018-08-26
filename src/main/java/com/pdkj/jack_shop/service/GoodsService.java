@@ -43,5 +43,7 @@ public class GoodsService extends BaseService<Goods> {
         goodsType.setId(Tools.generatorId());
         return goodsDao.addGoodsType(goodsType);
     }
-
+    public List<Map<String, Object>> getHotGoods(Long shop_id) {
+        return goodsDao.getHotGoods(shop_id);
+    }
 }

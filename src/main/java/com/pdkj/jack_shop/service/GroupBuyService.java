@@ -40,5 +40,9 @@ public class GroupBuyService extends BaseService<IsPassGroupBuy> {
     public List<Map<String, Object>> getIsPassGroupBuyList(Long shop_id) {
         return groupBuyDao.getIsPassGroupBuyList(shop_id);
     }
+    public Map<String, Object> getGroupBuyById(Long group_buy_id){
+        return groupBuyDao.getGroupBuyById(group_buy_id);
+    }
+
 
 }

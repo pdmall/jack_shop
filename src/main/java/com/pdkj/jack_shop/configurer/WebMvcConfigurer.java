@@ -113,7 +113,16 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
         exceptionResolvers.add(new HandlerExceptionResolver() {
             public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
                 Result result = new Result();
-                if (e instanceof CustomException) {//业务失败的异常，如“账号或密码错误”
+                if(e instanceof PwdErrorException){
+                    result.setCode(ResultCode.PWDERROR).setMessage(e.getMessage());
+                    logger.info(e.getMessage());
+                }else if(e instanceof TokenException){
+                    result.setCode(ResultCode.TOKEN_NULL).setMessage(e.getMessage());
+                    logger.info(e.getMessage());
+                }else if(e instanceof ParameterException){
+                    result.setCode(ResultCode.NULL_PARAMETER).setMessage(e.getMessage());
+                    logger.info(e.getMessage());
+                }else if (e instanceof CustomException) {//业务失败的异常，如“账号或密码错误”
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
                     logger.info(e.getMessage());
                 } else if (e instanceof NoHandlerFoundException) {

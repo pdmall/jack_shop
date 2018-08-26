@@ -14,9 +14,8 @@ import java.util.Map;
 @Service
 public class UserWalletService extends BaseService<Banner> {
 
-    public List<Map<String, Object>> getWallet(Long user_id) {
-        List<Map<String, Object>> wallet = userWalletDao.getWallet(user_id);
-        return wallet;
+    public Map<String, Object> getWallet(Long user_id) {
+        return userWalletDao.getWallet(user_id);
     }
 
 }
